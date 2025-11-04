@@ -61,7 +61,7 @@ public class Ventana2_2 extends JFrame{
 		add(pNorte, BorderLayout.NORTH);
 		add(pCentro, BorderLayout.CENTER);
 		add(pSur, BorderLayout.SOUTH);
-		
+		System.out.println();
 		
 	}
 }
