@@ -63,13 +63,5 @@ public class Ventana2_2 extends JFrame{
 		add(pSur, BorderLayout.SOUTH);
 		
 		
-		
-		
-		
-		
-
-
-		
-		
 	}
 }
