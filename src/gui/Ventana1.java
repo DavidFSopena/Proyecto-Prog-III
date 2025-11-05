@@ -54,7 +54,7 @@ public class Ventana1 extends JFrame{
 				@Override
 				public void mousePressed(MouseEvent e) {
 					Ventana1.this.setVisible(false);
-					Ventana3 nuevaVentana = new Ventana3();
+					Ventana2_1 nuevaVentana = new Ventana2_1();
 					nuevaVentana.setVisible(true);
 					
 				}
@@ -80,8 +80,6 @@ public class Ventana1 extends JFrame{
 			
 			pCentro.add(lblImagen);
 			add(pCentro, BorderLayout.CENTER);
-			
-			JButton botonImagen = new JButton(icono);
 			
 			setVisible(true);
 		}
