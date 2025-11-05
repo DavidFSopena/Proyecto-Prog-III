@@ -64,16 +64,23 @@ public class Ventana1 extends JFrame{
 				}
 			});
 			
+			pCentro.add(lblImagen);
+			add(pCentro, BorderLayout.CENTER);
+			
 			pSur = new JPanel();
 			pSur.setOpaque(false);
 			pSur.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 			
+			
+			
 			JButton btnSalir = new JButton("Salir");
 			btnSalir.setFont(new Font("Arial", Font.BOLD, 20));
+			btnSalir.setForeground(new Color(240, 80, 80));
+			btnSalir.setBackground(Color.WHITE);
 			
 			
-			pCentro.add(lblImagen);
-			add(pCentro, BorderLayout.CENTER);
+			add(pSur, BorderLayout.SOUTH);
+			
 			
 			setVisible(true);
 		}
