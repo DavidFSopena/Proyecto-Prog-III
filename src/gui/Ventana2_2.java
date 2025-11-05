@@ -2,10 +2,14 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Arrays;
 
 import javax.swing.BorderFactory;
@@ -19,7 +23,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class Ventana2_2 extends JFrame{
-	private JPanel pNorte, pCentro, pSur;
+	private JPanel pNorte, pCentro, pSur, pCheck, pRellenar;
 	private JTextField txtMail, txtUsuario;
 	private JPasswordField contrasenia1, contrasenia2;
 	private JCheckBox checkMostrar;
@@ -28,7 +32,8 @@ public class Ventana2_2 extends JFrame{
 
 	public Ventana2_2() {
 		super("Registro");
-		setSize(720,460);
+		setSize(780,520);
+		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout(0,20));
@@ -38,44 +43,52 @@ public class Ventana2_2 extends JFrame{
 		getContentPane().setBackground(turquesa);
 		
 		pNorte = new JPanel (new GridLayout(1,1));
-		pCentro = new JPanel (new GridLayout(3,3,15,15));
-		pSur = new JPanel (new GridLayout(1,2,10,0));
-		pNorte.setBorder(BorderFactory.createEmptyBorder(10,40,0,40));
-		pCentro.setBorder(BorderFactory.createEmptyBorder(10,60,10,60));
-		pSur.setBorder(BorderFactory.createEmptyBorder(0,60,20,60));
-
-		txtMail = new JTextField();
-		txtUsuario = new JTextField();
-		contrasenia1 = new JPasswordField();
-		contrasenia2 = new JPasswordField();
-		checkMostrar = new JCheckBox("Mostrar");
+		pCentro = new JPanel (new BorderLayout());
+		pSur = new JPanel (new FlowLayout(FlowLayout.CENTER,18,10));
+		pCheck = new JPanel(new FlowLayout(FlowLayout.LEFT,8,0));
+		pRellenar = new JPanel(new GridLayout(4,2,20,16));
+		
+		pNorte.setOpaque(false);
+		pCentro.setOpaque(false);
+		pSur.setOpaque(false);
+		pCheck.setOpaque(false);
+		pRellenar.setOpaque(false);
+		
+		txtMail = new JTextField(16);
+		txtUsuario = new JTextField(16);
+		contrasenia1 = new JPasswordField(16);
+		contrasenia2 = new JPasswordField(16);
+		checkMostrar = new JCheckBox("Mostrar contraseña");
+		checkMostrar.setOpaque(false);
 		
 		lblTitulo = new JLabel("Registro", JLabel.CENTER);
-		lblTitulo.setFont(new Font("Arial", Font.BOLD, 28));
-		lblMail = new JLabel("Correo eletrónico: ");
-		lblUsuario = new JLabel("Usuario: ");
-		lblcontrasenia1 = new JLabel("Contraseña: ");
-		lblcontrasenia2 = new JLabel("Repite contraseña: ");
+		lblTitulo.setForeground(coral);
+		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD,28));
+		lblMail = new JLabel("EMAIL: ");
+		lblUsuario = new JLabel("USUARIO: ");
+		lblcontrasenia1 = new JLabel("CONTRASEÑA: ");
+		lblcontrasenia2 = new JLabel("REPITE CONTRASEÑA: ");
 		
 		btnSiguiente = new JButton("SIGUIENTE");
-		btnSiguiente.setBackground(coral);
 		btnCancelar = new JButton("CANCELAR");
-		btnCancelar.setBackground(coral);
+		botonBonito(btnSiguiente, coral);
+		botonBonito(btnCancelar, coral);
 
 		pNorte.add(lblTitulo);
 		
-		pCentro.add(lblMail);
-		pCentro.add(txtMail);
-		pCentro.add(new JLabel());
-		pCentro.add(lblUsuario);
-		pCentro.add(txtUsuario);
-		pCentro.add(new JLabel());
-		pCentro.add(lblcontrasenia1);
-		pCentro.add(contrasenia1);
-		pCentro.add(checkMostrar);
-		pCentro.add(lblcontrasenia2);
-		pCentro.add(contrasenia2);
-		pCentro.add(new JLabel());
+		pCheck.add(contrasenia1);
+		pCheck.add(checkMostrar);
+		
+		pRellenar.add(lblMail);
+		pRellenar.add(txtMail);
+		pRellenar.add(lblUsuario);
+		pRellenar.add(txtUsuario);
+		pRellenar.add(lblcontrasenia1);
+		pRellenar.add(pCheck);
+		pRellenar.add(lblcontrasenia2);
+		pRellenar.add(contrasenia2);
+		
+		pCentro.add(pRellenar, BorderLayout.CENTER);
 		
 		pSur.add(btnSiguiente);
 		pSur.add(btnCancelar);
@@ -85,12 +98,12 @@ public class Ventana2_2 extends JFrame{
 		add(pSur, BorderLayout.SOUTH);
 		
 		checkMostrar.addActionListener(e->{
-			if (!checkMostrar.isSelected()) {
-				contrasenia1.setEchoChar('•');
-				contrasenia2.setEchoChar('•');
-			}else {
+			if (checkMostrar.isSelected()) {
 				contrasenia1.setEchoChar((char)0);
 				contrasenia2.setEchoChar((char)0);
+			}else {			
+				contrasenia1.setEchoChar('•');
+				contrasenia2.setEchoChar('•');
 			}
 		});
 		
@@ -103,7 +116,7 @@ public class Ventana2_2 extends JFrame{
 				mensaje("Debes introducir un nombre de usuario");
 			}
 			if(!cumpleRequisitos(new String(c1))) {
-				mensaje("Contraseña no válida\nDebe tener:\n-Mínimo 8 caracteres\n-1 mayúscula\n-1minúscula\n-1 número");
+				mensaje("Contraseña no válida\nDebe tener:\n- Mínimo 8 caracteres\n- 1 mayúscula\n- 1minúscula\n- 1 número");
 				
 			}
 			if (!Arrays.equals(c1, c2)) {
@@ -111,8 +124,51 @@ public class Ventana2_2 extends JFrame{
 	            return;
 			}
 		});
+		
+		btnCancelar.addActionListener(e-> setVisible(false));
 
 		setVisible(true);
+		
+	}
+
+	private void botonBonito(JButton boton, Color coral) {
+		boton.setForeground(coral);
+		boton.setBackground(Color.WHITE);
+		boton.setFocusPainted(false);
+		boton.setFont(new Font("Segoe UI", Font.BOLD,16));
+		
+		boton.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				boton.setForeground(coral);
+				boton.setBackground(Color.WHITE);
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				boton.setForeground(Color.WHITE);
+				boton.setBackground(coral);
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 	}
 
