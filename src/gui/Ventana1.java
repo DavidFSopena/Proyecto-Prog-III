@@ -3,6 +3,7 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -35,16 +36,24 @@ public class Ventana1 extends JFrame{
 			
 			Color TurquesaC = new Color(96, 198, 194);
 			getContentPane().setBackground(TurquesaC);
+			setLayout(new BorderLayout());
 			
 			pCentro = new JPanel();
 			pCentro.setOpaque(false);
 			pCentro.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 			
 			ImageIcon ruta = new ImageIcon(getClass().getResource("/images/ImagenTrans.png"));
-			Image img = ruta.getImage().getScaledInstance(600, 500, Image.SCALE_SMOOTH);
+			Image img = ruta.getImage().getScaledInstance(570, 470, Image.SCALE_SMOOTH);
 			ImageIcon icono = new ImageIcon(img);
 			lblImagen = new JLabel(icono);
 			lblImagen.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			
+			JPanel contenedorCasa = new JPanel();
+			contenedorCasa.setOpaque(true);
+			contenedorCasa.setBackground(Color.WHITE);
+			contenedorCasa.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+			contenedorCasa.add(lblImagen);
+			contenedorCasa.setPreferredSize(new Dimension(570, 470));
 			
 			lblImagen.addMouseListener(new MouseAdapter() {
 				public void mouseEntered(MouseEvent e ) {
@@ -66,18 +75,19 @@ public class Ventana1 extends JFrame{
 				}
 			});
 			
-			pCentro.add(lblImagen);
+			pCentro.add(contenedorCasa);
 			add(pCentro, BorderLayout.CENTER);
 			
 			pSur = new JPanel();
 			pSur.setOpaque(false);
-			pSur.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+			pSur.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 100));
 			
 			
 			
 			JButton btnSalir = new JButton("Salir");
-			btnSalir.setFont(new Font("Arial", Font.BOLD, 20));
+			btnSalir.setFont(new Font("Segoe UI", Font.BOLD, 40));
 			btnSalir.setForeground(new Color(240, 80, 80));
+			btnSalir.setPreferredSize(new Dimension(180, 70));
 			btnSalir.setBackground(Color.WHITE);
 			btnSalir.setFocusPainted(false);
 			btnSalir.setBorder(new LineBorder(Color.RED, 2, true));
@@ -88,18 +98,21 @@ public class Ventana1 extends JFrame{
 					btnSalir.setBackground(new Color(240, 80, 80));
 					btnSalir.setForeground(Color.WHITE);
 				}
+				
+				public void mouseExited(MouseEvent e) {
+					btnSalir.setBackground(Color.WHITE);
+					btnSalir.setForeground(new Color(240, 80, 80));
+				}
 			});
 			
+			btnSalir.addActionListener(e -> System.exit(0));
 			
-			
+			pSur.add(btnSalir);
 			add(pSur, BorderLayout.SOUTH);
 			
 			
 			setVisible(true);
 		}
-		
-		
-		
 }
 
 
