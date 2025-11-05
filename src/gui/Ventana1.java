@@ -4,10 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -19,7 +21,7 @@ import javax.swing.JPanel;
 
 public class Ventana1 extends JFrame{
 		private JPanel pCentro, pSur;
-		private JButton btnSeguir;
+		private JButton btnSalir;
 		private JLabel lblImagen;
 		
 		public Ventana1 () {
@@ -42,41 +44,33 @@ public class Ventana1 extends JFrame{
 			ImageIcon icono = new ImageIcon(img);
 			lblImagen = new JLabel(icono);
 			
-			lblImagen.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			lblImagen.addMouseListener(new MouseListener() {
-				
-				@Override
-				public void mouseReleased(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
+			lblImagen.addMouseListener(new MouseAdapter() {
+				public void mouseEntered(MouseEvent e ) {
+					ImageIcon iconoIluminado = new ImageIcon(getClass().getResource("/images/ImagenTrans.png"));
+					Image iconoZoom = iconoIluminado.getImage().getScaledInstance(630, 520, Image.SCALE_SMOOTH);
+					lblImagen.setIcon(new ImageIcon(iconoZoom));
 				}
 				
-				@Override
-				public void mousePressed(MouseEvent e) {
+				public void mouseExited(MouseEvent e) {
+					ImageIcon iconoNormal = new ImageIcon(getClass().getResource("/images/ImagenTrans.png"));
+					Image iconoZoom = iconoNormal.getImage().getScaledInstance(600, 500, Image.SCALE_SMOOTH);
+					lblImagen.setIcon(new ImageIcon(iconoZoom));
+				}
+				
+				public void mouseClicked(MouseEvent e) {
 					Ventana1.this.setVisible(false);
 					Ventana2_1 nuevaVentana = new Ventana2_1();
 					nuevaVentana.setVisible(true);
-					
-				}
-				
-				@Override
-				public void mouseExited(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-				@Override
-				public void mouseEntered(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
 				}
 			});
+			
+			pSur = new JPanel();
+			pSur.setOpaque(false);
+			pSur.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+			
+			JButton btnSalir = new JButton("Salir");
+			btnSalir.setFont(new Font("Arial", Font.BOLD, 20));
+			
 			
 			pCentro.add(lblImagen);
 			add(pCentro, BorderLayout.CENTER);
