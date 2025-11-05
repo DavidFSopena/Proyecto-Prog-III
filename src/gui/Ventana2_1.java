@@ -29,7 +29,7 @@ public class Ventana2_1 extends JFrame {
 	private JPanel pSur, pCentro, pCentroConLogo, pNorte;
 	private JLabel lblTitulo, lblNombre, lblContrasena;
 	private JButton btnIniciarSesion, btnRegistrarse, btnVolver;
-	private JTextField txtNombre;
+	private JTextField txtEmail;
 	private JPasswordField txtContrasena;
 	
 	public Ventana2_1() {
@@ -76,13 +76,13 @@ public class Ventana2_1 extends JFrame {
 		lblLogo.setAlignmentX(Component.CENTER_ALIGNMENT);
 		lblLogo.setBorder(BorderFactory.createEmptyBorder(60, 0, 0, 0));
 		
-		lblNombre = new JLabel("INTRODUCE TU NOMBRE: ", JLabel.CENTER);
+		lblNombre = new JLabel("USUARIO/EMAIL: ", JLabel.CENTER);
 		lblNombre.setFont(new Font("Arial", Font.BOLD,20));
-		lblContrasena = new JLabel("INTRODUCE TU CONTRASEÑA: ", JLabel.CENTER);
+		lblContrasena = new JLabel("CONTRASEÑA: ", JLabel.CENTER);
 		lblContrasena.setFont(new Font("Arial", Font.BOLD,20));
-		txtNombre = new JTextField(1);
-		txtNombre.setFont(new Font("Arial", Font.PLAIN, 20));
-		txtNombre.setHorizontalAlignment(JTextField.CENTER);
+		txtEmail = new JTextField(1);
+		txtEmail.setFont(new Font("Arial", Font.PLAIN, 20));
+		txtEmail.setHorizontalAlignment(JTextField.CENTER);
 		txtContrasena = new JPasswordField(1);
 		txtContrasena.setFont(new Font("Arial", Font.PLAIN, 20));
 		txtContrasena.setHorizontalAlignment(JTextField.CENTER);
@@ -97,7 +97,7 @@ public class Ventana2_1 extends JFrame {
 		pNorte.add(lblTitulo);
 		pCentroConLogo.add(lblLogo, BorderLayout.NORTH);
 		pCentro.add(lblNombre);
-		pCentro.add(txtNombre);
+		pCentro.add(txtEmail);
 		pCentro.add(lblContrasena);
 		pCentro.add(txtContrasena);
 		pCentroConLogo.add(pCentro, BorderLayout.CENTER);
@@ -107,10 +107,10 @@ public class Ventana2_1 extends JFrame {
 
 		//Listeners de los componentes
 		btnIniciarSesion.addActionListener((e) -> {
-			String nombre = txtNombre.getText();
+			String email = txtEmail.getText();
 			String contrasena = new String(txtContrasena.getPassword());
 			
-			if(nombre.isEmpty() || contrasena.isEmpty()) {
+			if(email.isEmpty() || contrasena.isEmpty()) {
 				JOptionPane.showMessageDialog(null, "No has escrito un usuario o contraseña", "ERROR", JOptionPane.ERROR_MESSAGE);
 			} else {
 				Ventana2_1.this.setVisible(false);
