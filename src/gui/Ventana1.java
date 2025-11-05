@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 public class Ventana1 extends JFrame{
@@ -42,28 +43,23 @@ public class Ventana1 extends JFrame{
 			pCentro.setOpaque(false);
 			pCentro.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 			
-			ImageIcon ruta = new ImageIcon(getClass().getResource("/images/ImagenTrans.png"));
+			ImageIcon ruta = new ImageIcon(getClass().getResource("/images/ImagenTrans1.png"));
 			Image img = ruta.getImage().getScaledInstance(570, 470, Image.SCALE_SMOOTH);
 			ImageIcon icono = new ImageIcon(img);
 			lblImagen = new JLabel(icono);
 			lblImagen.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			
-			JPanel contenedorCasa = new JPanel();
-			contenedorCasa.setOpaque(true);
-			contenedorCasa.setBackground(Color.WHITE);
-			contenedorCasa.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-			contenedorCasa.add(lblImagen);
-			contenedorCasa.setPreferredSize(new Dimension(570, 470));
+
+	        lblImagen.setBounds(-20, -20, 600, 500);
 			
 			lblImagen.addMouseListener(new MouseAdapter() {
 				public void mouseEntered(MouseEvent e ) {
-					ImageIcon iconoIluminado = new ImageIcon(getClass().getResource("/images/ImagenTrans.png"));
+					ImageIcon iconoIluminado = new ImageIcon(getClass().getResource("/images/ImagenTrans1.png"));
 					Image iconoZoom = iconoIluminado.getImage().getScaledInstance(630, 520, Image.SCALE_SMOOTH);
 					lblImagen.setIcon(new ImageIcon(iconoZoom));
 				}
 				
 				public void mouseExited(MouseEvent e) {
-					ImageIcon iconoNormal = new ImageIcon(getClass().getResource("/images/ImagenTrans.png"));
+					ImageIcon iconoNormal = new ImageIcon(getClass().getResource("/images/ImagenTrans1.png"));
 					Image iconoZoom = iconoNormal.getImage().getScaledInstance(600, 500, Image.SCALE_SMOOTH);
 					lblImagen.setIcon(new ImageIcon(iconoZoom));
 				}
@@ -75,7 +71,7 @@ public class Ventana1 extends JFrame{
 				}
 			});
 			
-			pCentro.add(contenedorCasa);
+			pCentro.add(lblImagen);
 			add(pCentro, BorderLayout.CENTER);
 			
 			pSur = new JPanel();
