@@ -48,8 +48,6 @@ public class Ventana1 extends JFrame{
 			ImageIcon icono = new ImageIcon(img);
 			lblImagen = new JLabel(icono);
 			lblImagen.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-	        lblImagen.setBounds(-20, -20, 600, 500);
 			
 			lblImagen.addMouseListener(new MouseAdapter() {
 				public void mouseEntered(MouseEvent e ) {
