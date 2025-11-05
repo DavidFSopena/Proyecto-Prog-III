@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
 
 public class Ventana1 extends JFrame{
 		private JPanel pCentro, pSur;
@@ -43,6 +44,7 @@ public class Ventana1 extends JFrame{
 			Image img = ruta.getImage().getScaledInstance(600, 500, Image.SCALE_SMOOTH);
 			ImageIcon icono = new ImageIcon(img);
 			lblImagen = new JLabel(icono);
+			lblImagen.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			
 			lblImagen.addMouseListener(new MouseAdapter() {
 				public void mouseEntered(MouseEvent e ) {
@@ -77,6 +79,17 @@ public class Ventana1 extends JFrame{
 			btnSalir.setFont(new Font("Arial", Font.BOLD, 20));
 			btnSalir.setForeground(new Color(240, 80, 80));
 			btnSalir.setBackground(Color.WHITE);
+			btnSalir.setFocusPainted(false);
+			btnSalir.setBorder(new LineBorder(Color.RED, 2, true));
+			btnSalir.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			
+			btnSalir.addMouseListener(new MouseAdapter() {
+				public void mouseEntered(MouseEvent e) {
+					btnSalir.setBackground(new Color(240, 80, 80));
+					btnSalir.setForeground(Color.WHITE);
+				}
+			});
+			
 			
 			
 			add(pSur, BorderLayout.SOUTH);
