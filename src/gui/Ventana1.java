@@ -44,7 +44,7 @@ public class Ventana1 extends JFrame{
 			pCentro.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 			
 			ImageIcon ruta = new ImageIcon(getClass().getResource("/images/ImagenTrans1.png"));
-			Image img = ruta.getImage().getScaledInstance(570, 470, Image.SCALE_SMOOTH);
+			Image img = ruta.getImage().getScaledInstance(660, 550, Image.SCALE_SMOOTH);
 			ImageIcon icono = new ImageIcon(img);
 			lblImagen = new JLabel(icono);
 			lblImagen.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -54,13 +54,13 @@ public class Ventana1 extends JFrame{
 			lblImagen.addMouseListener(new MouseAdapter() {
 				public void mouseEntered(MouseEvent e ) {
 					ImageIcon iconoIluminado = new ImageIcon(getClass().getResource("/images/ImagenTrans1.png"));
-					Image iconoZoom = iconoIluminado.getImage().getScaledInstance(630, 520, Image.SCALE_SMOOTH);
+					Image iconoZoom = iconoIluminado.getImage().getScaledInstance(680, 570, Image.SCALE_SMOOTH);
 					lblImagen.setIcon(new ImageIcon(iconoZoom));
 				}
 				
 				public void mouseExited(MouseEvent e) {
 					ImageIcon iconoNormal = new ImageIcon(getClass().getResource("/images/ImagenTrans1.png"));
-					Image iconoZoom = iconoNormal.getImage().getScaledInstance(600, 500, Image.SCALE_SMOOTH);
+					Image iconoZoom = iconoNormal.getImage().getScaledInstance(660, 550, Image.SCALE_SMOOTH);
 					lblImagen.setIcon(new ImageIcon(iconoZoom));
 				}
 				
