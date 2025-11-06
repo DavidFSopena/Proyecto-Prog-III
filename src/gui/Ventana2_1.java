@@ -10,6 +10,8 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -131,6 +133,17 @@ public class Ventana2_1 extends JFrame {
 			Ventana1 nuevaVentana = new Ventana1();
 			nuevaVentana.setVisible(true);
 		});
+		
+		KeyAdapter intro = new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+		        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+		            btnIniciarSesion.doClick(); 
+		        }
+		    }
+		};
+		
+		txtEmail.addKeyListener(intro);
+		txtContrasena.addKeyListener(intro);
 		
 		btnIniciarSesion.addMouseListener(new MouseAdapter() {
 			
