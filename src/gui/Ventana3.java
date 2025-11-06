@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -17,12 +18,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Ventana3 extends JFrame{
 	private JPanel pNorte, pSur, pOeste, pCentro;
 	private JLabel lblLogo;
-	private JButton btnGeneral, btnBuscar, btnMiCuenta, btnCerrarSesion;	
+	private JButton btnGeneral, btnBuscar, btnPerfil, btnCerrarSesion;	
 	
 	public Ventana3() {
 		setTitle("BilboBnB");
@@ -34,16 +36,19 @@ public class Ventana3 extends JFrame{
 		
 		//Creamos los paneles
 		pNorte = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 10));
+		pNorte.setBackground(Color.WHITE);
 		pSur = new JPanel();
 		pOeste = new JPanel(new GridLayout(4,1,0,0));
 		pOeste.setPreferredSize(new Dimension(200,0));
-		pCentro = new JPanel();
+		pCentro = new JPanel(new CardLayout());
 		
-		pNorte.setBackground(Color.WHITE);
+		JPanel panelGeneral = new PanelGeneral();
+		JPanel panelBuscar = new PanelBuscar();
+		JPanel panelPerfil = new PanelPerfil();
 		
 		//Creación de componentes
 		ImageIcon icono = new ImageIcon("resources/images/logoBilboBnBTransparenteMasPequeno.jpg");
-		Image imagenEscalada = icono.getImage().getScaledInstance(120, 60, Image.SCALE_SMOOTH);
+		Image imagenEscalada = icono.getImage().getScaledInstance(240, 120, Image.SCALE_SMOOTH);
 		JLabel lblLogo = new JLabel(new ImageIcon(imagenEscalada));
 		
 		btnGeneral = new JButton("General");
@@ -52,9 +57,9 @@ public class Ventana3 extends JFrame{
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.setBackground(Color.WHITE);
 		btnBuscar.setForeground(coral);
-		btnMiCuenta = new JButton("Mi cuenta");
-		btnMiCuenta.setBackground(Color.WHITE);
-		btnMiCuenta.setForeground(coral);
+		btnPerfil = new JButton("Mi cuenta");
+		btnPerfil.setBackground(Color.WHITE);
+		btnPerfil.setForeground(coral);
 		btnCerrarSesion = new JButton("Cerrar sesión");
 		btnCerrarSesion.setBackground(Color.WHITE);
 		btnCerrarSesion.setForeground(coral);
@@ -64,13 +69,19 @@ public class Ventana3 extends JFrame{
 		getContentPane().add(pSur, BorderLayout.SOUTH);
 		getContentPane().add(pOeste, BorderLayout.WEST);
 		getContentPane().add(pSur, BorderLayout.SOUTH);
+		getContentPane().add(pCentro, BorderLayout.CENTER);
 		
 		//Añadimos componentes a los paneles
 		pNorte.add(lblLogo);
 		pOeste.add(btnGeneral);
 		pOeste.add(btnBuscar);
-		pOeste.add(btnMiCuenta);
+		pOeste.add(btnPerfil);
 		pOeste.add(btnCerrarSesion);
+		
+		pCentro.add(panelGeneral, "GENERAL");
+		pCentro.add(panelBuscar, "BUSCAR");
+		pCentro.add(panelPerfil, "PERFIL");
+		CardLayout cardLayout= (CardLayout) pCentro.getLayout();
 		
 		//Listeners de los botones
 		btnGeneral.addMouseListener(new MouseAdapter() {
@@ -104,18 +115,18 @@ public class Ventana3 extends JFrame{
 			}
 		});
 		
-		btnMiCuenta.addMouseListener(new MouseAdapter() {
+		btnPerfil.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnMiCuenta.setBackground(Color.WHITE);
-				btnMiCuenta.setForeground(coral);
+				btnPerfil.setBackground(Color.WHITE);
+				btnPerfil.setForeground(coral);
 				
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnMiCuenta.setBackground(coral);
-				btnMiCuenta.setForeground(Color.WHITE);
+				btnPerfil.setBackground(coral);
+				btnPerfil.setForeground(Color.WHITE);
 				
 			}
 		});
@@ -136,11 +147,27 @@ public class Ventana3 extends JFrame{
 			}
 		});
 		
-		btnCerrarSesion.addActionListener((e) -> {
-			Ventana3.this.setVisible(false);
-			Ventana1 ventanaInicio = new Ventana1();
-			ventanaInicio.setVisible(true);
+		btnGeneral.addActionListener((e) -> {
+			cardLayout.show(pCentro, "GENERAL");
 		});
+		
+		btnBuscar.addActionListener((e) -> {
+			cardLayout.show(pCentro, "BUSCAR");
+		});
+		
+		btnPerfil.addActionListener((e) -> {
+			cardLayout.show(pCentro, "PERFIL");
+		});
+		
+		btnCerrarSesion.addActionListener((e) -> {
+			int opcion = JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres cerrar sesión?", "CERRANDO SESIÓN...", JOptionPane.YES_NO_CANCEL_OPTION);
+			if (opcion==JOptionPane.YES_OPTION) {
+				Ventana3.this.setVisible(false);
+				Ventana1 ventanaInicio = new Ventana1();
+				ventanaInicio.setVisible(true);
+			}
+		});
+		
+		setVisible(true);
 	}
-	
 }
