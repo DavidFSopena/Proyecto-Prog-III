@@ -25,7 +25,9 @@ import javax.swing.JPanel;
 public class Ventana3 extends JFrame{
 	private JPanel pNorte, pSur, pOeste, pCentro;
 	private JLabel lblLogo;
-	private JButton btnGeneral, btnBuscar, btnPerfil, btnCerrarSesion;	
+	private JButton btnGeneral, btnBuscar, btnPerfil, btnCerrarSesion;
+	
+	private JButton btnSeleccionado;
 	
 	public Ventana3() {
 		setTitle("BilboBnB");
@@ -103,46 +105,68 @@ public class Ventana3 extends JFrame{
 		btnGeneral.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnGeneral.setBackground(Color.WHITE);
-				btnGeneral.setForeground(coral);
 				
+				if(btnSeleccionado != btnGeneral) {
+					
+					btnGeneral.setBackground(Color.WHITE);
+					btnGeneral.setForeground(coral);
+				}
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnGeneral.setBackground(coral);
-				btnGeneral.setForeground(Color.WHITE);
 				
+				if(btnSeleccionado != btnGeneral) {
+					
+					btnGeneral.setBackground(coral);
+					btnGeneral.setForeground(Color.WHITE);
+				}
 			}
 		});
 		
 		btnBuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnBuscar.setBackground(Color.WHITE);
-				btnBuscar.setForeground(coral);
+				
+				if (btnSeleccionado != btnBuscar){
+					
+					btnBuscar.setBackground(Color.WHITE);
+					btnBuscar.setForeground(coral);
+					
+				}
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnBuscar.setBackground(coral);
-				btnBuscar.setForeground(Color.WHITE);
 				
+				if (btnSeleccionado != btnBuscar){
+					
+					btnBuscar.setBackground(coral);
+					btnBuscar.setForeground(Color.WHITE);
+					
+				}	
 			}
 		});
 		
 		btnPerfil.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnPerfil.setBackground(Color.WHITE);
-				btnPerfil.setForeground(coral);
 				
+				if (btnSeleccionado != btnPerfil) {
+					
+					btnPerfil.setBackground(Color.WHITE);
+					btnPerfil.setForeground(coral);
+					}
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
+				
+				if (btnSeleccionado != btnPerfil) {
+					
 				btnPerfil.setBackground(coral);
 				btnPerfil.setForeground(Color.WHITE);
+				}
 				
 			}
 		});
@@ -150,32 +174,43 @@ public class Ventana3 extends JFrame{
 		btnCerrarSesion.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnCerrarSesion.setBackground(Color.WHITE);
-				btnCerrarSesion.setForeground(coral);
 				
+				if (btnSeleccionado != btnCerrarSesion) {
+					
+					btnCerrarSesion.setBackground(Color.WHITE);
+					btnCerrarSesion.setForeground(coral);
+					}	
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btnCerrarSesion.setBackground(coral);
-				btnCerrarSesion.setForeground(Color.WHITE);
 				
+				if (btnSeleccionado != btnCerrarSesion) {
+					
+					btnCerrarSesion.setBackground(coral);
+					btnCerrarSesion.setForeground(Color.WHITE);
+				
+			}
 			}
 		});
 		
 		btnGeneral.addActionListener((e) -> {
 			cardLayout.show(pCentro, "GENERAL");
+			seleccionarBoton(btnGeneral, coral);
 		});
 		
 		btnBuscar.addActionListener((e) -> {
 			cardLayout.show(pCentro, "BUSCAR");
+			seleccionarBoton(btnBuscar, coral);
 		});
 		
 		btnPerfil.addActionListener((e) -> {
 			cardLayout.show(pCentro, "PERFIL");
+			seleccionarBoton(btnPerfil, coral);
 		});
 		
 		btnCerrarSesion.addActionListener((e) -> {
+			seleccionarBoton(btnCerrarSesion, coral);
 			int opcion = JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres cerrar sesión?", "CERRANDO SESIÓN...", JOptionPane.YES_NO_OPTION);
 			if (opcion==JOptionPane.YES_OPTION) {
 				Ventana3.this.setVisible(false);
@@ -186,4 +221,18 @@ public class Ventana3 extends JFrame{
 		
 		setVisible(true);
 	}
+	
+	private void seleccionarBoton(JButton btn, Color coral) {
+		JButton [] botones = {btnGeneral, btnBuscar, btnPerfil, btnCerrarSesion};
+		for (JButton b : botones ) {
+			b.setBackground(Color.WHITE);
+			b.setForeground(coral);
+		}
+		
+		btn.setBackground(coral);
+		btn.setForeground(Color.WHITE);
+		btnSeleccionado = btn;
+	}
+	
+	
 }

@@ -11,8 +11,8 @@ public class Main {
 		//new Ventana1();
 		//new Ventana2_1();
 		
-		new Ventana2_2();
-		//new Ventana3();
+		//new Ventana2_2();
+		new Ventana3();
 	}
 
 }
