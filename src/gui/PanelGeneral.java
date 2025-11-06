@@ -6,10 +6,12 @@ import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 public class PanelGeneral extends JPanel {
 	private JPanel pNorte, pSur, pOeste, pEste, pCentro;
 	private JLabel txtPruebaPanelGeneral;
+	private DefaultTableModel tblModelo;
 	public PanelGeneral() {
 		
 		
@@ -33,7 +35,9 @@ public class PanelGeneral extends JPanel {
 		add(pSur,BorderLayout.SOUTH);
 		add(pOeste,BorderLayout.WEST);
 		add(pEste,BorderLayout.EAST);
-		add(pCentro, BorderLayout.WEST);
+		add(pCentro, BorderLayout.CENTER);
+		
+		String[] columnas = {"ID", "Título", "Barrio", "Capacidad", "Precio/Noche", "Rating"};
 		
 		//Añadimos componenets a panel
 		pCentro.add(txtPruebaPanelGeneral);

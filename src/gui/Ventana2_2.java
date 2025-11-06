@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -48,6 +49,7 @@ public class Ventana2_2 extends JFrame{
 		pSur = new JPanel (new FlowLayout(FlowLayout.CENTER,18,10));
 		pCheck = new JPanel(new FlowLayout(FlowLayout.LEFT,8,0));
 		pRellenar = new JPanel(new GridLayout(4,2,20,16));
+
 		
 		pNorte.setOpaque(false);
 		pCentro.setOpaque(false);
