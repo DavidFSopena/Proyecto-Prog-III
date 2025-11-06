@@ -14,6 +14,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -54,15 +55,30 @@ public class Ventana3 extends JFrame{
 		btnGeneral = new JButton("General");
 		btnGeneral.setBackground(Color.WHITE);
 		btnGeneral.setForeground(coral);
+		btnGeneral.setFocusPainted(false);
+		btnGeneral.setFont(new java.awt.Font ("SansSerif", java.awt.Font.BOLD, 18));
+		btnGeneral.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(220, 220, 220)));
+		
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.setBackground(Color.WHITE);
 		btnBuscar.setForeground(coral);
+		btnBuscar.setFocusPainted(false);
+		btnBuscar.setFont(new java.awt.Font ("SansSerif", java.awt.Font.BOLD, 18));
+		btnBuscar.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(220, 220, 220)));
+		
 		btnPerfil = new JButton("Mi cuenta");
 		btnPerfil.setBackground(Color.WHITE);
 		btnPerfil.setForeground(coral);
+		btnPerfil.setFocusPainted(false);
+		btnPerfil.setFont(new java.awt.Font ("SansSerif", java.awt.Font.BOLD, 18));
+		btnPerfil.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(220, 220, 220)));
+		
 		btnCerrarSesion = new JButton("Cerrar sesión");
 		btnCerrarSesion.setBackground(Color.WHITE);
 		btnCerrarSesion.setForeground(coral);
+		btnCerrarSesion.setFocusPainted(false);
+		btnCerrarSesion.setFont(new java.awt.Font ("SansSerif", java.awt.Font.BOLD, 18));
+		btnCerrarSesion.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(220, 220, 220)));
 		
 		//Añadimos paneles a ventana
 		getContentPane().add(pNorte, BorderLayout.NORTH);
@@ -160,7 +176,7 @@ public class Ventana3 extends JFrame{
 		});
 		
 		btnCerrarSesion.addActionListener((e) -> {
-			int opcion = JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres cerrar sesión?", "CERRANDO SESIÓN...", JOptionPane.YES_NO_CANCEL_OPTION);
+			int opcion = JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres cerrar sesión?", "CERRANDO SESIÓN...", JOptionPane.YES_NO_OPTION);
 			if (opcion==JOptionPane.YES_OPTION) {
 				Ventana3.this.setVisible(false);
 				Ventana1 ventanaInicio = new Ventana1();
