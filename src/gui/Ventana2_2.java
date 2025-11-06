@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 public class Ventana2_2 extends JFrame{
 	private JPanel pNorte, pCentro, pSur, pCheck, pRellenar;
@@ -43,13 +44,14 @@ public class Ventana2_2 extends JFrame{
 		getContentPane().setBackground(turquesa);
 		
 		pNorte = new JPanel (new GridLayout(1,1));
-		pCentro = new JPanel (new BorderLayout());
+		pCentro = new JPanel (new FlowLayout(FlowLayout.CENTER, 0, 10));
 		pSur = new JPanel (new FlowLayout(FlowLayout.CENTER,18,10));
 		pCheck = new JPanel(new FlowLayout(FlowLayout.LEFT,8,0));
 		pRellenar = new JPanel(new GridLayout(4,2,20,16));
 		
 		pNorte.setOpaque(false);
 		pCentro.setOpaque(false);
+		pCentro.setBorder(new EmptyBorder(60, 0, 0, 0));
 		pSur.setOpaque(false);
 		pCheck.setOpaque(false);
 		pRellenar.setOpaque(false);
@@ -64,6 +66,8 @@ public class Ventana2_2 extends JFrame{
 		lblTitulo = new JLabel("Registro", JLabel.CENTER);
 		lblTitulo.setForeground(coral);
 		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD,28));
+		lblTitulo.setBackground(Color.WHITE);
+		lblTitulo.setOpaque(true);
 		lblMail = new JLabel("EMAIL: ");
 		lblUsuario = new JLabel("USUARIO: ");
 		lblcontrasenia1 = new JLabel("CONTRASEÑA: ");
