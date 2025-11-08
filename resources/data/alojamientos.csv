@@ -1,0 +1,9 @@
+id;titulo;barrio;capacidad;precioNoche;rating
+A1;Estudio frente al Guggen;Abando;2;95.0;4.6
+A2;Ático con terraza;Indautxu;4;140.0;4.8
+A3;Habitación Casco Viejo;Casco Viejo;2;60.0;4.3
+A4;Loft industrial;Deusto;3;85.0;4.5
+A5;Apartamento moderno;Santutxu;2;75.0;4.2
+A6;Habitación económica;Rekalde;1;50.0;4.0
+A7;Dúplex con vistas al Nervión;Uribarri;5;160.0;4.9
+A8;Piso luminoso;Begoña;3;90.0;4.4
