@@ -11,7 +11,10 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 
 public class PanelBuscar extends JPanel {
@@ -24,10 +27,12 @@ public class PanelBuscar extends JPanel {
 	private DefaultTableModel modeloTabla;
 	private List<Alojamiento> alojamientos = new ArrayList<>();
 	private List<Alojamiento> filtrados = new ArrayList<>();
+	private final Color turquesa = new Color(96, 198, 194);
+	private final Color coral = new Color(255, 102, 120);
 
 	public PanelBuscar() {
+		setBackground(turquesa);
 		setLayout(new BorderLayout());
-		setOpaque(false);
 
 		pBuscar = pBuscar();
 		pResultados = pResultados();
@@ -47,36 +52,55 @@ public class PanelBuscar extends JPanel {
 
 		cbBarrio = new JComboBox<>();
 		cbBarrio.addItem("TODOS");
-		for (Barrio b : Barrio.values()) cbBarrio.addItem(b);
+		for (Barrio b : Barrio.values())
+			cbBarrio.addItem(b);
 		cbAdultos = new JComboBox<>();
 		cbNinos = new JComboBox<>();
 		for (int i = 0; i <= 5; i++) {
 			cbAdultos.addItem(i);
 			cbNinos.addItem(i);
 		}
+		Font tipoLetra = new Font("Segoe UI", Font.BOLD, 22);
 
-		btnBuscar = new JButton("Buscar");
+		JLabel lblBarrio = new JLabel("BARRIO:");
+		lblBarrio.setFont(tipoLetra);
+		JLabel lblAdultos = new JLabel("ADULTOS:");
+		lblAdultos.setFont(tipoLetra);
+		JLabel lblNinos = new JLabel("NIÑOS:");
+		lblNinos.setFont(tipoLetra);
 
-		p.add(new JLabel("Barrio:"));
+		cbBarrio.setFont(tipoLetra);
+		cbAdultos.setFont(tipoLetra);
+		cbNinos.setFont(tipoLetra);
+
+		cbBarrio.setPreferredSize(new Dimension(260, 36));
+		cbAdultos.setPreferredSize(new Dimension(260, 36));
+		cbNinos.setPreferredSize(new Dimension(260, 36));
+
+		btnBuscar = new JButton("BUSCAR");
+		btnBuscar.setBackground(coral);
+		btnBuscar.setForeground(Color.WHITE);
+		btnBuscar.setFocusPainted(false);
+
+		p.add(lblBarrio);
 		p.add(cbBarrio);
-		p.add(new JLabel("Adultos:"));
+		p.add(lblAdultos);
 		p.add(cbAdultos);
-		p.add(new JLabel("Niños:"));
+		p.add(lblNinos);
 		p.add(cbNinos);
-		p.add(new JLabel(""));
 		p.add(btnBuscar);
 
 		btnBuscar.addActionListener(e -> {
 			Object seleccionado = cbBarrio.getSelectedItem();
 			Barrio barrio = null;
-			if(!"TODOS".equals(seleccionado)) {
+			if (!"TODOS".equals(seleccionado)) {
 				barrio = (Barrio) seleccionado;
 			}
 			int adultos = (int) cbAdultos.getSelectedItem();
 			int ninos = (int) cbNinos.getSelectedItem();
 			int total = adultos + ninos;
 
-			filtrados.clear(); 
+			filtrados.clear();
 			for (Alojamiento a : alojamientos) {
 				if ((barrio == null || a.getBarrio() == barrio) && a.getCapacidad() >= total) {
 					filtrados.add(a);
@@ -110,14 +134,32 @@ public class PanelBuscar extends JPanel {
 			}
 		};
 		tabla = new JTable(modeloTabla);
+		tabla.setBackground(Color.WHITE);
+		tabla.setSelectionForeground(Color.WHITE);
 
-		cbOrden = new JComboBox<>(new String[] { "Precio menor-mayor", "Precio mayor-menor", "Rating menor-mayor", "Rating mayor-menor" });
-		btnVolver = new JButton("Volver");
+		tabla.setOpaque(true);
+		tabla.setShowVerticalLines(true);
+		tabla.setGridColor(new Color(186, 184, 184));
+		tabla.getTableHeader().setReorderingAllowed(false);
+		tabla.getTableHeader().setForeground(coral);
+		tabla.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 26));
+		tabla.setRowHeight(30);
+
+		cbOrden = new JComboBox<>(new String[] { "Precio menor-mayor", "Precio mayor-menor", "Rating menor-mayor",
+				"Rating mayor-menor" });
+		cbOrden.setBackground(coral);
+		cbOrden.setForeground(Color.WHITE);
+		cbOrden.setFocusable(false);
+		btnVolver = new JButton("VOLVER");
+		btnVolver.setBackground(coral);
+		btnVolver.setForeground(Color.WHITE);
+		btnVolver.setFocusPainted(false);
 
 		JPanel pSur = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
 		pSur.add(cbOrden);
 		pSur.add(btnVolver);
-
+		pSur.setOpaque(false);
+		pSur.setBackground(turquesa);
 		p.add(new JScrollPane(tabla), BorderLayout.CENTER);
 		p.add(pSur, BorderLayout.SOUTH);
 
