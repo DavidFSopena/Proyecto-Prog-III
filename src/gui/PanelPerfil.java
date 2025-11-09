@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -21,7 +20,6 @@ import javax.swing.table.DefaultTableModel;
 
 import domain.Alojamiento;
 import domain.Barrio;
-import domain.Usuario;
 
 public class PanelPerfil extends JPanel {
 	private JPanel pNorte, pSur, pOeste, pEste, pCentro;
@@ -49,13 +47,13 @@ public class PanelPerfil extends JPanel {
 		pCentro.setBackground(turquesa);
 		
 		//Creamos componentes
-		JLabel lblNombre = new JLabel("Nombre: nombre de prueba", JLabel.LEFT);
+		lblNombre = new JLabel("Nombre: nombre de prueba", JLabel.LEFT);
 		lblNombre.setFont(new Font("Segoe UI", Font.BOLD, 25));
 		lblNombre.setForeground(Color.WHITE);
-		JLabel lblEmail = new JLabel("Email: emaildeprueba@gmail.com", JLabel.LEFT);
+		lblEmail = new JLabel("Email: emaildeprueba@gmail.com", JLabel.LEFT);
 		lblEmail.setFont(new Font("Segoe UI", Font.BOLD, 25));
 		lblEmail.setForeground(Color.WHITE);
-		JLabel lblTituloTabla = new JLabel("Tus alojamientos:", JLabel.CENTER);
+		lblTituloTabla = new JLabel("Tus alojamientos:", JLabel.CENTER);
 		lblTituloTabla.setFont(new Font("Segoe UI", Font.BOLD, 25));
 		lblTituloTabla.setForeground(Color.WHITE);
 		lblTituloTabla.setBounds(630, 100, 500, 40);
