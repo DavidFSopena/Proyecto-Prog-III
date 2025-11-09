@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import domain.Usuario;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
