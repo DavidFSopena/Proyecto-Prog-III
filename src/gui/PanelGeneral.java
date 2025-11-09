@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -33,7 +34,7 @@ public class PanelGeneral extends JPanel {
 		setBackground(turquesa);
 		setLayout(new BorderLayout());
 		
-		pNorte = new JPanel(null);
+		pNorte = new JPanel(new GridLayout());
 		pNorte.setBackground(turquesa);
 		pNorte.setPreferredSize(new Dimension(0, 100));
 		
@@ -50,15 +51,21 @@ public class PanelGeneral extends JPanel {
 		JLabel sombra = new JLabel("Mejores Alojamientos");
 		sombra.setFont(new Font("Segoe UI", Font.BOLD, 40));
 		sombra.setForeground(coral);
-		sombra.setBounds(620, 16, 600, 50);
+		sombra.setBounds(2, 2, 600, 50);
+		
+		JPanel panelTitulo = new JPanel(null);
+		panelTitulo.setOpaque(false); 
+		panelTitulo.setPreferredSize(new Dimension(600, 60));
 				
 		JLabel titulo = new JLabel("Mejores Alojamientos");
 		titulo.setFont(new Font("Segoe UI", Font.BOLD, 40));
 		titulo.setForeground(Color.BLACK);
-		titulo.setBounds(618, 14, 600, 50);
+		titulo.setBounds(0, 0, 600, 50);
 		
-		pNorte.add(sombra);
-		pNorte.add(titulo);
+		panelTitulo.add(sombra);
+		panelTitulo.add(titulo);
+		
+		pNorte.add(panelTitulo);
 		pNorte.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
 		
 		add(pNorte,BorderLayout.NORTH);
