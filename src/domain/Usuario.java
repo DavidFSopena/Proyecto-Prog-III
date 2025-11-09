@@ -24,9 +24,9 @@ public class Usuario {
 		return nombre;
 	}
 
+	@Override
 	public String toString() {
-		return "Usuario{" + ", usuario='" + usuario + '\'' + ", email='" + email + '\'' + ", nombre='" + nombre + '\''
-				+ '}';
+		return "Usuario [usuario=" + usuario + ", email=" + email + ", nombre=" + nombre + "]";
 	}
 
 	public void setUsuario(String usuario) {
