@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -31,18 +33,33 @@ public class PanelGeneral extends JPanel {
 		setBackground(turquesa);
 		setLayout(new BorderLayout());
 		
-		pNorte = new JPanel();
+		pNorte = new JPanel(null);
+		pNorte.setBackground(turquesa);
+		pNorte.setPreferredSize(new Dimension(0, 100));
+		
 		pSur = new JPanel();
 		pOeste = new JPanel();
+		pOeste.setBackground(turquesa);
+		
 		pEste = new JPanel();
+		pEste.setBackground(turquesa);
+		
 		pCentro = new JPanel(new BorderLayout());
+		pCentro.setBackground(turquesa);
+		
+		JLabel sombra = new JLabel("Mejores Alojamientos");
+		sombra.setFont(new Font("Segoe UI", Font.BOLD, 40));
+		sombra.setForeground(coral);
+		sombra.setBounds(620, 16, 600, 50);
 				
 		JLabel titulo = new JLabel("Mejores Alojamientos");
-		titulo.setForeground(coral);
-		titulo.setFont(new Font("Segio UI", Font.BOLD, 20));
-		titulo.setBackground(Color.WHITE);
+		titulo.setFont(new Font("Segoe UI", Font.BOLD, 40));
+		titulo.setForeground(Color.BLACK);
+		titulo.setBounds(618, 14, 600, 50);
 		
+		pNorte.add(sombra);
 		pNorte.add(titulo);
+		pNorte.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
 		
 		add(pNorte,BorderLayout.NORTH);
 		add(pSur,BorderLayout.SOUTH);
@@ -60,10 +77,26 @@ public class PanelGeneral extends JPanel {
 			}
 		};
 		
-		JTable tabla = new JTable(tblModelo);
+		tabla = new JTable(tblModelo);
 		tabla.setAutoCreateRowSorter(true);
 		JScrollPane scroll = new JScrollPane(tabla);
+		scroll.setPreferredSize(new Dimension(1200, 550));
+		scroll.setBackground(turquesa);
+		scroll.getViewport().setBackground(turquesa);
 		pCentro.add(scroll, BorderLayout.CENTER);
+		
+		tabla.setBackground(Color.WHITE);
+		tabla.setSelectionForeground(Color.WHITE);
+		tabla.setOpaque(true);
+		
+		tabla.setShowVerticalLines(true);
+		tabla.setGridColor(new Color (186, 184, 184));
+		
+		tabla.getTableHeader().setReorderingAllowed(false);
+		tabla.getTableHeader().setBackground(Color.WHITE);
+		tabla.getTableHeader().setForeground(coral);
+		tabla.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 26));
+		tabla.setRowHeight(30);
 		
 		cargarTopDesdeCSV("resources/data/alojamientos.csv", 20);
 	}
