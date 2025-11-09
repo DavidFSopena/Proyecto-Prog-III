@@ -137,6 +137,8 @@ public class Ventana2_2 extends JFrame {
 				return;
 			}
 			mensaje("Registro correcto.");
+			Usuario u = new Usuario(txtUsuario.getText(), txtMail.getText(), txtUsuario.getText(),
+					contrasenia1.getPassword());
 		});
 
 		btnCancelar.addActionListener(e -> setVisible(false));
