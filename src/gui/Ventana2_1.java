@@ -80,14 +80,14 @@ public class Ventana2_1 extends JFrame {
 		lblLogo.setBorder(BorderFactory.createEmptyBorder(60, 0, 0, 0));
 		
 		lblNombre = new JLabel("USUARIO/EMAIL: ", JLabel.CENTER);
-		lblNombre.setFont(new Font("Arial", Font.BOLD,20));
+		lblNombre.setFont(new Font("Segoe UI", Font.BOLD,20));
 		lblContrasena = new JLabel("CONTRASEÑA: ", JLabel.CENTER);
-		lblContrasena.setFont(new Font("Arial", Font.BOLD,20));
+		lblContrasena.setFont(new Font("Segoe UI", Font.BOLD,20));
 		txtEmail = new JTextField(1);
-		txtEmail.setFont(new Font("Arial", Font.PLAIN, 20));
+		txtEmail.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		txtEmail.setHorizontalAlignment(JTextField.CENTER);
 		txtContrasena = new JPasswordField(1);
-		txtContrasena.setFont(new Font("Arial", Font.PLAIN, 20));
+		txtContrasena.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		txtContrasena.setHorizontalAlignment(JTextField.CENTER);
 		
 		
