@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -59,19 +60,34 @@ public class PanelBuscar extends JPanel {
 			cbAdultos.addItem(i);
 			cbNinos.addItem(i);
 		}
+		Font tipoLetra = new Font("Segoe UI", Font.BOLD, 22);
 
-		btnBuscar = new JButton("Buscar");
+		JLabel lblBarrio = new JLabel("BARRIO:");
+		lblBarrio.setFont(tipoLetra);
+		JLabel lblAdultos = new JLabel("ADULTOS:");
+		lblAdultos.setFont(tipoLetra);
+		JLabel lblNinos = new JLabel("NIÑOS:");
+		lblNinos.setFont(tipoLetra);
+
+		cbBarrio.setFont(tipoLetra);
+		cbAdultos.setFont(tipoLetra);
+		cbNinos.setFont(tipoLetra);
+
+		cbBarrio.setPreferredSize(new Dimension(260, 36));
+		cbAdultos.setPreferredSize(new Dimension(260, 36));
+		cbNinos.setPreferredSize(new Dimension(260, 36));
+
+		btnBuscar = new JButton("BUSCAR");
 		btnBuscar.setBackground(coral);
 		btnBuscar.setForeground(Color.WHITE);
 		btnBuscar.setFocusPainted(false);
 
-		p.add(new JLabel("BARRIO:"));
+		p.add(lblBarrio);
 		p.add(cbBarrio);
-		p.add(new JLabel("ADULTOS:"));
+		p.add(lblAdultos);
 		p.add(cbAdultos);
-		p.add(new JLabel("NIÑOS:"));
+		p.add(lblNinos);
 		p.add(cbNinos);
-		p.add(new JLabel(""));
 		p.add(btnBuscar);
 
 		btnBuscar.addActionListener(e -> {
@@ -125,8 +141,7 @@ public class PanelBuscar extends JPanel {
 		tabla.setShowVerticalLines(true);
 		tabla.setGridColor(new Color(186, 184, 184));
 		tabla.getTableHeader().setReorderingAllowed(false);
-		tabla.getTableHeader().setReorderingAllowed(false);
-		tabla.getTableHeader().setReorderingAllowed(false);
+		tabla.getTableHeader().setForeground(coral);
 		tabla.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 26));
 		tabla.setRowHeight(30);
 
@@ -135,7 +150,7 @@ public class PanelBuscar extends JPanel {
 		cbOrden.setBackground(coral);
 		cbOrden.setForeground(Color.WHITE);
 		cbOrden.setFocusable(false);
-		btnVolver = new JButton("Volver");
+		btnVolver = new JButton("VOLVER");
 		btnVolver.setBackground(coral);
 		btnVolver.setForeground(Color.WHITE);
 		btnVolver.setFocusPainted(false);
