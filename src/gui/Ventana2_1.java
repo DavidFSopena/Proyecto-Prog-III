@@ -39,9 +39,8 @@ public class Ventana2_1 extends JFrame {
 		setTitle("BilboBnB - Acceso");
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
-		Color turquesa = new Color(96, 198, 194);
-		Color coral = new Color(255,102,102);
-		getContentPane().setBackground(turquesa);
+		
+		getContentPane().setBackground(Funciones.Colores.Turquesa);
 		
 		
 		//Creación de paneles
@@ -50,23 +49,23 @@ public class Ventana2_1 extends JFrame {
 		pCentro = new JPanel();
 		pCentro.setLayout(new GridLayout(2,2,10,15));
 		pCentro.setBorder(BorderFactory.createEmptyBorder(12, 240, 240, 240));
-		pCentro.setBackground(turquesa);
+		pCentro.setBackground(Funciones.Colores.Turquesa);
 		pCentroConLogo = new JPanel();
-		pCentroConLogo.setBackground(turquesa);
+		pCentroConLogo.setBackground(Funciones.Colores.Turquesa);
 		pCentroConLogo.setLayout(new BorderLayout());
 		setLayout(new BorderLayout(0,20)); 
 		
 		//Cración de componentes
 		btnIniciarSesion = new JButton("INICIAR SESIÓN");
-		btnIniciarSesion.setForeground(coral);
+		btnIniciarSesion.setForeground(Funciones.Colores.Coral);
 		btnIniciarSesion.setBackground(Color.WHITE);
 		//btnIniciarSesion.setBorder(new LineBorder(coral));
 		btnRegistrarse = new JButton("REGISTRARSE");
-		btnRegistrarse.setForeground(coral);
+		btnRegistrarse.setForeground(Funciones.Colores.Coral);
 		btnRegistrarse.setBackground(Color.WHITE);
 		//btnRegistrarse.setBorder(new LineBorder(coral));
 		btnVolver = new JButton("VOLVER");
-		btnVolver.setForeground(coral);
+		btnVolver.setForeground(Funciones.Colores.Coral);
 		btnVolver.setBackground(Color.WHITE);
 		//btnVolver.setBorder(new LineBorder(coral));
 		
@@ -146,48 +145,9 @@ public class Ventana2_1 extends JFrame {
 		txtEmail.addKeyListener(intro);
 		txtContrasena.addKeyListener(intro);
 		
-		btnIniciarSesion.addMouseListener(new MouseAdapter() {
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnIniciarSesion.setForeground(Color.WHITE);
-				btnIniciarSesion.setBackground(coral);	
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnIniciarSesion.setForeground(coral);
-				btnIniciarSesion.setBackground(Color.WHITE);
-			}
-		});
-		
-		btnRegistrarse.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnRegistrarse.setForeground(Color.WHITE);
-				btnRegistrarse.setBackground(coral);
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnRegistrarse.setForeground(coral);
-				btnRegistrarse.setBackground(Color.WHITE);
-			}
-		});
-		
-		btnVolver.addMouseListener(new MouseAdapter(){
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnVolver.setForeground(Color.WHITE);
-				btnVolver.setBackground(coral);
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnVolver.setForeground(coral);
-				btnVolver.setBackground(Color.WHITE);
-			}
-		});
+		Funciones.botonBonito(btnIniciarSesion, Funciones.Colores.Coral);
+		Funciones.botonBonito(btnRegistrarse, Funciones.Colores.Coral);
+		Funciones.botonBonito(btnVolver, Funciones.Colores.Coral);
 		
 		setVisible(true);
 	}

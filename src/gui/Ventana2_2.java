@@ -40,10 +40,8 @@ public class Ventana2_2 extends JFrame {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout(0, 20));
-
-		Color turquesa = new Color(96, 198, 194);
-		Color coral = new Color(255, 102, 102);
-		getContentPane().setBackground(turquesa);
+		
+		getContentPane().setBackground(Funciones.Colores.Turquesa);
 
 		pNorte = new JPanel(new GridLayout(1, 1));
 		pCentro = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 10));
@@ -66,7 +64,7 @@ public class Ventana2_2 extends JFrame {
 		checkMostrar.setOpaque(false);
 
 		lblTitulo = new JLabel("Registro", JLabel.CENTER);
-		lblTitulo.setForeground(coral);
+		lblTitulo.setForeground(Funciones.Colores.Coral);
 		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 28));
 		lblTitulo.setBackground(Color.WHITE);
 		lblTitulo.setOpaque(true);
@@ -77,8 +75,8 @@ public class Ventana2_2 extends JFrame {
 
 		btnSiguiente = new JButton("SIGUIENTE");
 		btnCancelar = new JButton("CANCELAR");
-		botonBonito(btnSiguiente, coral);
-		botonBonito(btnCancelar, coral);
+		Funciones.botonBonito(btnSiguiente, Funciones.Colores.Coral);
+		Funciones.botonBonito(btnCancelar, Funciones.Colores.Coral);
 
 		pNorte.add(lblTitulo);
 
@@ -144,47 +142,6 @@ public class Ventana2_2 extends JFrame {
 		btnCancelar.addActionListener(e -> setVisible(false));
 
 		setVisible(true);
-
-	}
-
-	private void botonBonito(JButton boton, Color coral) {
-		boton.setForeground(coral);
-		boton.setBackground(Color.WHITE);
-		boton.setFocusPainted(false);
-		boton.setFont(new Font("Segoe UI", Font.BOLD, 16));
-
-		boton.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				boton.setForeground(coral);
-				boton.setBackground(Color.WHITE);
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				boton.setForeground(Color.WHITE);
-				boton.setBackground(coral);
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
 
 	}
 

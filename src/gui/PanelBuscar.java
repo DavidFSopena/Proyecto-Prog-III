@@ -27,11 +27,10 @@ public class PanelBuscar extends JPanel {
 	private DefaultTableModel modeloTabla;
 	private List<Alojamiento> alojamientos = new ArrayList<>();
 	private List<Alojamiento> filtrados = new ArrayList<>();
-	private final Color turquesa = new Color(96, 198, 194);
-	private final Color coral = new Color(255, 102, 120);
 
+	
 	public PanelBuscar() {
-		setBackground(turquesa);
+		setBackground(Funciones.Colores.Turquesa);
 		setLayout(new BorderLayout());
 
 		pBuscar = pBuscar();
@@ -78,7 +77,7 @@ public class PanelBuscar extends JPanel {
 		cbNinos.setPreferredSize(new Dimension(260, 36));
 
 		btnBuscar = new JButton("BUSCAR");
-		btnBuscar.setBackground(coral);
+		btnBuscar.setBackground(Funciones.Colores.Coral);
 		btnBuscar.setForeground(Color.WHITE);
 		btnBuscar.setFocusPainted(false);
 
@@ -141,17 +140,17 @@ public class PanelBuscar extends JPanel {
 		tabla.setShowVerticalLines(true);
 		tabla.setGridColor(new Color(186, 184, 184));
 		tabla.getTableHeader().setReorderingAllowed(false);
-		tabla.getTableHeader().setForeground(coral);
+		tabla.getTableHeader().setForeground(Funciones.Colores.Coral);
 		tabla.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 26));
 		tabla.setRowHeight(30);
 
 		cbOrden = new JComboBox<>(new String[] { "Precio menor-mayor", "Precio mayor-menor", "Rating menor-mayor",
 				"Rating mayor-menor" });
-		cbOrden.setBackground(coral);
+		cbOrden.setBackground(Funciones.Colores.Coral);
 		cbOrden.setForeground(Color.WHITE);
 		cbOrden.setFocusable(false);
 		btnVolver = new JButton("VOLVER");
-		btnVolver.setBackground(coral);
+		btnVolver.setBackground(Funciones.Colores.Coral);
 		btnVolver.setForeground(Color.WHITE);
 		btnVolver.setFocusPainted(false);
 
@@ -159,7 +158,7 @@ public class PanelBuscar extends JPanel {
 		pSur.add(cbOrden);
 		pSur.add(btnVolver);
 		pSur.setOpaque(false);
-		pSur.setBackground(turquesa);
+		pSur.setBackground(Funciones.Colores.Turquesa);
 		p.add(new JScrollPane(tabla), BorderLayout.CENTER);
 		p.add(pSur, BorderLayout.SOUTH);
 

@@ -28,29 +28,26 @@ public class PanelGeneral extends JPanel {
 	
 	public PanelGeneral() {
 		
-		Color turquesa = new Color(96, 198, 194);
-		Color coral = new Color(255,102,120);
-		
-		setBackground(turquesa);
+		setBackground(Funciones.Colores.Turquesa);
 		setLayout(new BorderLayout());
 		
 		pNorte = new JPanel(new GridLayout());
-		pNorte.setBackground(turquesa);
+		pNorte.setBackground(Funciones.Colores.Turquesa);
 		pNorte.setPreferredSize(new Dimension(0, 100));
 		
 		pSur = new JPanel();
 		pOeste = new JPanel();
-		pOeste.setBackground(turquesa);
+		pOeste.setBackground(Funciones.Colores.Turquesa);
 		
 		pEste = new JPanel();
-		pEste.setBackground(turquesa);
+		pEste.setBackground(Funciones.Colores.Turquesa);
 		
 		pCentro = new JPanel(new BorderLayout());
-		pCentro.setBackground(turquesa);
+		pCentro.setBackground(Funciones.Colores.Turquesa);
 		
 		JLabel sombra = new JLabel("Mejores Alojamientos");
 		sombra.setFont(new Font("Segoe UI", Font.BOLD, 40));
-		sombra.setForeground(coral);
+		sombra.setForeground(Funciones.Colores.Coral);
 		sombra.setBounds(2, 2, 600, 50);
 		
 		JPanel panelTitulo = new JPanel(null);
@@ -88,8 +85,8 @@ public class PanelGeneral extends JPanel {
 		tabla.setAutoCreateRowSorter(true);
 		JScrollPane scroll = new JScrollPane(tabla);
 		scroll.setPreferredSize(new Dimension(1200, 550));
-		scroll.setBackground(turquesa);
-		scroll.getViewport().setBackground(turquesa);
+		scroll.setBackground(Funciones.Colores.Turquesa);
+		scroll.getViewport().setBackground(Funciones.Colores.Turquesa);
 		pCentro.add(scroll, BorderLayout.CENTER);
 		
 		tabla.setBackground(Color.WHITE);
@@ -101,7 +98,7 @@ public class PanelGeneral extends JPanel {
 		
 		tabla.getTableHeader().setReorderingAllowed(false);
 		tabla.getTableHeader().setBackground(Color.WHITE);
-		tabla.getTableHeader().setForeground(coral);
+		tabla.getTableHeader().setForeground(Funciones.Colores.Coral);
 		tabla.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 26));
 		tabla.setRowHeight(30);
 		

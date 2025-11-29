@@ -28,23 +28,21 @@ public class PanelPerfil extends JPanel {
 	private DefaultTableModel tblModelo;
 	
 	public PanelPerfil() {
-		Color turquesa = new Color(96, 198, 194);
-		Color coral = new Color(255,102,120);
-		setBackground(turquesa);
+		setBackground(Funciones.Colores.Turquesa);
 		setLayout(new BorderLayout(10,10));
 		setBorder(new EmptyBorder(30, 50, 30, 50));
 		
 		//Creamos los paneles 
 		pNorte = new JPanel(new GridLayout(3,1,5,5));
-		pNorte.setBackground(turquesa);
+		pNorte.setBackground(Funciones.Colores.Turquesa);
 		pSur = new JPanel();
-		pSur.setBackground(turquesa);
+		pSur.setBackground(Funciones.Colores.Turquesa);
 		pOeste = new JPanel();
-		pOeste.setBackground(turquesa);
+		pOeste.setBackground(Funciones.Colores.Turquesa);
 		pEste = new JPanel();
-		pEste.setBackground(turquesa);
+		pEste.setBackground(Funciones.Colores.Turquesa);
 		pCentro = new JPanel(new BorderLayout());
-		pCentro.setBackground(turquesa);
+		pCentro.setBackground(Funciones.Colores.Turquesa);
 		
 		//Creamos componentes
 		lblNombre = new JLabel("Nombre: nombre de prueba", JLabel.LEFT);
@@ -69,16 +67,16 @@ public class PanelPerfil extends JPanel {
 		tabla.setRowHeight(30);
 		
 		tabla.getTableHeader().setBackground(Color.WHITE);
-		tabla.setSelectionForeground(coral);
+		tabla.setSelectionForeground(Funciones.Colores.Coral);
 		tabla.setOpaque(true);
 		tabla.setBackground(Color.WHITE);
 		tabla.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 26));
-		tabla.getTableHeader().setForeground(coral);
+		tabla.getTableHeader().setForeground(Funciones.Colores.Coral);
 		JScrollPane scroll = new JScrollPane(tabla);
 		scroll.setBorder(null);
 		scroll.setPreferredSize(new Dimension(1100,50));
-		scroll.setBackground(turquesa);
-		scroll.getViewport().setBackground(turquesa);
+		scroll.setBackground(Funciones.Colores.Turquesa);
+		scroll.getViewport().setBackground(Funciones.Colores.Turquesa);
 		scroll.getViewport().setOpaque(false);
 		scroll.setOpaque(false);
 		

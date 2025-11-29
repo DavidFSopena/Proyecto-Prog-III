@@ -34,9 +34,7 @@ public class Ventana3 extends JFrame{
 		setTitle("BilboBnB");
 		setExtendedState(MAXIMIZED_BOTH);
 		
-		Color turquesa = new Color(96, 198, 194);
-		Color coral = new Color(255,102,120);
-		getContentPane().setBackground(turquesa);
+		getContentPane().setBackground(Funciones.Colores.Turquesa);
 		
 		//Creamos los paneles
 		pNorte = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 10));
@@ -57,28 +55,28 @@ public class Ventana3 extends JFrame{
 		
 		btnGeneral = new JButton("General");
 		btnGeneral.setBackground(Color.WHITE);
-		btnGeneral.setForeground(coral);
+		btnGeneral.setForeground(Funciones.Colores.Coral);
 		btnGeneral.setFocusPainted(false);
 		btnGeneral.setFont(new Font ("Segoe UI", Font.BOLD, 18));
 		btnGeneral.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(220, 220, 220)));
 		
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.setBackground(Color.WHITE);
-		btnBuscar.setForeground(coral);
+		btnBuscar.setForeground(Funciones.Colores.Coral);
 		btnBuscar.setFocusPainted(false);
 		btnBuscar.setFont(new Font ("Segoe UI", Font.BOLD, 18));
 		btnBuscar.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(220, 220, 220)));
 		
 		btnPerfil = new JButton("Mi cuenta");
 		btnPerfil.setBackground(Color.WHITE);
-		btnPerfil.setForeground(coral);
+		btnPerfil.setForeground(Funciones.Colores.Coral);
 		btnPerfil.setFocusPainted(false);
 		btnPerfil.setFont(new Font ("Segoe UI", Font.BOLD, 18));
 		btnPerfil.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(220, 220, 220)));
 		
 		btnCerrarSesion = new JButton("Cerrar sesión");
 		btnCerrarSesion.setBackground(Color.WHITE);
-		btnCerrarSesion.setForeground(coral);
+		btnCerrarSesion.setForeground(Funciones.Colores.Coral);
 		btnCerrarSesion.setFocusPainted(false);
 		btnCerrarSesion.setFont(new Font ("Segoe UI", Font.BOLD, 18));
 		btnCerrarSesion.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(220, 220, 220)));
@@ -102,6 +100,7 @@ public class Ventana3 extends JFrame{
 		pCentro.add(panelPerfil, "PERFIL");
 		CardLayout cardLayout= (CardLayout) pCentro.getLayout();
 		
+		
 		//Listeners de los botones
 		btnGeneral.addMouseListener(new MouseAdapter() {
 			@Override
@@ -110,7 +109,7 @@ public class Ventana3 extends JFrame{
 				if(btnSeleccionado != btnGeneral) {
 					
 					btnGeneral.setBackground(Color.WHITE);
-					btnGeneral.setForeground(coral);
+					btnGeneral.setForeground(Funciones.Colores.Coral);
 				}
 			}
 			
@@ -119,7 +118,7 @@ public class Ventana3 extends JFrame{
 				
 				if(btnSeleccionado != btnGeneral) {
 					
-					btnGeneral.setBackground(coral);
+					btnGeneral.setBackground(Funciones.Colores.Coral);
 					btnGeneral.setForeground(Color.WHITE);
 				}
 			}
@@ -132,7 +131,7 @@ public class Ventana3 extends JFrame{
 				if (btnSeleccionado != btnBuscar){
 					
 					btnBuscar.setBackground(Color.WHITE);
-					btnBuscar.setForeground(coral);
+					btnBuscar.setForeground(Funciones.Colores.Coral);
 					
 				}
 			}
@@ -142,7 +141,7 @@ public class Ventana3 extends JFrame{
 				
 				if (btnSeleccionado != btnBuscar){
 					
-					btnBuscar.setBackground(coral);
+					btnBuscar.setBackground(Funciones.Colores.Coral);
 					btnBuscar.setForeground(Color.WHITE);
 					
 				}	
@@ -156,7 +155,7 @@ public class Ventana3 extends JFrame{
 				if (btnSeleccionado != btnPerfil) {
 					
 					btnPerfil.setBackground(Color.WHITE);
-					btnPerfil.setForeground(coral);
+					btnPerfil.setForeground(Funciones.Colores.Coral);
 					}
 			}
 			
@@ -165,7 +164,7 @@ public class Ventana3 extends JFrame{
 				
 				if (btnSeleccionado != btnPerfil) {
 					
-				btnPerfil.setBackground(coral);
+				btnPerfil.setBackground(Funciones.Colores.Coral);
 				btnPerfil.setForeground(Color.WHITE);
 				}
 				
@@ -179,7 +178,7 @@ public class Ventana3 extends JFrame{
 				if (btnSeleccionado != btnCerrarSesion) {
 					
 					btnCerrarSesion.setBackground(Color.WHITE);
-					btnCerrarSesion.setForeground(coral);
+					btnCerrarSesion.setForeground(Funciones.Colores.Coral);
 					}	
 			}
 			
@@ -188,7 +187,7 @@ public class Ventana3 extends JFrame{
 				
 				if (btnSeleccionado != btnCerrarSesion) {
 					
-					btnCerrarSesion.setBackground(coral);
+					btnCerrarSesion.setBackground(Funciones.Colores.Coral);
 					btnCerrarSesion.setForeground(Color.WHITE);
 				
 			}
@@ -197,21 +196,21 @@ public class Ventana3 extends JFrame{
 		
 		btnGeneral.addActionListener((e) -> {
 			cardLayout.show(pCentro, "GENERAL");
-			seleccionarBoton(btnGeneral, coral);
+			seleccionarBoton(btnGeneral, Funciones.Colores.Coral);
 		});
 		
 		btnBuscar.addActionListener((e) -> {
 			cardLayout.show(pCentro, "BUSCAR");
-			seleccionarBoton(btnBuscar, coral);
+			seleccionarBoton(btnBuscar, Funciones.Colores.Coral);
 		});
 		
 		btnPerfil.addActionListener((e) -> {
 			cardLayout.show(pCentro, "PERFIL");
-			seleccionarBoton(btnPerfil, coral);
+			seleccionarBoton(btnPerfil, Funciones.Colores.Coral);
 		});
 		
 		btnCerrarSesion.addActionListener((e) -> {
-			seleccionarBoton(btnCerrarSesion, coral);
+			seleccionarBoton(btnCerrarSesion, Funciones.Colores.Coral);
 			int opcion = JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres cerrar sesión?", "CERRANDO SESIÓN...", JOptionPane.YES_NO_OPTION);
 			if (opcion==JOptionPane.YES_OPTION) {
 				Ventana3.this.setVisible(false);

@@ -35,8 +35,7 @@ public class Ventana1 extends JFrame{
 			setExtendedState(JFrame.MAXIMIZED_BOTH);
 			setUndecorated(true);
 			
-			Color TurquesaC = new Color(96, 198, 194);
-			getContentPane().setBackground(TurquesaC);
+			getContentPane().setBackground(Funciones.Colores.Turquesa);
 			setLayout(new BorderLayout());
 			
 			pCentro = new JPanel();
