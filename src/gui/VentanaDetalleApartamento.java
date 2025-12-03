@@ -75,6 +75,31 @@ public class VentanaDetalleApartamento extends JDialog {
         JPanel pDetalles = new JPanel(new GridLayout(0, 2, 15, 18));
         pDetalles.setOpaque(false);
         
+        pDetalles.add(crearLabel("ID:", Funciones.Letra.normal(16)));
+        pDetalles.add(crearBold(id, Funciones.Letra.negrita(16)));
         
+        pDetalles.add(crearLabel("Barrio:", Funciones.Letra.normal(16)));
+        pDetalles.add(crearBold(barrio, Funciones.Letra.negrita(16)));
+
+        pDetalles.add(crearLabel("Capacidad:", Funciones.Letra.normal(16)));
+        pDetalles.add(crearBold(capacidad + " personas", Funciones.Letra.negrita(16)));
+        
+        pDetalles.add(crearLabel("Rating:", Funciones.Letra.normal(16)));
+        pDetalles.add(crearBold(String.format("%.1f / 5   %s", rating, Funciones.estrellas(rating)), Funciones.Letra.negrita(16)));
     }
+    
+    private JLabel crearLabel(String texto, Font f) {
+        JLabel lbl = new JLabel(texto, SwingConstants.RIGHT);
+        lbl.setFont(f);
+        lbl.setForeground(Color.DARK_GRAY);
+        return lbl;
+    }
+
+    private JLabel crearBold(String texto, Font f) {
+        JLabel lbl = new JLabel(texto, SwingConstants.LEFT);
+        lbl.setFont(f);
+        lbl.setForeground(Color.BLACK);
+        return lbl;
+    }
+
 }

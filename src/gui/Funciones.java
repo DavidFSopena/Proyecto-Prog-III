@@ -30,6 +30,14 @@ public class Funciones {
 		    }
 		}
 		
+		public static String estrellas(double rating) {
+		    int r = (int) Math.round(rating);
+		    StringBuilder sb = new StringBuilder();
+		    for (int i = 0; i < 5; i++) sb.append(i < r ? "★" : "☆");
+		    return sb.toString();
+		}
+
+		
 		public static void botonBonito(JButton boton, Color Coral) {
 			boton.setForeground(Coral);
 			boton.setBackground(Color.WHITE);
