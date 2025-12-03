@@ -67,7 +67,7 @@ public class Ventana2_2 extends JFrame {
 
 		lblTitulo = new JLabel("Registro", JLabel.CENTER);
 		lblTitulo.setForeground(Funciones.Colores.Coral);
-		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 28));
+		lblTitulo.setFont(Funciones.Letra.negrita(28));
 		lblTitulo.setBackground(Color.WHITE);
 		lblTitulo.setOpaque(true);
 		lblMail = new JLabel("EMAIL: ");

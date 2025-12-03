@@ -50,7 +50,7 @@ public class PanelGeneral extends JPanel {
 		pCentro.setBackground(Funciones.Colores.Turquesa);
 		
 		JLabel sombra = new JLabel("Mejores Alojamientos");
-		sombra.setFont(new Font("Segoe UI", Font.BOLD, 40));
+		sombra.setFont(Funciones.Letra.negrita(40));
 		sombra.setForeground(Funciones.Colores.Coral);
 		sombra.setBounds(2, 2, 600, 50);
 		
@@ -59,7 +59,7 @@ public class PanelGeneral extends JPanel {
 		panelTitulo.setPreferredSize(new Dimension(600, 60));
 				
 		JLabel titulo = new JLabel("Mejores Alojamientos");
-		titulo.setFont(new Font("Segoe UI", Font.BOLD, 40));
+		titulo.setFont(Funciones.Letra.negrita(40));
 		titulo.setForeground(Color.BLACK);
 		titulo.setBounds(0, 0, 600, 50);
 		
@@ -103,7 +103,7 @@ public class PanelGeneral extends JPanel {
 		tabla.getTableHeader().setReorderingAllowed(false);
 		tabla.getTableHeader().setBackground(Color.WHITE);
 		tabla.getTableHeader().setForeground(Funciones.Colores.Coral);
-		tabla.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 26));
+		tabla.getTableHeader().setFont(Funciones.Letra.negrita(26));
 		tabla.setRowHeight(30);
 		
 		cargarTopDesdeCSV("resources/data/alojamientos.csv", 20);

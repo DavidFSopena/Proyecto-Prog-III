@@ -78,7 +78,7 @@ public class Ventana1 extends JFrame{
 			
 			
 			JButton btnSalir = new JButton("Salir");
-			btnSalir.setFont(new Font("Segoe UI", Font.BOLD, 40));
+			btnSalir.setFont(Funciones.Letra.negrita(40));
 			btnSalir.setForeground(new Color(240, 80, 80));
 			btnSalir.setPreferredSize(new Dimension(180, 70));
 			btnSalir.setBackground(Color.WHITE);

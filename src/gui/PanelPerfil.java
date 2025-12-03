@@ -46,13 +46,13 @@ public class PanelPerfil extends JPanel {
 		
 		//Creamos componentes
 		lblNombre = new JLabel("Nombre: nombre de prueba", JLabel.LEFT);
-		lblNombre.setFont(new Font("Segoe UI", Font.BOLD, 25));
+		lblNombre.setFont(Funciones.Letra.negrita(25));
 		lblNombre.setForeground(Color.WHITE);
 		lblEmail = new JLabel("Email: emaildeprueba@gmail.com", JLabel.LEFT);
-		lblEmail.setFont(new Font("Segoe UI", Font.BOLD, 25));
+		lblEmail.setFont(Funciones.Letra.negrita(25));
 		lblEmail.setForeground(Color.WHITE);
 		lblTituloTabla = new JLabel("Tus alojamientos:", JLabel.CENTER);
-		lblTituloTabla.setFont(new Font("Segoe UI", Font.BOLD, 25));
+		lblTituloTabla.setFont(Funciones.Letra.negrita(25));
 		lblTituloTabla.setForeground(Color.WHITE);
 		lblTituloTabla.setBounds(630, 100, 500, 40);
 		
@@ -70,7 +70,7 @@ public class PanelPerfil extends JPanel {
 		tabla.setSelectionForeground(Funciones.Colores.Coral);
 		tabla.setOpaque(true);
 		tabla.setBackground(Color.WHITE);
-		tabla.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 26));
+		tabla.getTableHeader().setFont(Funciones.Letra.negrita(26));
 		tabla.getTableHeader().setForeground(Funciones.Colores.Coral);
 		JScrollPane scroll = new JScrollPane(tabla);
 		scroll.setBorder(null);

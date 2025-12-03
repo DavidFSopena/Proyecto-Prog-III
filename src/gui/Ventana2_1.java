@@ -63,7 +63,7 @@ public class Ventana2_1 extends JFrame {
 		pCentroRegistrarse.setBackground(Funciones.Colores.Turquesa);
 
 		
-		//Cración de componentes
+		//Creación de componentes
 		btnIniciarSesion = new JButton("INICIAR SESIÓN");
 		btnIniciarSesion.setForeground(Funciones.Colores.Coral);
 		btnIniciarSesion.setBackground(Color.WHITE);
@@ -87,17 +87,17 @@ public class Ventana2_1 extends JFrame {
 		lblLogo.setBorder(BorderFactory.createEmptyBorder(50, 0, 0, 0));
 		
 		lblNombre = new JLabel("USUARIO/EMAIL: ", JLabel.CENTER);
-		lblNombre.setFont(new Font("Segoe UI", Font.BOLD,20));
+		lblNombre.setFont(Funciones.Letra.negrita(20));
 		lblContrasena = new JLabel("CONTRASEÑA: ", JLabel.CENTER);
-		lblContrasena.setFont(new Font("Segoe UI", Font.BOLD,20));
+		lblContrasena.setFont(Funciones.Letra.negrita(20));
 		txtEmail = new JTextField(1);
-		txtEmail.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		txtEmail.setFont(Funciones.Letra.normal(20));
 		txtEmail.setHorizontalAlignment(JTextField.CENTER);
 		txtContrasena = new JPasswordField(1);
-		txtContrasena.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		txtContrasena.setFont(Funciones.Letra.normal(20));
 		txtContrasena.setHorizontalAlignment(JTextField.CENTER);
 		lblRegistrarse = new JLabel("NO TIENES CUENTA? REGISTRATE HOY", JLabel.CENTER);
-		lblRegistrarse.setFont(new Font("Segoe UI", Font.BOLD,20));
+		lblRegistrarse.setFont(Funciones.Letra.negrita(20));
 		lblRegistrarse.setForeground(Funciones.Colores.Coral);
 		Font f = lblRegistrarse.getFont().deriveFont(
 			    Collections.singletonMap(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON)

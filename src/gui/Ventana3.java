@@ -57,28 +57,28 @@ public class Ventana3 extends JFrame{
 		btnGeneral.setBackground(Color.WHITE);
 		btnGeneral.setForeground(Funciones.Colores.Coral);
 		btnGeneral.setFocusPainted(false);
-		btnGeneral.setFont(new Font ("Segoe UI", Font.BOLD, 18));
+		btnGeneral.setFont(Funciones.Letra.negrita(18));
 		btnGeneral.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(220, 220, 220)));
 		
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.setBackground(Color.WHITE);
 		btnBuscar.setForeground(Funciones.Colores.Coral);
 		btnBuscar.setFocusPainted(false);
-		btnBuscar.setFont(new Font ("Segoe UI", Font.BOLD, 18));
+		btnBuscar.setFont(Funciones.Letra.negrita(18));
 		btnBuscar.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(220, 220, 220)));
 		
 		btnPerfil = new JButton("Mi cuenta");
 		btnPerfil.setBackground(Color.WHITE);
 		btnPerfil.setForeground(Funciones.Colores.Coral);
 		btnPerfil.setFocusPainted(false);
-		btnPerfil.setFont(new Font ("Segoe UI", Font.BOLD, 18));
+		btnPerfil.setFont(Funciones.Letra.negrita(18));
 		btnPerfil.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(220, 220, 220)));
 		
 		btnCerrarSesion = new JButton("Cerrar sesión");
 		btnCerrarSesion.setBackground(Color.WHITE);
 		btnCerrarSesion.setForeground(Funciones.Colores.Coral);
 		btnCerrarSesion.setFocusPainted(false);
-		btnCerrarSesion.setFont(new Font ("Segoe UI", Font.BOLD, 18));
+		btnCerrarSesion.setFont(Funciones.Letra.negrita(18));
 		btnCerrarSesion.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(220, 220, 220)));
 		
 		//Añadimos paneles a ventana
