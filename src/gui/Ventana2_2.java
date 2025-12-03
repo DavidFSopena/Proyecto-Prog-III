@@ -25,6 +25,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import db.BD;
+
 public class Ventana2_2 extends JFrame {
 	private JPanel pNorte, pCentro, pSur, pCheck, pRellenar;
 	private JTextField txtMail, txtUsuario;
@@ -116,6 +118,7 @@ public class Ventana2_2 extends JFrame {
 			String usuario = txtUsuario.getText();
 			char[] c1 = contrasenia1.getPassword();
 			char[] c2 = contrasenia2.getPassword();
+			Usuario u = new Usuario(usuario,mail,usuario,c1);
 
 			if (mail.isEmpty()) {
 				mensaje("Debes introducir un email.");
@@ -134,9 +137,15 @@ public class Ventana2_2 extends JFrame {
 				mensaje("Las contraseñas no coinciden.");
 				return;
 			}
-			mensaje("Registro correcto.");
-			Usuario u = new Usuario(txtUsuario.getText(), txtMail.getText(), txtUsuario.getText(),
-					contrasenia1.getPassword());
+			
+			boolean registro = BD.registrarUsuario(u, new String(c1));
+			if (registro) {
+				mensaje("Registro correcto.");
+				dispose();
+			} else {
+				mensaje("El usuario o email ya existe");
+			}
+			
 		});
 
 		btnCancelar.addActionListener(e -> setVisible(false));

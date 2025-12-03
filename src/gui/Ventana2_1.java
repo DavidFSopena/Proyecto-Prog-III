@@ -28,6 +28,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
+import db.BD;
+
 public class Ventana2_1 extends JFrame {
 	private JPanel pSur, pCentro, pCentroConLogo, pNorte;
 	private JLabel lblTitulo, lblNombre, lblContrasena;
@@ -112,12 +114,11 @@ public class Ventana2_1 extends JFrame {
 			String email = txtEmail.getText();
 			String contrasena = new String(txtContrasena.getPassword());
 			
-			if(email.isEmpty() || contrasena.isEmpty()) {
-				JOptionPane.showMessageDialog(null, "No has escrito un usuario o contraseña", "ERROR", JOptionPane.ERROR_MESSAGE);
-			} else {
+			if(BD.validarLogin(email, contrasena)) {
 				Ventana2_1.this.setVisible(false);
-				Ventana3 nuevaVentana = new Ventana3();
-				nuevaVentana.setVisible(true);
+				new Ventana3();
+			} else {
+				JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "ERROR", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		
