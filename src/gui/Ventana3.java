@@ -219,6 +219,8 @@ public class Ventana3 extends JFrame{
 			}
 		});
 		
+		seleccionarBoton(btnGeneral, Funciones.Colores.Coral);
+		
 		setVisible(true);
 	}
 	
