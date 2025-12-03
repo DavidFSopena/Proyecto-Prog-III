@@ -31,8 +31,8 @@ import javax.swing.border.LineBorder;
 import db.BD;
 
 public class Ventana2_1 extends JFrame {
-	private JPanel pSur, pCentro, pCentroConLogo, pNorte;
-	private JLabel lblTitulo, lblNombre, lblContrasena;
+	private JPanel pSur, pCentro, pCentroConLogo, pCentroRegistrarse, pNorte;
+	private JLabel lblTitulo, lblNombre, lblContrasena, lblRegistrarse;
 	private JButton btnIniciarSesion, btnRegistrarse, btnVolver;
 	private JTextField txtEmail;
 	private JPasswordField txtContrasena;
@@ -49,13 +49,16 @@ public class Ventana2_1 extends JFrame {
 		pNorte = new JPanel();
 		pSur = new JPanel();
 		pCentro = new JPanel();
-		pCentro.setLayout(new GridLayout(2,2,10,15));
-		pCentro.setBorder(BorderFactory.createEmptyBorder(12, 240, 240, 240));
+		pCentro.setLayout(new GridLayout(2,2,10,10));
+		pCentro.setBorder(BorderFactory.createEmptyBorder(12, 240, 180, 240));
 		pCentro.setBackground(Funciones.Colores.Turquesa);
 		pCentroConLogo = new JPanel();
 		pCentroConLogo.setBackground(Funciones.Colores.Turquesa);
 		pCentroConLogo.setLayout(new BorderLayout());
 		setLayout(new BorderLayout(0,20)); 
+		pCentroRegistrarse = new JPanel();
+		pCentroRegistrarse.setBackground(Funciones.Colores.Turquesa);
+
 		
 		//Cración de componentes
 		btnIniciarSesion = new JButton("INICIAR SESIÓN");
@@ -78,7 +81,7 @@ public class Ventana2_1 extends JFrame {
 		Image imagenEscalada = icono.getImage().getScaledInstance(320, 320, Image.SCALE_SMOOTH);
 		JLabel lblLogo = new JLabel(new ImageIcon(imagenEscalada));
 		lblLogo.setAlignmentX(Component.CENTER_ALIGNMENT);
-		lblLogo.setBorder(BorderFactory.createEmptyBorder(60, 0, 0, 0));
+		lblLogo.setBorder(BorderFactory.createEmptyBorder(50, 0, 0, 0));
 		
 		lblNombre = new JLabel("USUARIO/EMAIL: ", JLabel.CENTER);
 		lblNombre.setFont(new Font("Segoe UI", Font.BOLD,20));
@@ -90,6 +93,9 @@ public class Ventana2_1 extends JFrame {
 		txtContrasena = new JPasswordField(1);
 		txtContrasena.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		txtContrasena.setHorizontalAlignment(JTextField.CENTER);
+		lblRegistrarse = new JLabel("NO TIENES CUENTA? REGISTRATE HOY", JLabel.CENTER);
+		lblRegistrarse.setFont(new Font("Segoe UI", Font.BOLD,20));
+		lblRegistrarse.setForeground(Funciones.Colores.Coral);
 		
 		
 		//Añadir paneles a ventana
@@ -104,7 +110,9 @@ public class Ventana2_1 extends JFrame {
 		pCentro.add(txtEmail);
 		pCentro.add(lblContrasena);
 		pCentro.add(txtContrasena);
+		pCentroRegistrarse.add(lblRegistrarse);
 		pCentroConLogo.add(pCentro, BorderLayout.CENTER);
+		pCentroConLogo.add(pCentroRegistrarse, BorderLayout.SOUTH);
 		pSur.add(btnIniciarSesion);
 		pSur.add(btnRegistrarse);
 		pSur.add(btnVolver);
@@ -133,6 +141,39 @@ public class Ventana2_1 extends JFrame {
 			Ventana2_1.this.setVisible(false);
 			Ventana1 nuevaVentana = new Ventana1();
 			nuevaVentana.setVisible(true);
+		});
+		
+		lblRegistrarse.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				Ventana2_2 nuevaVentana = new Ventana2_2();
+				nuevaVentana.setAlwaysOnTop(true);
+				nuevaVentana.setLocationRelativeTo(Ventana2_1.this);	
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				lblRegistrarse.setForeground(Funciones.Colores.Coral.darker());
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblRegistrarse.setForeground(Funciones.Colores.Coral);
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
 		});
 		
 		KeyAdapter intro = new KeyAdapter() {
