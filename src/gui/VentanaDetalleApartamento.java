@@ -81,8 +81,6 @@ public class VentanaDetalleApartamento extends JDialog {
         pDerecha.setLayout(new BoxLayout(pDerecha, BoxLayout.Y_AXIS));
         pCentro.add(pDerecha, BorderLayout.CENTER);
 
-
-
         JPanel pDetalles = new JPanel(new java.awt.GridLayout(0, 2, 15, 18));
         pDetalles.setOpaque(false);
 
