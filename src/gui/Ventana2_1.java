@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import domain.Usuario;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -16,6 +17,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.font.TextAttribute;
+import java.util.Collections;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -50,7 +53,7 @@ public class Ventana2_1 extends JFrame {
 		pSur = new JPanel();
 		pCentro = new JPanel();
 		pCentro.setLayout(new GridLayout(2,2,10,10));
-		pCentro.setBorder(BorderFactory.createEmptyBorder(12, 240, 180, 240));
+		pCentro.setBorder(BorderFactory.createEmptyBorder(0, 240, 240, 240));
 		pCentro.setBackground(Funciones.Colores.Turquesa);
 		pCentroConLogo = new JPanel();
 		pCentroConLogo.setBackground(Funciones.Colores.Turquesa);
@@ -96,6 +99,10 @@ public class Ventana2_1 extends JFrame {
 		lblRegistrarse = new JLabel("NO TIENES CUENTA? REGISTRATE HOY", JLabel.CENTER);
 		lblRegistrarse.setFont(new Font("Segoe UI", Font.BOLD,20));
 		lblRegistrarse.setForeground(Funciones.Colores.Coral);
+		Font f = lblRegistrarse.getFont().deriveFont(
+			    Collections.singletonMap(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON)
+			);
+		lblRegistrarse.setFont(f);
 		
 		
 		//Añadir paneles a ventana
@@ -147,9 +154,6 @@ public class Ventana2_1 extends JFrame {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				Ventana2_2 nuevaVentana = new Ventana2_2();
-				nuevaVentana.setAlwaysOnTop(true);
-				nuevaVentana.setLocationRelativeTo(Ventana2_1.this);	
 			}
 			
 			@Override
@@ -165,14 +169,14 @@ public class Ventana2_1 extends JFrame {
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
+				lblRegistrarse.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
+				Ventana2_2 nuevaVentana = new Ventana2_2();
+				nuevaVentana.setAlwaysOnTop(true);
+				nuevaVentana.setLocationRelativeTo(Ventana2_1.this);
 			}
 		});
 		
