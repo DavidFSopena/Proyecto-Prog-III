@@ -10,6 +10,9 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Window;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -44,23 +47,17 @@ public class VentanaDetalleApartamento extends JDialog {
         cabecera.setBackground(Color.WHITE);
         
         JLabel lblTitulo = new JLabel(titulo, SwingConstants.LEFT);
-        lblTitulo.setFont(Funciones.Letra.normal(28));
+        lblTitulo.setFont(Funciones.Letra.negrita(28));
         lblTitulo.setForeground(Color.BLACK);
         
         JLabel lblBarrio = new JLabel(barrio, SwingConstants.RIGHT);
-        lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        lblTitulo.setForeground(Color.BLACK);
+        lblBarrio.setFont(Funciones.Letra.normal(16));
+        lblBarrio.setForeground(Color.BLACK);
         
         cabecera.add(lblTitulo, BorderLayout.WEST);
         cabecera.add(lblBarrio, BorderLayout.EAST);
         
         raiz.add(cabecera, BorderLayout.NORTH);
-        
-        JLabel lineaFina = new JLabel();
-        lineaFina.setOpaque(true);
-        lineaFina.setBackground(Funciones.Colores.Gris);
-        lineaFina.setPreferredSize(new Dimension(820, 1));
-        raiz.add(lineaFina, BorderLayout.AFTER_LAST_LINE);
         
         JPanel pcentro = new JPanel(new GridLayout());
         pcentro.setBackground(Color.WHITE);
@@ -86,6 +83,43 @@ public class VentanaDetalleApartamento extends JDialog {
         
         pDetalles.add(crearLabel("Rating:", Funciones.Letra.normal(16)));
         pDetalles.add(crearBold(String.format("%.1f / 5   %s", rating, Funciones.estrellas(rating)), Funciones.Letra.negrita(16)));
+        
+        margen.gridx = 0;
+        margen.gridy = 0;
+        pcentro.add(pDetalles, margen);
+        
+        JPanel pPrecio = new JPanel();
+        pPrecio.setLayout(new BoxLayout(pPrecio, BoxLayout.Y_AXIS));
+        pPrecio.setBackground(new Color(247, 247, 247));
+        pPrecio.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(new Color(210, 210, 210)),new EmptyBorder(25, 25, 25, 25)));
+    
+        JLabel lblDesde = new JLabel("Precio por noche", SwingConstants.CENTER);
+        lblDesde.setFont(Funciones.Letra.normal(14));
+        lblDesde.setForeground(Funciones.Colores.Gris);
+        
+        JLabel lblPrecio = new JLabel(String.format("%.2f €", precioNoche), SwingConstants.CENTER);
+        lblPrecio.setFont(Funciones.Letra.negrita(30));
+        lblPrecio.setForeground(Color.BLACK);
+        
+        pPrecio.add(lblDesde);
+        pPrecio.add(Box.createVerticalStrut(10));
+        pPrecio.add(lblPrecio);
+        
+        JPanel pSur = new JPanel();
+        pSur.setBackground(Color.WHITE);
+        pSur.setPreferredSize(new Dimension(0, 60));
+        pSur.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(20, 0, 0, 0),BorderFactory.createMatteBorder(1, 0, 0, 0, new Color(220,220,220))));
+
+        JButton btnCerrar = new JButton("Cerrar");
+        btnCerrar.setFont(Funciones.Letra.negrita(14));
+        btnCerrar.setBackground(Color.WHITE);
+        btnCerrar.setForeground(Color.BLACK);
+        btnCerrar.setFocusPainted(false);
+        btnCerrar.setBorder(BorderFactory.createLineBorder(Funciones.Colores.Gris));
+        btnCerrar.addActionListener(e -> dispose());
+        
+        pSur.add(btnCerrar);
+        raiz.add(pSur, BorderLayout.SOUTH);        
     }
     
     private JLabel crearLabel(String texto, Font f) {

@@ -33,7 +33,15 @@ public class Funciones {
 		public static String estrellas(double rating) {
 		    int r = (int) Math.round(rating);
 		    StringBuilder sb = new StringBuilder();
-		    for (int i = 0; i < 5; i++) sb.append(i < r ? "★" : "☆");
+		    final String ESTRELLA_LLENA  = "*";
+		    final String ESTRELLA_VACIA  = "."; 
+		    for (int i = 0; i < 5; i++) {
+		        if (i < r) {
+		            sb.append(ESTRELLA_LLENA);
+		        } else {
+		            sb.append(ESTRELLA_VACIA);
+		        }
+		    }
 		    return sb.toString();
 		}
 
