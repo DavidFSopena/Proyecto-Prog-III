@@ -12,6 +12,22 @@ public class Funciones {
 		public class Colores {
 			public static final Color Turquesa = new Color(96, 198, 194);
 			public static final Color Coral = new Color(255,102,102);
+			public static final Color Gris = new Color(230, 230, 230);
+		}
+		
+		public static class Letra {
+
+		    public static Font normal(int size) {
+		        return new Font("Segoe UI", Font.PLAIN, size);
+		    }
+
+		    public static Font negrita(int size) {
+		        return new Font("Segoe UI", Font.BOLD, size);
+		    }
+
+		    public static Font inclinada(int size) {
+		        return new Font("Segoe UI", Font.ITALIC, size);
+		    }
 		}
 		
 		public static void botonBonito(JButton boton, Color Coral) {

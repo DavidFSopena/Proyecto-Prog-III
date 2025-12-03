@@ -1,81 +1,81 @@
 id;titulo;barrio;capacidad;precioNoche;rating 
-A1;Estudio frente al Guggen;Abando;2;95.0;4.6
-A2;Ático con terraza;Indautxu;4;140.0;4.8
-A3;Habitación Casco Viejo;Casco Viejo;2;60.0;4.3
-A4;Loft industrial;Deusto;3;85.0;4.5
-A5;Apartamento moderno;Santutxu;2;75.0;4.2
-A6;Habitación económica;Rekalde;1;50.0;4.0
+A1;Estudio frente al Guggen;Abando;2;95.0;4.4
+A2;Ático con terraza;Indautxu;4;140.0;4.7
+A3;Habitación Casco Viejo;Casco Viejo;2;60.0;3.6
+A4;Loft industrial;Deusto;3;85.0;4.1
+A5;Apartamento moderno;Santutxu;2;75.0;3.4
+A6;Habitación económica;Rekalde;1;50.0;2.9
 A7;Dúplex con vistas al Nervión;Uribarri;5;160.0;4.9
-A8;Piso luminoso;Begoña;3;90.0;4.4
-A9;Estudio minimalista con balcón;Abando;2;100.0;4.7
-A10;Ático con jacuzzi privado;Indautxu;4;175.0;4.9
-A11;Habitación con encanto en el Casco;Casco Viejo;2;65.0;4.5
-A12;Loft moderno junto a la ría;Deusto;3;88.0;4.6
-A13;Apartamento acogedor;Santutxu;2;72.0;4.1
-A14;Habitación privada con baño;Rekalde;1;55.0;4.3
+A8;Piso luminoso;Begoña;3;90.0;4.0
+A9;Estudio minimalista con balcón;Abando;2;100.0;4.5
+A10;Ático con jacuzzi privado;Indautxu;4;175.0;4.8
+A11;Habitación con encanto en el Casco;Casco Viejo;2;65.0;4.2
+A12;Loft moderno junto a la ría;Deusto;3;88.0;4.3
+A13;Apartamento acogedor;Santutxu;2;72.0;3.7
+A14;Habitación privada con baño;Rekalde;1;55.0;3.1
 A15;Dúplex con terraza y vistas;Uribarri;4;155.0;4.8
-A16;Piso familiar junto a Basílica;Begoña;5;120.0;4.7
-A17;Apartamento elegante;Abando;3;130.0;4.8
+A16;Piso familiar junto a Basílica;Begoña;5;120.0;4.4
+A17;Apartamento elegante;Abando;3;130.0;4.7
 A18;Ático amplio y céntrico;Indautxu;5;160.0;4.6
-A19;Habitación bohemia;Casco Viejo;1;58.0;4.2
-A20;Loft con decoración industrial;Deusto;2;90.0;4.5
-A21;Apartamento tranquilo;Santutxu;3;70.0;4.0
-A22;Habitación económica reformada;Rekalde;1;47.0;3.9
-A23;Dúplex moderno en Uribarri;Uribarri;4;150.0;4.7
-A24;Piso con balcón a la ría;Begoña;3;92.0;4.4
-A25;Suite de lujo cerca del Guggenheim;Abando;2;200.0;5.0
+A19;Habitación bohemia;Casco Viejo;1;58.0;3.3
+A20;Loft con decoración industrial;Deusto;2;90.0;4.0
+A21;Apartamento tranquilo;Santutxu;3;70.0;3.5
+A22;Habitación económica reformada;Rekalde;1;47.0;2.8
+A23;Dúplex moderno en Uribarri;Uribarri;4;150.0;4.6
+A24;Piso con balcón a la ría;Begoña;3;92.0;4.1
+A25;Suite de lujo cerca del Guggenheim;Abando;2;200.0;4.9
 A26;Ático con vistas panorámicas;Indautxu;4;185.0;4.9
-A27;Habitación céntrica en el Casco;Casco Viejo;2;62.0;4.1
-A28;Loft colorido y artístico;Deusto;2;95.0;4.5
-A29;Apartamento con garaje;Santutxu;3;80.0;4.2
-A30;Habitación luminosa;Rekalde;1;52.0;4.0
-A31;Dúplex moderno con despacho;Uribarri;4;145.0;4.6
-A32;Piso con vistas al monte Artxanda;Begoña;3;88.0;4.3
-A33;Apartamento executive;Abando;2;125.0;4.7
-A34;Ático recién reformado;Indautxu;3;135.0;4.6
-A35;Habitación vintage;Casco Viejo;2;59.0;4.2
-A36;Loft en zona universitaria;Deusto;2;85.0;4.3
-A37;Apartamento cálido y familiar;Santutxu;4;78.0;4.1
-A38;Habitación sencilla y limpia;Rekalde;1;45.0;3.8
+A27;Habitación céntrica en el Casco;Casco Viejo;2;62.0;3.4
+A28;Loft colorido y artístico;Deusto;2;95.0;4.2
+A29;Apartamento con garaje;Santutxu;3;80.0;3.8
+A30;Habitación luminosa;Rekalde;1;52.0;3.0
+A31;Dúplex moderno con despacho;Uribarri;4;145.0;4.5
+A32;Piso con vistas al monte Artxanda;Begoña;3;88.0;3.9
+A33;Apartamento executive;Abando;2;125.0;4.6
+A34;Ático recién reformado;Indautxu;3;135.0;4.3
+A35;Habitación vintage;Casco Viejo;2;59.0;3.6
+A36;Loft en zona universitaria;Deusto;2;85.0;3.8
+A37;Apartamento cálido y familiar;Santutxu;4;78.0;3.4
+A38;Habitación sencilla y limpia;Rekalde;1;45.0;2.7
 A39;Dúplex con chimenea;Uribarri;5;170.0;4.9
-A40;Piso moderno con cocina equipada;Begoña;3;95.0;4.5
+A40;Piso moderno con cocina equipada;Begoña;3;95.0;4.3
 A41;Apartamento de diseño;Abando;2;150.0;4.8
-A42;Ático con patio interior;Indautxu;4;155.0;4.7
-A43;Habitación romántica;Casco Viejo;2;66.0;4.4
-A44;Loft tranquilo junto al campus;Deusto;2;87.0;4.5
-A45;Apartamento con wifi rápido;Santutxu;3;74.0;4.1
-A46;Habitación funcional;Rekalde;1;49.0;4.0
+A42;Ático con patio interior;Indautxu;4;155.0;4.6
+A43;Habitación romántica;Casco Viejo;2;66.0;4.0
+A44;Loft tranquilo junto al campus;Deusto;2;87.0;4.2
+A45;Apartamento con wifi rápido;Santutxu;3;74.0;3.5
+A46;Habitación funcional;Rekalde;1;49.0;3.2
 A47;Dúplex amplio con parking;Uribarri;4;148.0;4.6
-A48;Piso con terraza privada;Begoña;3;98.0;4.6
-A49;Apartamento moderno frente a la ría;Abando;3;140.0;4.9
-A50;Ático en zona comercial;Indautxu;4;160.0;4.7
-A51;Habitación económica y céntrica;Casco Viejo;1;55.0;4.1
-A52;Loft con luz natural;Deusto;3;92.0;4.5
-A53;Apartamento con balcón;Santutxu;2;76.0;4.2
-A54;Habitación acogedora;Rekalde;1;53.0;4.0
-A55;Dúplex reformado;Uribarri;5;165.0;4.8
-A56;Piso elegante y silencioso;Begoña;3;94.0;4.6
-A57;Apartamento boutique;Abando;2;130.0;4.9
-A58;Ático con decoración moderna;Indautxu;4;150.0;4.8
-A59;Habitación amplia con baño privado;Casco Viejo;2;68.0;4.5
-A60;Loft céntrico y funcional;Deusto;2;82.0;4.3
-A61;Apartamento ideal para familias;Santutxu;4;90.0;4.4
-A62;Habitación compartida;Rekalde;2;40.0;3.7
-A63;Dúplex en zona tranquila;Uribarri;4;142.0;4.5
-A64;Piso reformado con ascensor;Begoña;3;87.0;4.4
-A65;Apartamento de lujo;Abando;2;180.0;5.0
-A66;Ático con gran terraza;Indautxu;4;175.0;4.9
-A67;Habitación sencilla;Casco Viejo;1;50.0;4.0
-A68;Loft artístico;Deusto;2;89.0;4.4
-A69;Apartamento tranquilo y luminoso;Santutxu;3;73.0;4.1
-A70;Habitación con escritorio;Rekalde;1;48.0;3.9
-A71;Dúplex familiar;Uribarri;5;155.0;4.7
-A72;Piso amplio en buena zona;Begoña;4;100.0;4.5
-A73;Apartamento premium;Abando;3;160.0;4.9
-A74;Ático céntrico con vistas;Indautxu;4;170.0;4.8
-A75;Habitación céntrica con balcón;Casco Viejo;2;63.0;4.3
-A76;Loft moderno y cómodo;Deusto;2;84.0;4.4
-A77;Apartamento práctico;Santutxu;3;71.0;4.1
-A78;Habitación individual sencilla;Rekalde;1;46.0;3.8
-A79;Dúplex reformado con terraza;Uribarri;5;168.0;4.8
-A80;Piso con buena comunicación;Begoña;3;91.0;4.5
+A48;Piso con terraza privada;Begoña;3;98.0;4.4
+A49;Apartamento moderno frente a la ría;Abando;3;140.0;4.8
+A50;Ático en zona comercial;Indautxu;4;160.0;4.5
+A51;Habitación económica y céntrica;Casco Viejo;1;55.0;3.3
+A52;Loft con luz natural;Deusto;3;92.0;4.1
+A53;Apartamento con balcón;Santutxu;2;76.0;3.7
+A54;Habitación acogedora;Rekalde;1;53.0;3.2
+A55;Dúplex reformado;Uribarri;5;165.0;4.7
+A56;Piso elegante y silencioso;Begoña;3;94.0;4.4
+A57;Apartamento boutique;Abando;2;130.0;4.7
+A58;Ático con decoración moderna;Indautxu;4;150.0;4.6
+A59;Habitación amplia con baño privado;Casco Viejo;2;68.0;4.0
+A60;Loft céntrico y funcional;Deusto;2;82.0;3.8
+A61;Apartamento ideal para familias;Santutxu;4;90.0;3.9
+A62;Habitación compartida;Rekalde;2;40.0;2.5
+A63;Dúplex en zona tranquila;Uribarri;4;142.0;4.3
+A64;Piso reformado con ascensor;Begoña;3;87.0;4.1
+A65;Apartamento de lujo;Abando;2;180.0;4.9
+A66;Ático con gran terraza;Indautxu;4;175.0;4.8
+A67;Habitación sencilla;Casco Viejo;1;50.0;3.1
+A68;Loft artístico;Deusto;2;89.0;4.0
+A69;Apartamento tranquilo y luminoso;Santutxu;3;73.0;3.6
+A70;Habitación con escritorio;Rekalde;1;48.0;2.9
+A71;Dúplex familiar;Uribarri;5;155.0;4.5
+A72;Piso amplio en buena zona;Begoña;4;100.0;4.3
+A73;Apartamento premium;Abando;3;160.0;4.8
+A74;Ático céntrico con vistas;Indautxu;4;170.0;4.7
+A75;Habitación céntrica con balcón;Casco Viejo;2;63.0;3.9
+A76;Loft moderno y cómodo;Deusto;2;84.0;4.1
+A77;Apartamento práctico;Santutxu;3;71.0;3.5
+A78;Habitación individual sencilla;Rekalde;1;46.0;2.8
+A79;Dúplex reformado con terraza;Uribarri;5;168.0;4.7
+A80;Piso con buena comunicación;Begoña;3;91.0;4.2

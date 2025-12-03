@@ -5,6 +5,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Window;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -19,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 public class PanelGeneral extends JPanel {
@@ -103,7 +107,34 @@ public class PanelGeneral extends JPanel {
 		tabla.setRowHeight(30);
 		
 		cargarTopDesdeCSV("resources/data/alojamientos.csv", 20);
+		
+		tabla.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2 && tabla.getSelectedRow() != -1) {
+
+                    int filaVista = tabla.getSelectedRow();
+                    int filaModelo = tabla.convertRowIndexToModel(filaVista);
+
+                    String id       = tblModelo.getValueAt(filaModelo, 0).toString();
+                    String titulo   = tblModelo.getValueAt(filaModelo, 1).toString();
+                    String barrio   = tblModelo.getValueAt(filaModelo, 2).toString();
+                    int capacidad   = Integer.parseInt(tblModelo.getValueAt(filaModelo, 3).toString());
+                    double precio   = Double.parseDouble(tblModelo.getValueAt(filaModelo, 4).toString());
+                    double rating   = Double.parseDouble(tblModelo.getValueAt(filaModelo, 5).toString());
+
+                    Window padre = SwingUtilities.getWindowAncestor(PanelGeneral.this);
+
+                    VentanaDetalleApartamento v = new VentanaDetalleApartamento( padre,
+                            id, titulo, barrio, capacidad, precio, rating);
+                    
+                    v.setVisible(true);
+                }
+            }
+        });
 	}
+	
+	
 	
 	private void cargarTopDesdeCSV(String ruta, int cuantos) {
 		List<String[]> filas = new ArrayList<>();
