@@ -59,18 +59,16 @@ public class PanelBuscar extends JPanel {
 			cbAdultos.addItem(i);
 			cbNinos.addItem(i);
 		}
-		Font tipoLetra = new Font("Segoe UI", Font.BOLD, 22);
-
 		JLabel lblBarrio = new JLabel("BARRIO:");
-		lblBarrio.setFont(tipoLetra);
+		lblBarrio.setFont(Funciones.Letra.negrita(20));
 		JLabel lblAdultos = new JLabel("ADULTOS:");
-		lblAdultos.setFont(tipoLetra);
+		lblAdultos.setFont(Funciones.Letra.negrita(20));
 		JLabel lblNinos = new JLabel("NIÑOS:");
-		lblNinos.setFont(tipoLetra);
+		lblNinos.setFont(Funciones.Letra.negrita(20));
 
-		cbBarrio.setFont(tipoLetra);
-		cbAdultos.setFont(tipoLetra);
-		cbNinos.setFont(tipoLetra);
+		cbBarrio.setFont(Funciones.Letra.negrita(20));
+		cbAdultos.setFont(Funciones.Letra.negrita(20));
+		cbNinos.setFont(Funciones.Letra.negrita(20));
 
 		cbBarrio.setPreferredSize(new Dimension(260, 36));
 		cbAdultos.setPreferredSize(new Dimension(260, 36));
