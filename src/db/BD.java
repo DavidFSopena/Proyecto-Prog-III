@@ -21,6 +21,9 @@ public class BD {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			con = DriverManager.getConnection("jdbc:sqlite:" + nombreBD);
+			
+			crearTablaUsuario();
+	        crearTablaAlquiler();
 
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
