@@ -139,6 +139,7 @@ public class Ventana2_1 extends JFrame {
 			String contrasena = new String(txtContrasena.getPassword());
 			
 			if(BD.validarLogin(email, contrasena)) {
+				Sesion.setUsuarioActual(BD.usuarioLogeado);
 				Ventana2_1.this.setVisible(false);
 				new Ventana3();
 			} else {
