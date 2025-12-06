@@ -45,17 +45,16 @@ public class BD {
 				+ "email TEXT unique,"
 				+ "nombre TEXT,"
 				+ "contrasenia TEXT)";
-		try (Statement st = con.createStatement();){
+		try (Statement st = con.createStatement()) {
 			st.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public static boolean registrarUsuario(Usuario u, String contrasenia) {
 		String sql = "INSERT INTO Usuario (usuario, email, nombre, contrasenia) VALUES (?,?,?,?)";
-		try(PreparedStatement ps = con.prepareStatement(sql);) {
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, u.getUsuario());
 			ps.setString(2, u.getEmail());
 			ps.setString(3, u.getNombre());
@@ -69,20 +68,30 @@ public class BD {
 	}
 	
 	public static boolean validarLogin(String usuarioEmail, String contrasenia) {
-		String sql = "SELECT contrasenia FROM Usuario WHERE Usuario = ? or Email = ?";
+		String sql = "SELECT usuario, email, nombre, contrasenia FROM Usuario WHERE usuario = ? OR email = ?";
 		
-		try(PreparedStatement ps = con.prepareStatement(sql);) {
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, usuarioEmail);
 			ps.setString(2, usuarioEmail);
 			ResultSet rs = ps.executeQuery();
 			
 			if (rs.next()) {
-				String passBD = rs.getString(1);
-				return passBD.equals(contrasenia);
+				String contraseniaBD = rs.getString("contrasenia");
+				
+				if (contraseniaBD.equals(contrasenia)) {
+					usuarioLogeado = new Usuario(
+							rs.getString("usuario"),
+							rs.getString("email"),
+							rs.getString("nombre")
+					);
+					rs.close();
+					return true;
+				}
 			}
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
 		return false;
 	}
@@ -124,7 +133,7 @@ public class BD {
 	            String email = rs.getString("email");
 	            String nombre = rs.getString("nombre");
 	            rs.close();
-	            return new Usuario(usuario, email, nombre, null);
+	            return new Usuario(usuario, email, nombre);
 	        }
 	        rs.close();
 	    } catch (SQLException e) {
@@ -134,7 +143,7 @@ public class BD {
 	}
 
 	public static boolean actualizarUsuario(String usuarioOriginal, String nuevoNombre, String nuevoEmail) {
-	    String sql = "UPDATE Usuario SET nombre = ?, email = ? WHERE usuario = ?"; // <--- corregido Usuario
+	    String sql = "UPDATE Usuario SET nombre = ?, email = ? WHERE usuario = ?";
 	    try (PreparedStatement ps = con.prepareStatement(sql)) {
 	        ps.setString(1, nuevoNombre);
 	        ps.setString(2, nuevoEmail);
@@ -142,9 +151,8 @@ public class BD {
 
 	        int filas = ps.executeUpdate();
 
-	        // Si ha actualizado en la BD, también actualizamos el usuario guardado en memoria
 	        if (filas > 0) {
-	            usuarioLogeado = new Usuario(usuarioOriginal, nuevoEmail, nuevoNombre, null);
+	            usuarioLogeado = new Usuario(usuarioOriginal, nuevoEmail, nuevoNombre);
 	            return true;
 	        }
 	        return false;
@@ -154,5 +162,4 @@ public class BD {
 	        return false;
 	    }
 	}
-
-	}
+}
