@@ -118,7 +118,7 @@ public class Ventana2_2 extends JFrame {
 			String usuario = txtUsuario.getText();
 			char[] c1 = contrasenia1.getPassword();
 			char[] c2 = contrasenia2.getPassword();
-			Usuario u = new Usuario(usuario,mail,usuario,c1);
+			Usuario u = new Usuario(usuario,mail,usuario);
 
 			if (mail.isEmpty()) {
 				mensaje("Debes introducir un email.");

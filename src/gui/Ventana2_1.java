@@ -21,6 +21,7 @@ import java.awt.font.TextAttribute;
 import java.util.Collections;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -34,7 +35,7 @@ import javax.swing.border.LineBorder;
 import db.BD;
 
 public class Ventana2_1 extends JFrame {
-	private JPanel pSur, pCentro, pCentroConLogo, pCentroRegistrarse, pNorte;
+	private JPanel pSur, pCentro, pCentroConLogo, pNorte, pFormulario;
 	private JLabel lblTitulo, lblNombre, lblContrasena, lblRegistrarse;
 	private JButton btnIniciarSesion, btnRegistrarse, btnVolver;
 	private JTextField txtEmail;
@@ -52,15 +53,16 @@ public class Ventana2_1 extends JFrame {
 		pNorte = new JPanel();
 		pSur = new JPanel();
 		pCentro = new JPanel();
-		pCentro.setLayout(new GridLayout(2,2,10,10));
-		pCentro.setBorder(BorderFactory.createEmptyBorder(0, 240, 240, 240));
+		pCentro.setLayout(new GridLayout(3,1,10,10));
+		pCentro.setBorder(BorderFactory.createEmptyBorder(0, 240, 0, 240));
 		pCentro.setBackground(Funciones.Colores.Turquesa);
 		pCentroConLogo = new JPanel();
 		pCentroConLogo.setBackground(Funciones.Colores.Turquesa);
 		pCentroConLogo.setLayout(new BorderLayout());
 		setLayout(new BorderLayout(0,20)); 
-		pCentroRegistrarse = new JPanel();
-		pCentroRegistrarse.setBackground(Funciones.Colores.Turquesa);
+		pFormulario = new JPanel();
+		pFormulario.setLayout(new GridLayout(2, 2, 10, 10));
+		pFormulario.setBackground(Funciones.Colores.Turquesa);
 
 		
 		//Creación de componentes
@@ -85,6 +87,7 @@ public class Ventana2_1 extends JFrame {
 		JLabel lblLogo = new JLabel(new ImageIcon(imagenEscalada));
 		lblLogo.setAlignmentX(Component.CENTER_ALIGNMENT);
 		lblLogo.setBorder(BorderFactory.createEmptyBorder(50, 0, 0, 0));
+
 		
 		lblNombre = new JLabel("USUARIO/EMAIL: ", JLabel.CENTER);
 		lblNombre.setFont(Funciones.Letra.negrita(20));
@@ -96,13 +99,18 @@ public class Ventana2_1 extends JFrame {
 		txtContrasena = new JPasswordField(1);
 		txtContrasena.setFont(Funciones.Letra.normal(20));
 		txtContrasena.setHorizontalAlignment(JTextField.CENTER);
-		lblRegistrarse = new JLabel("NO TIENES CUENTA? REGISTRATE HOY", JLabel.CENTER);
+		lblRegistrarse = new JLabel("NO TIENES CUENTA? ÚNETE A NOSOTROS", JLabel.CENTER);
 		lblRegistrarse.setFont(Funciones.Letra.negrita(20));
 		lblRegistrarse.setForeground(Funciones.Colores.Coral);
 		Font f = lblRegistrarse.getFont().deriveFont(
 			    Collections.singletonMap(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON)
 			);
 		lblRegistrarse.setFont(f);
+		JPanel pFilaRegistro = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		pFilaRegistro.setBackground(Funciones.Colores.Turquesa);
+		pFilaRegistro.add(lblRegistrarse);
+		pFilaRegistro.setBorder(BorderFactory.createEmptyBorder(56, 0, 0, 0));
+
 		
 		
 		//Añadir paneles a ventana
@@ -113,13 +121,14 @@ public class Ventana2_1 extends JFrame {
 		//Añadir componentes a los paneles
 		pNorte.add(lblTitulo);
 		pCentroConLogo.add(lblLogo, BorderLayout.NORTH);
-		pCentro.add(lblNombre);
-		pCentro.add(txtEmail);
-		pCentro.add(lblContrasena);
-		pCentro.add(txtContrasena);
-		pCentroRegistrarse.add(lblRegistrarse);
+		pFormulario.add(lblNombre);
+		pFormulario.add(txtEmail);
+		pFormulario.add(lblContrasena);
+		pFormulario.add(txtContrasena);
+		pCentro.add(pFormulario);
+		pCentro.add(lblRegistrarse);
 		pCentroConLogo.add(pCentro, BorderLayout.CENTER);
-		pCentroConLogo.add(pCentroRegistrarse, BorderLayout.SOUTH);
+		pCentroConLogo.add(pFilaRegistro, BorderLayout.SOUTH);
 		pSur.add(btnIniciarSesion);
 		pSur.add(btnRegistrarse);
 		pSur.add(btnVolver);

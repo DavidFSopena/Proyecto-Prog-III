@@ -5,11 +5,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -18,13 +21,15 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import db.BD;
 import domain.Alojamiento;
 import domain.Barrio;
 
 public class PanelPerfil extends JPanel {
-	private JPanel pNorte, pSur, pOeste, pEste, pCentro;
+	private JPanel pNorte, pSur, pOeste, pEste, pCentro, pFilaNombreEmail;
 	private JLabel lblNombre, lblEmail, lblTituloTabla;
 	private JTable tabla;
+	private JButton btnEditarPerfil;
 	private DefaultTableModel tblModelo;
 	
 	public PanelPerfil() {
@@ -43,18 +48,22 @@ public class PanelPerfil extends JPanel {
 		pEste.setBackground(Funciones.Colores.Turquesa);
 		pCentro = new JPanel(new BorderLayout());
 		pCentro.setBackground(Funciones.Colores.Turquesa);
+		pFilaNombreEmail = new JPanel(new BorderLayout());
+		pFilaNombreEmail.setBackground(Funciones.Colores.Turquesa);
+		
 		
 		//Creamos componentes
-		lblNombre = new JLabel("Nombre: nombre de prueba", JLabel.LEFT);
+		lblNombre = new JLabel("Nombre: "+BD.usuarioLogeado.getNombre(), JLabel.LEFT);
 		lblNombre.setFont(Funciones.Letra.negrita(25));
 		lblNombre.setForeground(Color.WHITE);
-		lblEmail = new JLabel("Email: emaildeprueba@gmail.com", JLabel.LEFT);
+		lblEmail = new JLabel("Email: "+BD.usuarioLogeado.getEmail(), JLabel.RIGHT);
 		lblEmail.setFont(Funciones.Letra.negrita(25));
 		lblEmail.setForeground(Color.WHITE);
 		lblTituloTabla = new JLabel("Tus alojamientos:", JLabel.CENTER);
 		lblTituloTabla.setFont(Funciones.Letra.negrita(25));
 		lblTituloTabla.setForeground(Color.WHITE);
 		lblTituloTabla.setBounds(630, 100, 500, 40);
+		btnEditarPerfil = new JButton("Editar perfil");
 		
 		String[] columnas = {"ID", "Título", "Barrio", "Capacidad", "Precio/Noche", "Rating"};
 		tblModelo = new DefaultTableModel(columnas, 0) {
@@ -88,11 +97,35 @@ public class PanelPerfil extends JPanel {
 		add(pCentro, BorderLayout.WEST);
 				
 		//Añadimos componenets a panel
-		pNorte.add(lblNombre);
-		pNorte.add(lblEmail);
+		pFilaNombreEmail.add(lblNombre, BorderLayout.WEST);
+		pFilaNombreEmail.add(lblEmail, BorderLayout.EAST);
+		pNorte.add(pFilaNombreEmail);
 		pNorte.add(lblTituloTabla);
+		pSur.add(btnEditarPerfil);
 		
 		pCentro.add(scroll);
+		
+		//Listeners
+		btnEditarPerfil.addActionListener( (e) -> {
+			String nuevoNombre = JOptionPane.showInputDialog(this,"Nuevo nombre:",BD.usuarioLogeado.getNombre());
+			if (nuevoNombre == null || nuevoNombre.isEmpty()) {
+				return;
+			}
+			String nuevoEmail = JOptionPane.showInputDialog(this,"Nuevo email:",BD.usuarioLogeado.getEmail());
+			if (nuevoEmail == null || nuevoEmail.isEmpty()) {
+				return;
+			}
+			
+			boolean actualizacionUsuarioCorrecta = BD.actualizarUsuario(BD.usuarioLogeado.getUsuario(), nuevoNombre, nuevoEmail);
+			
+			if(actualizacionUsuarioCorrecta) {
+				lblNombre.setText("Nombre: "+BD.usuarioLogeado.getNombre());
+				lblEmail.setText("Nombre: "+BD.usuarioLogeado.getEmail());
+				JOptionPane.showMessageDialog(this, "Datos actualizados correctamente");
+			} else {
+				JOptionPane.showMessageDialog(this, "Error actualizados correctamente");
+			}
+		});
 		
 		cargarAlojamientosDesdeCSV(new File("resources/data/alojamientos.csv"));
 	}
