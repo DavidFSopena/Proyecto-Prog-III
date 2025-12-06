@@ -13,6 +13,8 @@ public class BD {
 	
 	static Connection con;
 	
+	public static Usuario usuarioLogeado;
+	
 	public static void initBD(String nombreBD)  {
 		con = null;
 
@@ -131,5 +133,26 @@ public class BD {
 	    return null;
 	}
 
+	public static boolean actualizarUsuario(String usuarioOriginal, String nuevoNombre, String nuevoEmail) {
+	    String sql = "UPDATE Usuario SET nombre = ?, email = ? WHERE usuario = ?"; // <--- corregido Usuario
+	    try (PreparedStatement ps = con.prepareStatement(sql)) {
+	        ps.setString(1, nuevoNombre);
+	        ps.setString(2, nuevoEmail);
+	        ps.setString(3, usuarioOriginal);
+
+	        int filas = ps.executeUpdate();
+
+	        // Si ha actualizado en la BD, también actualizamos el usuario guardado en memoria
+	        if (filas > 0) {
+	            usuarioLogeado = new Usuario(usuarioOriginal, nuevoEmail, nuevoNombre, null);
+	            return true;
+	        }
+	        return false;
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
 
 	}
