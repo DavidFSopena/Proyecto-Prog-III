@@ -16,6 +16,11 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import javax.swing.SwingUtilities;
+import java.awt.Window;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 
 public class PanelBuscar extends JPanel {
 	private JPanel pCentro, pBuscar, pResultados;
@@ -125,6 +130,11 @@ public class PanelBuscar extends JPanel {
 
 		String[] titulos = { "ID", "Título", "Barrio", "Capacidad", "€/noche", "Rating" };
 		modeloTabla = new DefaultTableModel(titulos, 0) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean isCellEditable(int r, int c) {
 				return false;
@@ -141,6 +151,28 @@ public class PanelBuscar extends JPanel {
 		tabla.getTableHeader().setForeground(Funciones.Colores.Coral);
 		tabla.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 26));
 		tabla.setRowHeight(30);
+		
+		tabla.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        if (e.getClickCount() == 2 && tabla.getSelectedRow() != -1) {
+
+		            int filaVista = tabla.getSelectedRow();
+		            int filaModelo = tabla.convertRowIndexToModel(filaVista);
+
+		            String id = modeloTabla.getValueAt(filaModelo, 0).toString();
+		            String titulo = modeloTabla.getValueAt(filaModelo, 1).toString();
+		            String barrio = modeloTabla.getValueAt(filaModelo, 2).toString();
+		            int capacidad = Integer.parseInt(modeloTabla.getValueAt(filaModelo, 3).toString());
+		            double precio = Double.parseDouble(modeloTabla.getValueAt(filaModelo, 4).toString());
+		            double rating = Double.parseDouble(modeloTabla.getValueAt(filaModelo, 5).toString());
+
+		            Window parent = SwingUtilities.getWindowAncestor(PanelBuscar.this);
+
+		            new VentanaDetalleApartamento(parent, id, titulo, barrio, capacidad, precio, rating).setVisible(true);
+		        }
+		    }
+		});
 
 		cbOrden = new JComboBox<>(new String[] { "Precio menor-mayor", "Precio mayor-menor", "Rating menor-mayor",
 				"Rating mayor-menor" });

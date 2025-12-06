@@ -11,7 +11,6 @@ import domain.Usuario;
 
 public class BD {
 	
-	public static Usuario usuarioLogeado;
 	static Connection con;
 	
 	public static void initBD(String nombreBD)  {
@@ -68,7 +67,7 @@ public class BD {
 	}
 	
 	public static boolean validarLogin(String usuarioEmail, String contrasenia) {
-		String sql = "SELECT usuario,email,nombre,contrasenia FROM Usuario WHERE Usuario = ? or Email = ?";
+		String sql = "SELECT contrasenia FROM Usuario WHERE Usuario = ? or Email = ?";
 		
 		try(PreparedStatement ps = con.prepareStatement(sql);) {
 			ps.setString(1, usuarioEmail);
@@ -76,45 +75,61 @@ public class BD {
 			ResultSet rs = ps.executeQuery();
 			
 			if (rs.next()) {
-				String contraseniaBD = rs.getString("contrasenia");
-				
-				if (contraseniaBD.equals(contrasenia)) {
-					usuarioLogeado = new Usuario(
-							rs.getString("usuario"),
-							rs.getString("email"),
-							rs.getString("nombre")
-						);
-						return true;
-				}
+				String passBD = rs.getString(1);
+				return passBD.equals(contrasenia);
 			}
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
 		}
 		return false;
 	}
 	
-	public static boolean actualizarUsuario(String usuarioOriginal, String nuevoNombre, String nuevoEmail) {
-		String sql = "UPDATE usuario SET nombre = ?, email = ? WHERE usuario = ?";
-		try(PreparedStatement ps = con.prepareStatement(sql);) {
-			ps.setString(1, nuevoNombre);
-			ps.setString(2, nuevoEmail);
-			ps.setString(3, usuarioOriginal);
-			
-			int filas = ps.executeUpdate();
-			
-			if (filas>0) {
-				usuarioLogeado = new Usuario(usuarioOriginal, nuevoEmail, nuevoNombre);
-				return true;
-			}
-			return false;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
+	public static void crearTablaAlquiler() {
+	    String sql = "CREATE TABLE IF NOT EXISTS Alquiler ("
+	            + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+	            + "usuario TEXT,"
+	            + "idAlojamiento TEXT"
+	            + ")";
+	    try (Statement st = con.createStatement()) {
+	        st.executeUpdate(sql);
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
 	}
 	
+	public static boolean registrarAlquiler(String usuario, String idAlojamiento) {
+	    String sql = "INSERT INTO Alquiler (usuario, idAlojamiento) VALUES (?, ?)";
+	    try (PreparedStatement ps = con.prepareStatement(sql)) {
+	        ps.setString(1, usuario);
+	        ps.setString(2, idAlojamiento);
+	        ps.executeUpdate();
+	        return true;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
 	
-}
+	public static Usuario obtenerUsuarioPorUsuarioOEmail(String usuarioEmail) {
+	    String sql = "SELECT usuario, email, nombre FROM Usuario WHERE usuario = ? OR email = ?";
+	    try (PreparedStatement ps = con.prepareStatement(sql)) {
+	        ps.setString(1, usuarioEmail);
+	        ps.setString(2, usuarioEmail);
+	        ResultSet rs = ps.executeQuery();
+	        if (rs.next()) {
+	            String usuario = rs.getString("usuario");
+	            String email = rs.getString("email");
+	            String nombre = rs.getString("nombre");
+	            rs.close();
+	            return new Usuario(usuario, email, nombre, null);
+	        }
+	        rs.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return null;
+	}
+
+
+	}

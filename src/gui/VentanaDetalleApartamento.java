@@ -12,13 +12,19 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import db.BD;
+import domain.Sesion;
+import domain.Usuario;
+
 public class VentanaDetalleApartamento extends JDialog {
 
     private JLabel lblImagen;
+    private String idAlojamiento;
 
     public VentanaDetalleApartamento(
             Window padre,
@@ -30,6 +36,7 @@ public class VentanaDetalleApartamento extends JDialog {
             double rating) {
 
         super(padre, "Apartamento " + id, ModalityType.APPLICATION_MODAL);
+        this.idAlojamiento = id;
 
         setSize(1000, 600);
         setLocationRelativeTo(padre);
@@ -109,6 +116,14 @@ public class VentanaDetalleApartamento extends JDialog {
                 BorderFactory.createLineBorder(new Color(210, 210, 210)),
                 new EmptyBorder(25, 25, 25, 25)
         ));
+        
+        JButton btnAlquilar = new JButton("Alquilar");
+        btnAlquilar.setFont(Funciones.Letra.negrita(16));
+        btnAlquilar.setBackground(Color.BLACK);
+        btnAlquilar.setForeground(Color.WHITE);
+        btnAlquilar.setFocusPainted(false);
+        
+        btnAlquilar.addActionListener(e -> alquilarApartamento());
 
         JLabel lblDesde = new JLabel("Precio por noche", SwingConstants.CENTER);
         lblDesde.setFont(Funciones.Letra.normal(16));
@@ -121,6 +136,9 @@ public class VentanaDetalleApartamento extends JDialog {
         pPrecio.add(lblDesde);
         pPrecio.add(Box.createVerticalStrut(10));
         pPrecio.add(lblPrecio);
+        
+        pPrecio.add(Box.createVerticalStrut(15));
+        pPrecio.add(btnAlquilar);
 
         pDerecha.add(pPrecio);
         pDerecha.add(Box.createVerticalGlue());
@@ -144,6 +162,29 @@ public class VentanaDetalleApartamento extends JDialog {
         pSur.add(btnCerrar);
         panel.add(pSur, BorderLayout.SOUTH);
     }
+    
+    private void alquilarApartamento() {
+        if (!Sesion.hayUsuario()) {
+            JOptionPane.showMessageDialog(this,
+                    "Debes iniciar sesión para alquilar un apartamento.",
+                    "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Usuario u = Sesion.getUsuarioActual();
+        boolean ok = BD.registrarAlquiler(u.getUsuario(), idAlojamiento);
+
+        if (ok) {
+            JOptionPane.showMessageDialog(this,
+                    "Apartamento alquilado correctamente.",
+                    "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "No se ha podido registrar el alquiler.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     private JLabel crearLabel(String texto, Font f) {
         JLabel lbl = new JLabel(texto, SwingConstants.RIGHT);
@@ -158,4 +199,6 @@ public class VentanaDetalleApartamento extends JDialog {
         lbl.setForeground(Color.BLACK);
         return lbl;
     }
+    
+    
 }

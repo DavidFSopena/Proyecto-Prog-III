@@ -6,7 +6,7 @@ public class Usuario {
 	private String nombre;
 	private char[] contrasenia;
 
-	public Usuario(String usuario, String email, String nombre) {
+	public Usuario(String usuario, String email, String nombre, char[] contrasenia) {
 		this.usuario = usuario;
 		this.email = email;
 		this.nombre = nombre;
