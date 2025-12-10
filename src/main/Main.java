@@ -8,6 +8,8 @@ import gui.Ventana3;
 
 public class Main {
 	public static void main(String[] arg) {
+
+		BD.initBD("resources/db/bilbobnb.db");
 		
 		// Ventanas
 		new Ventana1();
@@ -16,8 +18,9 @@ public class Main {
 //		new Ventana3();
 		
 		// Base de datos
-		BD.initBD("resources/db/bilbobnb.db");
 		BD.crearTablaUsuario();
+		BD.crearTablaAlquiler();
+		BD.crearTablaAlojamiento();
 		
 		
 	}

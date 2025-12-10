@@ -65,29 +65,16 @@ public class PanelPerfil extends JPanel {
 		lblTituloTabla.setBounds(630, 100, 500, 40);
 		btnEditarPerfil = new JButton("Editar perfil");
 		
-		String[] columnas = {"ID", "Título", "Barrio", "Capacidad", "Precio/Noche", "Rating"};
-		tblModelo = new DefaultTableModel(columnas, 0) {
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		};
-		tabla = new JTable(tblModelo);
-		tabla.setGridColor(new Color(186, 184, 184));
+		List<Alojamiento> alojamientosCadaUsuario = BD.obtenerListaAlojamiento(BD.usuarioLogeado.getUsuario());
+		ModeloTablaMisAlojamientosUsuario modelo = new ModeloTablaMisAlojamientosUsuario(alojamientosCadaUsuario);
+		tabla = new JTable(modelo);
+		tabla.setGridColor(new Color(186,184,184));
 		tabla.setRowHeight(30);
-		
 		tabla.getTableHeader().setBackground(Color.WHITE);
-		tabla.setSelectionForeground(Funciones.Colores.Coral);
-		tabla.setOpaque(true);
-		tabla.setBackground(Color.WHITE);
-		tabla.getTableHeader().setFont(Funciones.Letra.negrita(26));
+		tabla.getTableHeader().setFont(Funciones.Letra.negrita(20));
 		tabla.getTableHeader().setForeground(Funciones.Colores.Coral);
+		tabla.repaint();
 		JScrollPane scroll = new JScrollPane(tabla);
-		scroll.setBorder(null);
-		scroll.setPreferredSize(new Dimension(1100,50));
-		scroll.setBackground(Funciones.Colores.Turquesa);
-		scroll.getViewport().setBackground(Funciones.Colores.Turquesa);
-		scroll.getViewport().setOpaque(false);
-		scroll.setOpaque(false);
 		
 		//Añadimos paneles a ventana
 		add(pNorte,BorderLayout.NORTH);
@@ -127,40 +114,5 @@ public class PanelPerfil extends JPanel {
 			}
 		});
 		
-		cargarAlojamientosDesdeCSV(new File("resources/data/alojamientos.csv"));
-	}
-	
-	private void cargarAlojamientosDesdeCSV(File csv) {
-		List<Alojamiento> lista = new ArrayList<>();
-		try (Scanner sc = new Scanner(csv)) {
-			sc.nextLine(); 
-			
-			int contador = 0;
-			
-			while (sc.hasNextLine() && contador < 2) { 
-				String linea = sc.nextLine();
-				String[] campo = linea.split(";");
-
-				Barrio barrio = null;
-				try {
-					barrio = Barrio.valueOf(campo[2].toUpperCase().replace(" ", "_"));
-				} catch (Exception e) {
-				}
-
-				Alojamiento a = new Alojamiento(campo[0], campo[1], barrio, Integer.parseInt(campo[3]),
-						Double.parseDouble(campo[4]), Double.parseDouble(campo[5]));
-				lista.add(a);
-				contador++;
-			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, "Error al cargar alojamientos: " + e.getMessage());
-		}
-
-		// Añadimos los alojamientos al modelo
-		for (Alojamiento a : lista) {
-			Object[] fila = { a.getId(), a.getTitulo(), a.getBarrio(), a.getCapacidad(), a.getPrecioNoche(),
-					a.getRating() };
-			tblModelo.addRow(fila);
-		}
 	}
 }

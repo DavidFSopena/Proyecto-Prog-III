@@ -6,7 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
+import domain.Alojamiento;
+import domain.Barrio;
 import domain.Usuario;
 
 public class BD {
@@ -24,6 +28,7 @@ public class BD {
 			
 			crearTablaUsuario();
 	        crearTablaAlquiler();
+	        crearTablaAlojamiento();
 
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -82,9 +87,11 @@ public class BD {
 				String contraseniaBD = rs.getString("contrasenia");
 				
 				if (contraseniaBD.equals(contrasenia)) {
+					String usuario = rs.getString("usuario");
+					String email = rs.getString("email");
 					usuarioLogeado = new Usuario(
-							rs.getString("usuario"),
-							rs.getString("email"),
+							usuario,
+							email,
 							rs.getString("nombre")
 					);
 					rs.close();
@@ -97,6 +104,23 @@ public class BD {
 			return false;
 		}
 		return false;
+	}
+	
+	public static void crearTablaAlojamiento() {
+		String sql = "CREATE TABLE IF NOT EXISTS Alojamiento("
+				+ "id TEXT PRIMARY KEY,"
+				+ "titulo TEXT,"
+				+ "barrio TEXT,"
+				+ "capacidad INTEGER,"
+				+ "precio REAL,"
+				+ "rating REAL,"
+				+ "usuario TEXT"
+				+ ")";
+		try(Statement st = con.createStatement();) {
+			st.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void crearTablaAlquiler() {
@@ -164,5 +188,35 @@ public class BD {
 	        e.printStackTrace();
 	        return false;
 	    }
+	}
+	
+	public static List<Alojamiento> obtenerListaAlojamiento(String usuario){
+		List<Alojamiento> lista = new ArrayList<>();
+		// "ID","Titulo","Barrio","Capacidad","Precio/Noche","Rating"
+		System.out.println("LOG usuario=" + BD.usuarioLogeado.getUsuario());
+		System.out.println("LOG email=" + BD.usuarioLogeado.getEmail());
+		String sql = "SELECT * FROM Alojamiento WHERE usuario = ?";
+		
+		
+		try(PreparedStatement ps = con.prepareStatement(sql);) {
+			ps.setString(1, usuario);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				Barrio barrio = Barrio.valueOf(rs.getString("barrio"));
+				Alojamiento a = new Alojamiento(
+						rs.getString("id"),
+						rs.getString("titulo"),
+						barrio,
+						rs.getInt("capacidad"),
+						rs.getDouble("precio"),
+						rs.getDouble("rating")
+						);
+				lista.add(a);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lista;
 	}
 }
