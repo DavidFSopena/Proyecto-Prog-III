@@ -7,6 +7,9 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +67,8 @@ public class PanelPerfil extends JPanel {
 		lblTituloTabla.setForeground(Color.WHITE);
 		lblTituloTabla.setBounds(630, 100, 500, 40);
 		btnEditarPerfil = new JButton("Editar perfil");
+		btnEditarPerfil.setForeground(Funciones.Colores.Coral);
+		btnEditarPerfil.setBackground(Color.WHITE);
 		
 		List<Alojamiento> alojamientosCadaUsuario = BD.obtenerListaAlojamiento(BD.usuarioLogeado.getUsuario());
 		ModeloTablaMisAlojamientosUsuario modelo = new ModeloTablaMisAlojamientosUsuario(alojamientosCadaUsuario);
@@ -81,7 +86,7 @@ public class PanelPerfil extends JPanel {
 		add(pSur,BorderLayout.SOUTH);
 		add(pOeste,BorderLayout.WEST);
 		add(pEste,BorderLayout.EAST);
-		add(pCentro, BorderLayout.WEST);
+		add(pCentro, BorderLayout.CENTER);
 				
 		//Añadimos componenets a panel
 		pFilaNombreEmail.add(lblNombre, BorderLayout.WEST);
@@ -114,5 +119,21 @@ public class PanelPerfil extends JPanel {
 			}
 		});
 		
+		btnEditarPerfil.addMouseListener(new MouseAdapter() {
+			
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnEditarPerfil.setBackground(Color.WHITE);
+				btnEditarPerfil.setForeground(Funciones.Colores.Coral);
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnEditarPerfil.setBackground(Funciones.Colores.Coral);
+				btnEditarPerfil.setForeground(Color.WHITE);
+			}
+			
+		});
 	}
 }
