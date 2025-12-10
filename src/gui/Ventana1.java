@@ -42,7 +42,7 @@ public class Ventana1 extends JFrame{
 			pCentro.setOpaque(false);
 			pCentro.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 			
-			ImageIcon ruta = new ImageIcon(getClass().getResource("/images/ImagenTrans1.png"));
+			ImageIcon ruta = new ImageIcon("resources/images/ImagenTrans1.png");
 			Image img = ruta.getImage().getScaledInstance(660, 550, Image.SCALE_SMOOTH);
 			ImageIcon icono = new ImageIcon(img);
 			lblImagen = new JLabel(icono);
