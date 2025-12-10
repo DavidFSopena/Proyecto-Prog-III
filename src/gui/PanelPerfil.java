@@ -136,4 +136,18 @@ public class PanelPerfil extends JPanel {
 			
 		});
 	}
+	
+	public void actualizarDatos() {
+		
+		lblNombre.setText("Nombre: "+BD.usuarioLogeado.getNombre());
+		lblEmail.setText("Email: "+BD.usuarioLogeado.getEmail());
+		
+		List<Alojamiento> alojamientosActualizados = BD.obtenerListaAlojamiento((BD.usuarioLogeado.getUsuario()));
+		
+		ModeloTablaMisAlojamientosUsuario modelo = new ModeloTablaMisAlojamientosUsuario(alojamientosActualizados);
+		
+		tabla.setModel(modelo);
+		tabla.repaint();
+		
+	}
 }
