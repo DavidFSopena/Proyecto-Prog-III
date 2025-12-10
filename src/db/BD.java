@@ -189,20 +189,23 @@ public class BD {
 	        return false;
 	    }
 	}
-	
+
 	public static List<Alojamiento> obtenerListaAlojamiento(String usuario){
 		List<Alojamiento> lista = new ArrayList<>();
-		// "ID","Titulo","Barrio","Capacidad","Precio/Noche","Rating"
-		System.out.println("LOG usuario=" + BD.usuarioLogeado.getUsuario());
-		System.out.println("LOG email=" + BD.usuarioLogeado.getEmail());
-		String sql = "SELECT * FROM Alojamiento WHERE usuario = ?";
-		
-		
-		try(PreparedStatement ps = con.prepareStatement(sql);) {
+
+		String sql =
+				"SELECT al.id, al.titulo, al.barrio, al.capacidad, al.precio, al.rating " +
+				"FROM Alquiler aq " +
+				"JOIN Alojamiento al ON aq.idAlojamiento = al.id " +
+				"WHERE aq.usuario = ?";
+
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, usuario);
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
-				Barrio barrio = Barrio.valueOf(rs.getString("barrio"));
+
+			while (rs.next()) {
+				Barrio barrio = Barrio.valueOf(rs.getString("barrio").toUpperCase());
+
 				Alojamiento a = new Alojamiento(
 						rs.getString("id"),
 						rs.getString("titulo"),
@@ -210,13 +213,16 @@ public class BD {
 						rs.getInt("capacidad"),
 						rs.getDouble("precio"),
 						rs.getDouble("rating")
-						);
+				);
+
 				lista.add(a);
 			}
 			rs.close();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
 		return lista;
 	}
 }

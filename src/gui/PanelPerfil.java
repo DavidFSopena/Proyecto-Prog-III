@@ -107,7 +107,7 @@ public class PanelPerfil extends JPanel {
 			
 			if(actualizacionUsuarioCorrecta) {
 				lblNombre.setText("Nombre: "+BD.usuarioLogeado.getNombre());
-				lblEmail.setText("Nombre: "+BD.usuarioLogeado.getEmail());
+				lblEmail.setText("Email: "+BD.usuarioLogeado.getEmail());
 				JOptionPane.showMessageDialog(this, "Datos actualizados correctamente");
 			} else {
 				JOptionPane.showMessageDialog(this, "Error actualizados correctamente");

@@ -41,3 +41,4 @@ public class Alojamiento {
 		return rating;
 	}
 }
+
