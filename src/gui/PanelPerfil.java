@@ -115,7 +115,7 @@ public class PanelPerfil extends JPanel {
 				lblEmail.setText("Email: "+BD.usuarioLogeado.getEmail());
 				JOptionPane.showMessageDialog(this, "Datos actualizados correctamente");
 			} else {
-				JOptionPane.showMessageDialog(this, "Error actualizados correctamente");
+				JOptionPane.showMessageDialog(this, "Error, el email ya está en uso", "Error al actualizar datos", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		
