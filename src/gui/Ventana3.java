@@ -208,6 +208,7 @@ public class Ventana3 extends JFrame{
 		});
 		
 		btnPerfil.addActionListener((e) -> {
+			((PanelPerfil) panelPerfil).actualizarDatos();
 			cardLayout.show(pCentro, "PERFIL");
 			seleccionarBoton(btnPerfil, Funciones.Colores.Coral);
 		});

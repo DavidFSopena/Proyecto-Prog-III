@@ -114,7 +114,7 @@ public class PanelPerfil extends JPanel {
 				lblEmail.setText("Email: "+BD.usuarioLogeado.getEmail());
 				JOptionPane.showMessageDialog(this, "Datos actualizados correctamente");
 			} else {
-				JOptionPane.showMessageDialog(this, "Error actualizados correctamente");
+				JOptionPane.showMessageDialog(this, "Error, el email ya está en uso", "Error al actualizar datos", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		
@@ -134,5 +134,19 @@ public class PanelPerfil extends JPanel {
 			}
 			
 		});
+	}
+	
+	public void actualizarDatos() {
+		
+		lblNombre.setText("Nombre: "+BD.usuarioLogeado.getNombre());
+		lblEmail.setText("Email: "+BD.usuarioLogeado.getEmail());
+		
+		List<Alojamiento> alojamientosActualizados = BD.obtenerListaAlojamiento((BD.usuarioLogeado.getUsuario()));
+		
+		ModeloTablaMisAlojamientosUsuario modelo = new ModeloTablaMisAlojamientosUsuario(alojamientosActualizados);
+		
+		tabla.setModel(modelo);
+		tabla.repaint();
+		
 	}
 }

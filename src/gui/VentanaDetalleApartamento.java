@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Window;
 
 import javax.swing.BorderFactory;
@@ -15,7 +16,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
+import javax.swing.ImageIcon;
 
 import db.BD;
 import domain.Sesion;
@@ -25,6 +28,9 @@ public class VentanaDetalleApartamento extends JDialog {
 
     private JLabel lblImagen;
     private String idAlojamiento;
+    private Thread hiloFotos;
+    private volatile boolean seguirMostrando = true;
+    private ImageIcon[] imagenes;
 
     public VentanaDetalleApartamento(
             Window padre,
@@ -76,7 +82,7 @@ public class VentanaDetalleApartamento extends JDialog {
         ));
         pImagen.setPreferredSize(new Dimension(420, 0));
 
-        lblImagen = new JLabel("Fotos con hilo", SwingConstants.CENTER);
+        lblImagen = new JLabel("Cargando fotos...", SwingConstants.CENTER);
         lblImagen.setFont(Funciones.Letra.normal(14));
         lblImagen.setForeground(Color.DARK_GRAY);
 
@@ -116,13 +122,13 @@ public class VentanaDetalleApartamento extends JDialog {
                 BorderFactory.createLineBorder(new Color(210, 210, 210)),
                 new EmptyBorder(25, 25, 25, 25)
         ));
-        
+
         JButton btnAlquilar = new JButton("Alquilar");
         btnAlquilar.setFont(Funciones.Letra.negrita(16));
         btnAlquilar.setBackground(Color.BLACK);
         btnAlquilar.setForeground(Color.WHITE);
         btnAlquilar.setFocusPainted(false);
-        
+
         btnAlquilar.addActionListener(e -> alquilarApartamento());
 
         JLabel lblDesde = new JLabel("Precio por noche", SwingConstants.CENTER);
@@ -136,13 +142,13 @@ public class VentanaDetalleApartamento extends JDialog {
         pPrecio.add(lblDesde);
         pPrecio.add(Box.createVerticalStrut(10));
         pPrecio.add(lblPrecio);
-        
         pPrecio.add(Box.createVerticalStrut(15));
         pPrecio.add(btnAlquilar);
 
         pDerecha.add(pPrecio);
         pDerecha.add(Box.createVerticalGlue());
 
+        // SUR
         JPanel pSur = new JPanel();
         pSur.setBackground(Color.WHITE);
         pSur.setPreferredSize(new Dimension(0, 60));
@@ -161,8 +167,74 @@ public class VentanaDetalleApartamento extends JDialog {
 
         pSur.add(btnCerrar);
         panel.add(pSur, BorderLayout.SOUTH);
+
+        cargarImagenesAlojamiento(idAlojamiento);
+        iniciarHiloFotos();
     }
-    
+
+    private void cargarImagenesAlojamiento(String id) {
+        imagenes = new ImageIcon[3];
+
+        for (int i=0; i<3; i++) {
+            String ruta = "/images/" + id + "_" + (i+1) + ".jpg";
+            java.net.URL url = getClass().getResource(ruta);
+            if (url != null) {
+                ImageIcon original = new ImageIcon(url);
+                Image imgEscalada = original.getImage().getScaledInstance(380, 260, Image.SCALE_SMOOTH);
+                imagenes[i] = new ImageIcon(imgEscalada);
+            } else {
+                imagenes[i] = null;
+            }
+        }
+    }
+
+    private void iniciarHiloFotos() {
+        boolean hayAlguna = false;
+        for (ImageIcon ic : imagenes) {
+            if (ic != null) {
+                hayAlguna = true;
+                break;
+            }
+        }
+
+        if (!hayAlguna) {
+            lblImagen.setText("No hay imágenes disponibles");
+            return;
+        }
+
+        hiloFotos = new Thread(() -> {
+            int indice = 0;
+            while (seguirMostrando) {
+                if (imagenes[indice] == null) {
+                    indice = (indice + 1) % imagenes.length;
+                    continue;
+                }
+                final int indiceFinal = indice;
+                SwingUtilities.invokeLater(() -> {
+                    lblImagen.setText(null);
+                    lblImagen.setIcon(imagenes[indiceFinal]);
+                });
+                try {
+                    Thread.sleep(2500);
+                } catch (InterruptedException e) {
+                    break;
+                }
+                indice = (indice+1)%imagenes.length; 
+            }
+        });
+
+        hiloFotos.start();
+    }
+
+    @Override
+    public void dispose() {
+        seguirMostrando = false;
+        if (hiloFotos != null && hiloFotos.isAlive()) {
+            hiloFotos.interrupt();
+        }
+        super.dispose();
+    }
+
     private void alquilarApartamento() {
         if (!Sesion.hayUsuario()) {
             JOptionPane.showMessageDialog(this,
@@ -199,6 +271,4 @@ public class VentanaDetalleApartamento extends JDialog {
         lbl.setForeground(Color.BLACK);
         return lbl;
     }
-    
-    
 }

@@ -170,12 +170,16 @@ public class BD {
 	}
 
 	public static boolean actualizarUsuario(String usuarioOriginal, String nuevoNombre, String nuevoEmail) {
-	    String sql = "UPDATE Usuario SET nombre = ?, email = ? WHERE usuario = ?";
+		if(emailExiste(nuevoEmail,usuarioOriginal)) {
+			return false; //Error el email ya está en uso
+		}
+		
+		String sql = "UPDATE Usuario SET nombre = ?, email = ? WHERE usuario = ?";
 	    try (PreparedStatement ps = con.prepareStatement(sql)) {
 	        ps.setString(1, nuevoNombre);
 	        ps.setString(2, nuevoEmail);
 	        ps.setString(3, usuarioOriginal);
-
+ 
 	        int filas = ps.executeUpdate();
 
 	        if (filas > 0) {
@@ -226,6 +230,20 @@ public class BD {
 		return lista;
 	}
 	
+	public static boolean emailExiste(String email, String usuarioOriginal) {
+		String sql = "SELECT email FROM Usuario WHERE email = ? AND usuario != ?";
+		try(PreparedStatement ps = con.prepareStatement(sql);) {
+			ps.setString(1, email);
+			ps.setString(2, usuarioOriginal);
+			ResultSet rs = ps.executeQuery();
+			boolean existe = rs.next();
+			return existe;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return true;
+		}
+	}
+	
 	public static void upsertAlojamiento(Alojamiento a) {
 	    String sql = "INSERT OR REPLACE INTO Alojamiento (id, titulo, barrio, capacidad, precio, rating) VALUES (?,?,?,?,?,?)";
 	    try (PreparedStatement ps = con.prepareStatement(sql)) {
@@ -272,5 +290,4 @@ public class BD {
 	        e.printStackTrace();
 	    }
 	}
-	
 }
