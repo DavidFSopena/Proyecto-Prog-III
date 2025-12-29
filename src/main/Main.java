@@ -15,7 +15,7 @@ public class Main {
 		//new Ventana2_2();
 //		new Ventana3();
 		
-		// Base de datos
+		// Base de datos actualizada
 		BD.initBD("resources/db/bilbobnb.db");
 		BD.crearTablaUsuario();
 		BD.crearTablaAlquiler();
