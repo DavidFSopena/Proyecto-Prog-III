@@ -31,6 +31,9 @@ public class Ventana3 extends JFrame{
 	private JButton btnSeleccionado;
 	
 	public Ventana3() {
+		
+		Funciones.aplicarIcono(this);
+		
 		setTitle("BilboBnB");
 		setExtendedState(MAXIMIZED_BOTH);
 		

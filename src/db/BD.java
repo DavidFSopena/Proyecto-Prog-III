@@ -225,4 +225,52 @@ public class BD {
 
 		return lista;
 	}
+	
+	public static void upsertAlojamiento(Alojamiento a) {
+	    String sql = "INSERT OR REPLACE INTO Alojamiento (id, titulo, barrio, capacidad, precio, rating) VALUES (?,?,?,?,?,?)";
+	    try (PreparedStatement ps = con.prepareStatement(sql)) {
+	        ps.setString(1, a.getId());
+	        ps.setString(2, a.getTitulo());
+	        ps.setString(3, a.getBarrio().toString());
+	        ps.setInt(4, a.getCapacidad());
+	        ps.setDouble(5, a.getPrecioNoche());
+	        ps.setDouble(6, a.getRating());
+	        ps.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+
+	public static void cargarAlojamientosDesdeCSV(String rutaCsv) {
+	    try (java.util.Scanner sc = new java.util.Scanner(new java.io.File(rutaCsv), "UTF-8")) {
+	        if (sc.hasNextLine()) sc.nextLine();
+
+	        while (sc.hasNextLine()) {
+	            String linea = sc.nextLine().trim();
+	            if (linea.isEmpty()) continue;
+
+	            String[] c = linea.split(";");
+	            if (c.length != 6) continue;
+
+	            for (int i = 0; i < 6; i++) c[i] = c[i].trim();
+
+	            Barrio barrio = null;
+	            try {
+	                barrio = Barrio.valueOf(c[2].toUpperCase().replace(" ", "_"));
+	            } catch (Exception e) {}
+
+	            Alojamiento a = new Alojamiento(
+	                    c[0], c[1], barrio,
+	                    Integer.parseInt(c[3]),
+	                    Double.parseDouble(c[4]),
+	                    Double.parseDouble(c[5])
+	            );
+
+	            upsertAlojamiento(a);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
 }

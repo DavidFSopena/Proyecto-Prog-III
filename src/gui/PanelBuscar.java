@@ -5,6 +5,9 @@ import domain.Barrio;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+
+import db.BD;
+
 import java.io.*;
 import java.util.List;
 import java.util.Scanner;
@@ -141,16 +144,8 @@ public class PanelBuscar extends JPanel {
 			}
 		};
 		tabla = new JTable(modeloTabla);
-		tabla.setBackground(Color.WHITE);
-		tabla.setSelectionForeground(Color.WHITE);
-
-		tabla.setOpaque(true);
-		tabla.setShowVerticalLines(true);
-		tabla.setGridColor(new Color(186, 184, 184));
-		tabla.getTableHeader().setReorderingAllowed(false);
-		tabla.getTableHeader().setForeground(Funciones.Colores.Coral);
-		tabla.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 26));
-		tabla.setRowHeight(30);
+		tabla.setAutoCreateRowSorter(true);
+		Tabla.aplicar(tabla);
 		
 		tabla.addMouseListener(new MouseAdapter() {
 		    @Override
@@ -242,9 +237,9 @@ public class PanelBuscar extends JPanel {
 				} catch (Exception e) {
 				}
 
-				Alojamiento a = new Alojamiento(campo[0], campo[1], barrio, Integer.parseInt(campo[3]),
-						Double.parseDouble(campo[4]), Double.parseDouble(campo[5]));
+				Alojamiento a = new Alojamiento(campo[0], campo[1], barrio, Integer.parseInt(campo[3]), Double.parseDouble(campo[4]), Double.parseDouble(campo[5]));
 				lista.add(a);
+				BD.upsertAlojamiento(a);
 			}
 
 			sc.close();

@@ -41,6 +41,8 @@ public class Ventana2_1 extends JFrame {
 		setTitle("BilboBnB - Acceso");
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
+		Funciones.aplicarIcono(this);
+		
 		getContentPane().setBackground(Funciones.Colores.Turquesa);
 		
 		// Paneles

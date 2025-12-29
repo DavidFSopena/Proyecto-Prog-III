@@ -5,7 +5,9 @@ import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 
 public class Funciones {
 
@@ -84,6 +86,12 @@ public class Funciones {
 
 				}
 			});
+			
+			
 
+		}
+		public static void aplicarIcono(JFrame ventana) {
+			ImageIcon im = new ImageIcon("resources/images/ImagenTrans.png");
+		    ventana.setIconImage(im.getImage());
 		}
 }

@@ -72,12 +72,11 @@ public class PanelPerfil extends JPanel {
 		
 		List<Alojamiento> alojamientosCadaUsuario = BD.obtenerListaAlojamiento(BD.usuarioLogeado.getUsuario());
 		ModeloTablaMisAlojamientosUsuario modelo = new ModeloTablaMisAlojamientosUsuario(alojamientosCadaUsuario);
+		
 		tabla = new JTable(modelo);
-		tabla.setGridColor(new Color(186,184,184));
-		tabla.setRowHeight(30);
-		tabla.getTableHeader().setBackground(Color.WHITE);
-		tabla.getTableHeader().setFont(Funciones.Letra.negrita(20));
-		tabla.getTableHeader().setForeground(Funciones.Colores.Coral);
+		tabla.setAutoCreateRowSorter(true);
+		Tabla.aplicar(tabla);
+
 		tabla.repaint();
 		JScrollPane scroll = new JScrollPane(tabla);
 		

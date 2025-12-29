@@ -37,6 +37,7 @@ public class Ventana2_2 extends JFrame {
 
 	public Ventana2_2() {
 		super("Registro");
+		Funciones.aplicarIcono(this);
 		setSize(780, 520);
 		setResizable(false);
 		setLocationRelativeTo(null);

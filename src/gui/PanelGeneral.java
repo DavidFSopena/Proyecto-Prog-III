@@ -17,6 +17,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -87,24 +88,26 @@ public class PanelGeneral extends JPanel {
 		
 		tabla = new JTable(tblModelo);
 		tabla.setAutoCreateRowSorter(true);
+		Tabla.aplicar(tabla);
+		
+		Tabla.aplicar(tabla);
+		
+		tabla.getColumnModel().getColumn(0).setPreferredWidth(70);
+		tabla.getColumnModel().getColumn(1).setPreferredWidth(420);
+		tabla.getColumnModel().getColumn(2).setPreferredWidth(160);
+		tabla.getColumnModel().getColumn(3).setPreferredWidth(120);
+		tabla.getColumnModel().getColumn(4).setPreferredWidth(150);
+		tabla.getColumnModel().getColumn(5).setPreferredWidth(100);
+		
 		JScrollPane scroll = new JScrollPane(tabla);
 		scroll.setPreferredSize(new Dimension(1200, 550));
 		scroll.setBackground(Funciones.Colores.Turquesa);
+		scroll.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220), 1));
 		scroll.getViewport().setBackground(Funciones.Colores.Turquesa);
 		pCentro.add(scroll, BorderLayout.CENTER);
 		
 		tabla.setBackground(Color.WHITE);
-		tabla.setSelectionForeground(Color.WHITE);
 		tabla.setOpaque(true);
-		
-		tabla.setShowVerticalLines(true);
-		tabla.setGridColor(new Color (186, 184, 184));
-		
-		tabla.getTableHeader().setReorderingAllowed(false);
-		tabla.getTableHeader().setBackground(Color.WHITE);
-		tabla.getTableHeader().setForeground(Funciones.Colores.Coral);
-		tabla.getTableHeader().setFont(Funciones.Letra.negrita(26));
-		tabla.setRowHeight(30);
 		
 		cargarTopDesdeCSV("resources/data/alojamientos.csv", 20);
 		

@@ -1,4 +1,4 @@
-id;titulo;barrio;capacidad;precioNoche;rating 
+id;titulo;barrio;capacidad;precioNoche;rating
 A1;Estudio frente al Guggen;Abando;2;95.0;4.4
 A2;Ático con terraza;Indautxu;4;140.0;4.7
 A3;Habitación Casco Viejo;Casco Viejo;2;60.0;3.6
@@ -79,3 +79,9 @@ A77;Apartamento práctico;Santutxu;3;71.0;3.5
 A78;Habitación individual sencilla;Rekalde;1;46.0;2.8
 A79;Dúplex reformado con terraza;Uribarri;5;168.0;4.7
 A80;Piso con buena comunicación;Begoña;3;91.0;4.2
+A81;Habitación muy deteriorada;Rekalde;1;35.0;1.9
+A82;Piso ruidoso sin reformar;Casco Viejo;2;45.0;2.1
+A83;Apartamento descuidado;Santutxu;3;50.0;2.3
+A84;Habitación sin ventilación;Rekalde;1;30.0;1.7
+A85;Estudio en mal estado;Deusto;2;40.0;2.2
+A86;Piso con humedades;Begoña;3;55.0;2.4

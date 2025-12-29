@@ -29,11 +29,11 @@ public class Ventana1 extends JFrame{
 		
 		public Ventana1 () {
 			
+			Funciones.aplicarIcono(this);
+			
+			setUndecorated(false);
+			
 			pCentro = new JPanel();
-			
-			
-			setExtendedState(JFrame.MAXIMIZED_BOTH);
-			setUndecorated(true);
 			
 			getContentPane().setBackground(Funciones.Colores.Turquesa);
 			setLayout(new BorderLayout());
@@ -98,12 +98,20 @@ public class Ventana1 extends JFrame{
 				}
 			});
 			
-			btnSalir.addActionListener(e -> System.exit(0));
+			btnSalir.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					System.exit(0);
+					
+				}
+			});
 			
 			pSur.add(btnSalir);
 			add(pSur, BorderLayout.SOUTH);
 			
 			
+			setExtendedState(JFrame.MAXIMIZED_BOTH);
 			setVisible(true);
 		}
 }
