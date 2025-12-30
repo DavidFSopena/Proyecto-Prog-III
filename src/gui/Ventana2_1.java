@@ -32,7 +32,7 @@ import db.BD;
 
 public class Ventana2_1 extends JFrame {
 	private JPanel pSur, pCentro, pCentroConLogo, pNorte, pFormulario;
-	private JLabel lblTitulo, lblNombre, lblContrasena, lblRegistrarse;
+	private JLabel lblTitulo, lblNombre, lblContrasena, lblRegistrarse, lblReloj;
 	private JButton btnIniciarSesion, btnRegistrarse, btnVolver;
 	private JTextField txtEmail;
 	private JPasswordField txtContrasena;
@@ -46,7 +46,10 @@ public class Ventana2_1 extends JFrame {
 		getContentPane().setBackground(Funciones.Colores.Turquesa);
 		
 		// Paneles
-		pNorte = new JPanel();
+		pNorte = new JPanel(new BorderLayout());
+		pNorte.setBackground(Funciones.Colores.Turquesa);
+		pNorte.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+		
 		pSur = new JPanel();
 		pCentro = new JPanel();
 		pCentro.setLayout(new GridLayout(3, 1, 10, 10));
@@ -78,6 +81,10 @@ public class Ventana2_1 extends JFrame {
 		// Título
 		lblTitulo = new JLabel("BIENVENIDO", JLabel.CENTER);
 		lblTitulo.setFont(new Font("Arial", Font.BOLD, 28));
+		
+		//Reloj
+		lblReloj = Funciones.crearReloj();
+		lblReloj.setForeground(Color.BLACK);
 		
 		// Logo
 		ImageIcon icono = new ImageIcon("resources/images/ImagenTrans1.png");
@@ -122,7 +129,8 @@ public class Ventana2_1 extends JFrame {
 		getContentPane().add(pSur, BorderLayout.SOUTH);
 		
 		// Añadir componentes
-		pNorte.add(lblTitulo);
+		pNorte.add(lblTitulo, BorderLayout.CENTER);
+		pNorte.add(lblReloj, BorderLayout.EAST);
 
 		pCentroConLogo.add(lblLogo, BorderLayout.NORTH);
 

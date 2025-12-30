@@ -2,12 +2,19 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.Timer;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 public class Funciones {
 
@@ -94,4 +101,47 @@ public class Funciones {
 			ImageIcon im = new ImageIcon("resources/images/ImagenTrans.png");
 		    ventana.setIconImage(im.getImage());
 		}
+		
+		public static JLabel crearReloj() {
+			
+			JLabel lbl = new JLabel("", SwingConstants.RIGHT);
+			
+			lbl.setFont(Letra.negrita(14));
+			lbl.setForeground(Color.BLACK);
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			
+			
+			Timer t = new Timer(1000, new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					lbl.setText(sdf.format(new Date()));
+					
+				}
+			});
+			
+			t.setInitialDelay(0);
+			t.start();
+			
+			return lbl;
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 }
