@@ -244,7 +244,7 @@ public class VentanaDetalleApartamento extends JDialog {
         }
 
         Usuario u = Sesion.getUsuarioActual();
-        boolean ok = BD.registrarAlquiler(u.getUsuario(), idAlojamiento);
+        boolean ok = BD.registrarAlquiler(u.getId(), idAlojamiento);
 
         if (ok) {
             JOptionPane.showMessageDialog(this,

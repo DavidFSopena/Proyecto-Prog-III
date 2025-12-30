@@ -49,10 +49,12 @@ public class BD {
 	
 	public static void crearTablaUsuario() {
 		String sql = "CREATE TABLE IF NOT EXISTS Usuario ("
-				+ "usuario TEXT PRIMARY KEY,"
+				+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+				+ "usuario TEXT unique,"
 				+ "email TEXT unique,"
-				+ "nombre TEXT,"
-				+ "contrasenia TEXT)";
+				+ "nombre TEXT unique,"
+				+ "contrasenia TEXT"
+				+ ")";
 		try (Statement st = con.createStatement()) {
 			st.executeUpdate(sql);
 		} catch (SQLException e) {
@@ -76,7 +78,7 @@ public class BD {
 	}
 	
 	public static boolean validarLogin(String usuarioEmail, String contrasenia) {
-		String sql = "SELECT usuario, email, nombre, contrasenia FROM Usuario WHERE usuario = ? OR email = ?";
+		String sql = "SELECT id, usuario, email, nombre, contrasenia FROM Usuario WHERE nombre = ? OR email = ?";
 		
 		try (PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, usuarioEmail);
@@ -87,9 +89,11 @@ public class BD {
 				String contraseniaBD = rs.getString("contrasenia");
 				
 				if (contraseniaBD.equals(contrasenia)) {
+					int id = rs.getInt("id");
 					String usuario = rs.getString("usuario");
 					String email = rs.getString("email");
 					usuarioLogeado = new Usuario(
+							id,
 							usuario,
 							email,
 							rs.getString("nombre")
@@ -126,8 +130,9 @@ public class BD {
 	public static void crearTablaAlquiler() {
 	    String sql = "CREATE TABLE IF NOT EXISTS Alquiler ("
 	            + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-	            + "usuario TEXT,"
-	            + "idAlojamiento TEXT"
+	            + "usuarioID INTEGER,"
+	            + "idAlojamiento TEXT,"
+	            + "FOREIGN KEY (usuarioID) REFERENCES Usuario(id)"
 	            + ")";
 	    try (Statement st = con.createStatement()) {
 	        st.executeUpdate(sql);
@@ -136,10 +141,10 @@ public class BD {
 	    }
 	}
 	
-	public static boolean registrarAlquiler(String usuario, String idAlojamiento) {
-	    String sql = "INSERT INTO Alquiler (usuario, idAlojamiento) VALUES (?, ?)";
+	public static boolean registrarAlquiler(int usuarioID, String idAlojamiento) {
+	    String sql = "INSERT INTO Alquiler (usuarioID, idAlojamiento) VALUES (?, ?)";
 	    try (PreparedStatement ps = con.prepareStatement(sql)) {
-	        ps.setString(1, usuario);
+	        ps.setInt(1, usuarioID);
 	        ps.setString(2, idAlojamiento);
 	        ps.executeUpdate();
 	        return true;
@@ -150,40 +155,48 @@ public class BD {
 	}
 	
 	public static Usuario obtenerUsuarioPorUsuarioOEmail(String usuarioEmail) {
-	    String sql = "SELECT usuario, email, nombre FROM Usuario WHERE usuario = ? OR email = ?";
+	    String sql = "SELECT usuario, email, nombre FROM Usuario WHERE nombre = ? OR email = ?";
 	    try (PreparedStatement ps = con.prepareStatement(sql)) {
 	        ps.setString(1, usuarioEmail);
 	        ps.setString(2, usuarioEmail);
 	        ResultSet rs = ps.executeQuery();
 	        if (rs.next()) {
+	        	int id = rs.getInt("id");
 	            String usuario = rs.getString("usuario");
 	            String email = rs.getString("email");
 	            String nombre = rs.getString("nombre");
+	            Usuario u = new Usuario(id,usuario,email,nombre);
 	            rs.close();
-	            return new Usuario(usuario, email, nombre);
+	            return u;
 	        }
 	        rs.close();
+	        
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
 	    return null;
 	}
 
-	public static boolean actualizarUsuario(String usuarioOriginal, String nuevoNombre, String nuevoEmail) {
-		if(emailExiste(nuevoEmail,usuarioOriginal)) {
-			return false; //Error el email ya está en uso
+	public static boolean actualizarUsuario(int usuarioID, String nuevoUsuario, String nuevoNombre, String nuevoEmail) {
+		if(emailExiste(nuevoEmail,usuarioID)) {
+			return false; //Error pq el email ya está en uso
 		}
 		
-		String sql = "UPDATE Usuario SET nombre = ?, email = ? WHERE usuario = ?";
+		if(nombreExiste(nuevoNombre,usuarioID)) {
+			return false; //Error pq el email ya está en uso
+		}
+		
+		String sql = "UPDATE Usuario SET nombre = ?, email = ?, usuario = ? WHERE id = ?";
 	    try (PreparedStatement ps = con.prepareStatement(sql)) {
 	        ps.setString(1, nuevoNombre);
 	        ps.setString(2, nuevoEmail);
-	        ps.setString(3, usuarioOriginal);
+	        ps.setString(3, nuevoUsuario);
+	        ps.setInt(4, usuarioID);
  
 	        int filas = ps.executeUpdate();
 
 	        if (filas > 0) {
-	            usuarioLogeado = new Usuario(usuarioOriginal, nuevoEmail, nuevoNombre);
+	            usuarioLogeado = new Usuario(usuarioID, nuevoUsuario, nuevoEmail, nuevoNombre);
 	            return true;
 	        }
 	        return false;
@@ -194,17 +207,17 @@ public class BD {
 	    }
 	}
 
-	public static List<Alojamiento> obtenerListaAlojamiento(String usuario){
+	public static List<Alojamiento> obtenerListaAlojamiento(int usuarioID){
 		List<Alojamiento> lista = new ArrayList<>();
 
 		String sql =
 				"SELECT al.id, al.titulo, al.barrio, al.capacidad, al.precio, al.rating " +
 				"FROM Alquiler aq " +
 				"JOIN Alojamiento al ON aq.idAlojamiento = al.id " +
-				"WHERE aq.usuario = ?";
+				"WHERE aq.usuarioID = ?";
 
 		try (PreparedStatement ps = con.prepareStatement(sql)) {
-			ps.setString(1, usuario);
+			ps.setInt(1, usuarioID);
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -230,11 +243,25 @@ public class BD {
 		return lista;
 	}
 	
-	public static boolean emailExiste(String email, String usuarioOriginal) {
-		String sql = "SELECT email FROM Usuario WHERE email = ? AND usuario != ?";
+	public static boolean emailExiste(String email, int usuarioID) {
+		String sql = "SELECT email FROM Usuario WHERE email = ? AND id != ?";
 		try(PreparedStatement ps = con.prepareStatement(sql);) {
 			ps.setString(1, email);
-			ps.setString(2, usuarioOriginal);
+			ps.setInt(2, usuarioID);
+			ResultSet rs = ps.executeQuery();
+			boolean existe = rs.next();
+			return existe;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return true;
+		}
+	}
+	
+	public static boolean nombreExiste(String nombre, int usuarioID) {
+		String sql = "SELECT email FROM Usuario WHERE nombre = ? AND id != ?";
+		try(PreparedStatement ps = con.prepareStatement(sql);) {
+			ps.setString(1, nombre);
+			ps.setInt(2, usuarioID);
 			ResultSet rs = ps.executeQuery();
 			boolean existe = rs.next();
 			return existe;
@@ -259,35 +286,35 @@ public class BD {
 	    }
 	}
 
-	public static void cargarAlojamientosDesdeCSV(String rutaCsv) {
-	    try (java.util.Scanner sc = new java.util.Scanner(new java.io.File(rutaCsv), "UTF-8")) {
-	        if (sc.hasNextLine()) sc.nextLine();
-
-	        while (sc.hasNextLine()) {
-	            String linea = sc.nextLine().trim();
-	            if (linea.isEmpty()) continue;
-
-	            String[] c = linea.split(";");
-	            if (c.length != 6) continue;
-
-	            for (int i = 0; i < 6; i++) c[i] = c[i].trim();
-
-	            Barrio barrio = null;
-	            try {
-	                barrio = Barrio.valueOf(c[2].toUpperCase().replace(" ", "_"));
-	            } catch (Exception e) {}
-
-	            Alojamiento a = new Alojamiento(
-	                    c[0], c[1], barrio,
-	                    Integer.parseInt(c[3]),
-	                    Double.parseDouble(c[4]),
-	                    Double.parseDouble(c[5])
-	            );
-
-	            upsertAlojamiento(a);
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	}
+//	public static void cargarAlojamientosDesdeCSV(String rutaCsv) {
+//	    try (java.util.Scanner sc = new java.util.Scanner(new java.io.File(rutaCsv), "UTF-8")) {
+//	        if (sc.hasNextLine()) sc.nextLine();
+//
+//	        while (sc.hasNextLine()) {
+//	            String linea = sc.nextLine().trim();
+//	            if (linea.isEmpty()) continue;
+//
+//	            String[] c = linea.split(";");
+//	            if (c.length != 6) continue;
+//
+//	            for (int i = 0; i < 6; i++) c[i] = c[i].trim();
+//
+//	            Barrio barrio = null;
+//	            try {
+//	                barrio = Barrio.valueOf(c[2].toUpperCase().replace(" ", "_"));
+//	            } catch (Exception e) {}
+//
+//	            Alojamiento a = new Alojamiento(
+//	                    c[0], c[1], barrio,
+//	                    Integer.parseInt(c[3]),
+//	                    Double.parseDouble(c[4]),
+//	                    Double.parseDouble(c[5])
+//	            );
+//
+//	            upsertAlojamiento(a);
+//	        }
+//	    } catch (Exception e) {
+//	        e.printStackTrace();
+//	    }
+//	}
 }

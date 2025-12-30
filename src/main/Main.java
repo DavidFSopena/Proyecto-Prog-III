@@ -9,20 +9,17 @@ import gui.Ventana3;
 public class Main {
 	public static void main(String[] arg) {
 		
-		// Ventanas
-		new Ventana1();
-		//new Ventana2_1();
-		//new Ventana2_2();
-//		new Ventana3();
-		
-		// Base de datos actualizada
+		// Base de datos
 		BD.initBD("resources/db/bilbobnb.db");
 		BD.crearTablaUsuario();
 		BD.crearTablaAlquiler();
 		BD.crearTablaAlojamiento();
-		BD.cargarAlojamientosDesdeCSV("resources/data/alojamientos.csv");
 
-		
+		// Ventanas
+		new Ventana1();
+		//new Ventana2_1();
+		//new Ventana2_2();
+		//new Ventana3();
 		
 	}
 }

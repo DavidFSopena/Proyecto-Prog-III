@@ -70,7 +70,7 @@ public class PanelPerfil extends JPanel {
 		btnEditarPerfil.setForeground(Funciones.Colores.Coral);
 		btnEditarPerfil.setBackground(Color.WHITE);
 		
-		List<Alojamiento> alojamientosCadaUsuario = BD.obtenerListaAlojamiento(BD.usuarioLogeado.getUsuario());
+		List<Alojamiento> alojamientosCadaUsuario = BD.obtenerListaAlojamiento(BD.usuarioLogeado.getId());
 		ModeloTablaMisAlojamientosUsuario modelo = new ModeloTablaMisAlojamientosUsuario(alojamientosCadaUsuario);
 		
 		tabla = new JTable(modelo);
@@ -107,14 +107,19 @@ public class PanelPerfil extends JPanel {
 				return;
 			}
 			
-			boolean actualizacionUsuarioCorrecta = BD.actualizarUsuario(BD.usuarioLogeado.getUsuario(), nuevoNombre, nuevoEmail);
+			boolean actualizacionUsuarioCorrecta = BD.actualizarUsuario(BD.usuarioLogeado.getId(),BD.usuarioLogeado.getUsuario(), nuevoNombre, nuevoEmail);
 			
 			if(actualizacionUsuarioCorrecta) {
 				lblNombre.setText("Nombre: "+BD.usuarioLogeado.getNombre());
 				lblEmail.setText("Email: "+BD.usuarioLogeado.getEmail());
+				
+				List<Alojamiento> alojamientos = BD.obtenerListaAlojamiento(BD.usuarioLogeado.getId());
+				tabla.setModel(new ModeloTablaMisAlojamientosUsuario(alojamientos));
+		        tabla.repaint();
+		        
 				JOptionPane.showMessageDialog(this, "Datos actualizados correctamente");
 			} else {
-				JOptionPane.showMessageDialog(this, "Error, el email ya está en uso", "Error al actualizar datos", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Error, el nombre o el email ya está en uso", "Error al actualizar datos", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		
@@ -141,7 +146,7 @@ public class PanelPerfil extends JPanel {
 		lblNombre.setText("Nombre: "+BD.usuarioLogeado.getNombre());
 		lblEmail.setText("Email: "+BD.usuarioLogeado.getEmail());
 		
-		List<Alojamiento> alojamientosActualizados = BD.obtenerListaAlojamiento((BD.usuarioLogeado.getUsuario()));
+		List<Alojamiento> alojamientosActualizados = BD.obtenerListaAlojamiento((BD.usuarioLogeado.getId()));
 		
 		ModeloTablaMisAlojamientosUsuario modelo = new ModeloTablaMisAlojamientosUsuario(alojamientosActualizados);
 		
