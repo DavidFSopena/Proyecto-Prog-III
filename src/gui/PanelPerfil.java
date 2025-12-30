@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -21,6 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -97,6 +99,35 @@ public class PanelPerfil extends JPanel {
 		pCentro.add(scroll);
 		
 		//Listeners
+		tabla.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2 && tabla.getSelectedRow() != -1) {
+
+		            int filaVista = tabla.rowAtPoint(e.getPoint());
+		            if(filaVista<0) {
+		            	return;
+		            }
+		            int filaModelo = tabla.convertRowIndexToModel(filaVista);
+		            
+		            ModeloTablaMisAlojamientosUsuario m = (ModeloTablaMisAlojamientosUsuario) tabla.getModel();
+
+		            String id = m.getValueAt(filaModelo, 0).toString();
+		            String titulo = m.getValueAt(filaModelo, 1).toString();
+		            String barrio = m.getValueAt(filaModelo, 2).toString();
+		            int capacidad = Integer.parseInt(m.getValueAt(filaModelo, 3).toString());
+		            double precio = Double.parseDouble(m.getValueAt(filaModelo, 4).toString());
+		            double rating = Double.parseDouble(m.getValueAt(filaModelo, 5).toString());
+
+		            Window parent = SwingUtilities.getWindowAncestor(PanelPerfil.this);
+
+		            new VentanaEliminarApartamento(parent, BD.usuarioLogeado.getId(), id, titulo, barrio, capacidad, precio, rating, () -> actualizarDatos()).setVisible(true);
+		        }
+				
+			}
+		});
+		
 		btnEditarPerfil.addActionListener( (e) -> {
 			String nuevoNombre = JOptionPane.showInputDialog(this,"Nuevo nombre:",BD.usuarioLogeado.getNombre());
 			if (nuevoNombre == null || nuevoNombre.isEmpty()) {
@@ -125,7 +156,7 @@ public class PanelPerfil extends JPanel {
 		
 		btnEditarPerfil.addMouseListener(new MouseAdapter() {
 			
-			
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnEditarPerfil.setBackground(Color.WHITE);

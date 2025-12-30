@@ -77,6 +77,21 @@ public class BD {
 		}
 	}
 	
+	public static boolean eliminarAlquiler(int usuarioID, String idAlojamiento) {
+		String sql = "DELETE FROM Alquiler WHERE usuarioID = ? AND idAlojamiento = ?";
+		
+		try(PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setInt(1, usuarioID);
+			ps.setString(2, idAlojamiento);
+			int filas = ps.executeUpdate();
+			return filas>0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
+	
 	public static boolean validarLogin(String usuarioEmail, String contrasenia) {
 		String sql = "SELECT id, usuario, email, nombre, contrasenia FROM Usuario WHERE nombre = ? OR email = ?";
 		
@@ -286,6 +301,7 @@ public class BD {
 	    }
 	}
 
+	
 //	public static void cargarAlojamientosDesdeCSV(String rutaCsv) {
 //	    try (java.util.Scanner sc = new java.util.Scanner(new java.io.File(rutaCsv), "UTF-8")) {
 //	        if (sc.hasNextLine()) sc.nextLine();
