@@ -16,6 +16,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -25,7 +27,7 @@ import javax.swing.JPanel;
 
 public class Ventana3 extends JFrame{
 	private JPanel pNorte, pSur, pOeste, pCentro;
-	private JLabel lblLogo;
+	private JLabel lblLogo, lblReloj;
 	private JButton btnGeneral, btnBuscar, btnPerfil, btnCerrarSesion;
 	
 	private JButton btnSeleccionado;
@@ -40,8 +42,11 @@ public class Ventana3 extends JFrame{
 		getContentPane().setBackground(Funciones.Colores.Turquesa);
 		
 		//Creamos los paneles
-		pNorte = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 10));
+		pNorte = new JPanel();
+		pNorte.setLayout(new BoxLayout(pNorte, BoxLayout.X_AXIS));
 		pNorte.setBackground(Color.WHITE);
+		pNorte.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+		
 		pSur = new JPanel();
 		pOeste = new JPanel(new GridLayout(4,1,0,0));
 		pOeste.setPreferredSize(new Dimension(200,0));
@@ -55,6 +60,10 @@ public class Ventana3 extends JFrame{
 		ImageIcon icono = new ImageIcon("resources/images/logoBilboBnBTransparenteMasPequeno.jpg");
 		Image imagenEscalada = icono.getImage().getScaledInstance(240, 120, Image.SCALE_SMOOTH);
 		JLabel lblLogo = new JLabel(new ImageIcon(imagenEscalada));
+		
+		lblReloj = Funciones.crearReloj();
+		lblReloj.setForeground(Color.BLACK);
+		lblReloj.setFont(Funciones.Letra.negrita(14));
 		
 		btnGeneral = new JButton("General");
 		btnGeneral.setBackground(Color.WHITE);
@@ -93,6 +102,9 @@ public class Ventana3 extends JFrame{
 		
 		//Añadimos componentes a los paneles
 		pNorte.add(lblLogo);
+		pNorte.add(Box.createHorizontalGlue());
+		pNorte.add(lblReloj);
+		
 		pOeste.add(btnGeneral);
 		pOeste.add(btnBuscar);
 		pOeste.add(btnPerfil);

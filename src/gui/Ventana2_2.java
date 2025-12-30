@@ -32,7 +32,7 @@ public class Ventana2_2 extends JFrame {
 	private JTextField txtMail, txtUsuario;
 	private JPasswordField contrasenia1, contrasenia2;
 	private JCheckBox checkMostrar;
-	private JLabel lblTitulo, lblMail, lblUsuario, lblcontrasenia1, lblcontrasenia2;
+	private JLabel lblTitulo, lblMail, lblUsuario, lblcontrasenia1, lblcontrasenia2, lblReloj;
 	private JButton btnSiguiente, btnCancelar;
 
 	public Ventana2_2() {
@@ -46,7 +46,9 @@ public class Ventana2_2 extends JFrame {
 		
 		getContentPane().setBackground(Funciones.Colores.Turquesa);
 
-		pNorte = new JPanel(new GridLayout(1, 1));
+		pNorte = new JPanel(new BorderLayout());
+		pNorte.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+		
 		pCentro = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 10));
 		pSur = new JPanel(new FlowLayout(FlowLayout.CENTER, 18, 10));
 		pCheck = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
@@ -75,13 +77,16 @@ public class Ventana2_2 extends JFrame {
 		lblUsuario = new JLabel("USUARIO: ");
 		lblcontrasenia1 = new JLabel("CONTRASEÑA: ");
 		lblcontrasenia2 = new JLabel("REPITE CONTRASEÑA: ");
+		lblReloj = Funciones.crearReloj();
+		lblReloj.setForeground(Color.BLACK);
 
 		btnSiguiente = new JButton("SIGUIENTE");
 		btnCancelar = new JButton("CANCELAR");
 		Funciones.botonBonito(btnSiguiente, Funciones.Colores.Coral);
 		Funciones.botonBonito(btnCancelar, Funciones.Colores.Coral);
 
-		pNorte.add(lblTitulo);
+		pNorte.add(lblTitulo, BorderLayout.CENTER);
+		pNorte.add(lblReloj, BorderLayout.EAST);
 
 		pCheck.add(contrasenia1);
 		pCheck.add(checkMostrar);
