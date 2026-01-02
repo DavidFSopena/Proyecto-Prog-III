@@ -98,8 +98,8 @@ public class Funciones {
 
 		}
 		public static void aplicarIcono(JFrame ventana) {
-			ImageIcon im = new ImageIcon("resources/images/ImagenTrans.png");
-		    ventana.setIconImage(im.getImage());
+			ImageIcon image = new ImageIcon("resources/images/ImagenTrans.png");
+		    ventana.setIconImage(image.getImage());
 		}
 		
 		public static JLabel crearReloj() {
