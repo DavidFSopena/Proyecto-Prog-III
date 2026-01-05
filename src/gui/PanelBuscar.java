@@ -104,54 +104,55 @@ public class PanelBuscar extends JPanel {
 		p.add(btnHistorial);
 
 
-		btnBuscar.addActionListener(e -> {
-			Object seleccionado = cbBarrio.getSelectedItem();
-			Barrio barrio = null;
-			if (!"TODOS".equals(seleccionado)) {
-				barrio = (Barrio) seleccionado;
-			}
-			int adultos = (int) cbAdultos.getSelectedItem();
-			int ninos = (int) cbNinos.getSelectedItem();
-			int total = adultos + ninos;
-
-			filtrados.clear();
-			for (Alojamiento a : alojamientos) {
-				if ((barrio == null || a.getBarrio() == barrio) && a.getCapacidad() >= total) {
-					filtrados.add(a);
-				}
-			}
-			
-			String fecha = Funciones.fechayHora();
-
-			String textoBarrio;
-			if (barrio == null) {
-			    textoBarrio = "TODOS";
-			} else {
-			    textoBarrio = barrio.toString();
-			}
-
-			String filtros = "Barrio=" + textoBarrio + ", Adultos=" + adultos + ", Niños=" + ninos + ", Total=" + total;
-
-			int resultados = filtrados.size();
-
-			Sesion.getHistorial().add(new Busqueda(fecha, filtros, resultados));
-			modeloTabla.setRowCount(0);
-			for (Alojamiento a : filtrados) {
-				modeloTabla.addRow(new Object[] { a.getId(), a.getTitulo(), a.getBarrio(), a.getCapacidad(),
-						a.getPrecioNoche(), a.getRating() });
-			}
-
-			pCentro.remove(pBuscar);
-			pCentro.add(pResultados, BorderLayout.CENTER);
-			pCentro.revalidate();
-			pCentro.repaint();
-		});
+		btnBuscar.addActionListener(e -> {ejecutarBusquedaDesdeFiltros(true);});
 		
-		btnHistorial.addActionListener(e -> {
-		    new VentanaHistorialBusquedas().setVisible(true);
-		});
+		btnHistorial.addActionListener(e -> {new VentanaHistorialBusquedas(PanelBuscar.this).setVisible(true);});
 		return p;
 	}
+	public void ejecutarBusquedaDesdeFiltros(boolean guardarEnHistorial) {
+
+	    Object seleccionado = cbBarrio.getSelectedItem();
+	    Barrio barrio = null;
+	    if (!"TODOS".equals(seleccionado)) {
+	        barrio = (Barrio) seleccionado;
+	    }
+
+	    int adultos = (int) cbAdultos.getSelectedItem();
+	    int ninos = (int) cbNinos.getSelectedItem();
+	    int total = adultos + ninos;
+
+	    filtrados.clear();
+	    for (Alojamiento a : alojamientos) {
+	        if ((barrio == null || a.getBarrio() == barrio) && a.getCapacidad() >= total) {
+	            filtrados.add(a);
+	        }
+	    }
+
+	    modeloTabla.setRowCount(0);
+	    for (Alojamiento a : filtrados) {
+	        modeloTabla.addRow(new Object[] { a.getId(), a.getTitulo(), a.getBarrio(), a.getCapacidad(),
+	                a.getPrecioNoche(), a.getRating() });
+	    }
+
+	    if (guardarEnHistorial) {
+	        String fecha = Funciones.fechayHora();
+
+	        String textoBarrio;
+	        if (barrio == null) textoBarrio = "TODOS";
+	        else textoBarrio = barrio.toString();
+
+	        String filtros = "Barrio=" + textoBarrio + ", Adultos=" + adultos + ", Niños=" + ninos + ", Total=" + total;
+	        int resultados = filtrados.size();
+
+	        Sesion.getHistorial().add(new Busqueda(fecha, filtros, resultados, textoBarrio, adultos, ninos));
+	    }
+
+	    pCentro.remove(pBuscar);
+	    pCentro.add(pResultados, BorderLayout.CENTER);
+	    pCentro.revalidate();
+	    pCentro.repaint();
+	}
+
 
 	private JPanel pResultados() {
 		JPanel p = new JPanel(new BorderLayout(10, 10));
@@ -274,6 +275,22 @@ public class PanelBuscar extends JPanel {
 			JOptionPane.showMessageDialog(this, "Error al cargar los alojamientos: " + e.getMessage());
 		}
 		return lista;
+	}
+	
+	public void setBarrioDesdeString(String barrio) {
+	    for (int i = 0; i < cbBarrio.getItemCount(); i++) {
+	        Object item = cbBarrio.getItemAt(i);
+	        if (item != null && item.toString().equals(barrio)) {
+	            cbBarrio.setSelectedIndex(i);
+	            return;
+	        }
+	    }
+	}
+	public void setAdultos(int adultos) {
+	    cbAdultos.setSelectedItem(adultos);
+	}
+	public void setNinos(int ninos) {
+	    cbNinos.setSelectedItem(ninos);
 	}
 
 }

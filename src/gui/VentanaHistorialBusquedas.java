@@ -9,7 +9,10 @@ import javax.swing.JTable;
 import domain.Sesion;
 
 public class VentanaHistorialBusquedas extends JDialog{
-	public VentanaHistorialBusquedas() {
+	private PanelBuscar panelBuscar;
+	
+	public VentanaHistorialBusquedas(PanelBuscar panelBuscar) {
+		this.panelBuscar = panelBuscar;
         setTitle("Historial de búsquedas");
         setModal(true);
         setSize(new Dimension(800, 400));
@@ -18,6 +21,24 @@ public class VentanaHistorialBusquedas extends JDialog{
 
         JTable tabla = new JTable(new ModeloTablaHistorialBusquedas(Sesion.getHistorial().getLista()));
         Tabla.aplicar(tabla);
+        tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                if (e.getClickCount() == 2 && tabla.getSelectedRow() != -1) {
+
+                    int fila = tabla.getSelectedRow();  // fila del historial
+                    domain.Busqueda b = Sesion.getHistorial().getLista().get(fila);
+
+                    panelBuscar.setBarrioDesdeString(b.getBarrio());
+                    panelBuscar.setAdultos(b.getAdultos());
+                    panelBuscar.setNinos(b.getNinos());
+
+                    panelBuscar.ejecutarBusquedaDesdeFiltros(false);
+                    dispose();
+                }
+            }
+        });
+
 
         tabla.getColumnModel().getColumn(1).setPreferredWidth(550);
 
