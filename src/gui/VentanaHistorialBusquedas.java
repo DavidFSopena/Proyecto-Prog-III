@@ -26,7 +26,7 @@ public class VentanaHistorialBusquedas extends JDialog{
             public void mouseClicked(java.awt.event.MouseEvent e) {
                 if (e.getClickCount() == 2 && tabla.getSelectedRow() != -1) {
 
-                    int fila = tabla.getSelectedRow();  // fila del historial
+                    int fila = tabla.getSelectedRow();
                     domain.Busqueda b = Sesion.getHistorial().getLista().get(fila);
 
                     panelBuscar.setBarrioDesdeString(b.getBarrio());
