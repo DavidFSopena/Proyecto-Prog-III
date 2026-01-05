@@ -70,7 +70,7 @@ public class Tabla {
                 hover = (filaHover == row && colHover == column);
             }
 
-            if (column == 3 && hover) {
+            if (column == 3 && hover && value!=null) {
                 int cap = 0;
                 try {
                     cap = Integer.parseInt(value.toString());
@@ -81,8 +81,13 @@ public class Tabla {
                 pb.setStringPainted(true);
                 pb.setString(cap + " personas");
 
-                pb.setBackground(isSelected ? new Color(225, 240, 240) : ((row % 2 == 0) ? zebra1 : zebra2));
-                pb.setForeground(new Color(60, 160, 140));
+                if (isSelected) {
+                    pb.setBackground(new Color(225, 240, 240));
+                } else if (row % 2 == 0) {
+                    pb.setBackground(zebra1);
+                } else {
+                    pb.setBackground(zebra2);
+                }                pb.setForeground(new Color(60, 160, 140));
                 pb.setBorder(new EmptyBorder(6, 12, 6, 12));
 
                 return pb;
@@ -118,8 +123,15 @@ public class Tabla {
             if (value != null && column == 5) {
                 try {
                     double r = Double.parseDouble(value.toString());
-                    l.setText(String.format("%.1f  %s", r, Funciones.estrellas(r)));
-
+                    Color fondo;
+                    if (isSelected) {
+                        fondo = new Color(225, 240, 240);
+                    } else if (row % 2 == 0) {
+                        fondo = zebra1;
+                    } else {
+                        fondo = zebra2;
+                    }
+                    
                     if (hover) {
                         if (r < 2) {
                             l.setForeground(new Color(200, 40, 40));
@@ -131,6 +143,7 @@ public class Tabla {
                     } else {
                         l.setForeground(new Color(80, 80, 80));
                     }
+                    return Funciones.ratingPanel(r, 16, fondo);
                 } catch (Exception e) {}
             }
 
