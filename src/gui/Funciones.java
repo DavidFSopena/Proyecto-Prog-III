@@ -155,5 +155,10 @@ public class Funciones {
 
 		return lbl;
 	}
+	
+	public static String fechayHora() {
+	    java.text.SimpleDateFormat f = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm");
+	    return f.format(new java.util.Date());
+	}
 
 }

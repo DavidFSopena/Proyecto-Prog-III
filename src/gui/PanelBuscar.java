@@ -2,6 +2,7 @@ package gui;
 
 import domain.Alojamiento;
 import domain.Barrio;
+import domain.Sesion;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -23,6 +24,7 @@ import javax.swing.SwingUtilities;
 import java.awt.Window;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import domain.Busqueda;
 
 
 public class PanelBuscar extends JPanel {
@@ -30,7 +32,7 @@ public class PanelBuscar extends JPanel {
 	private JComboBox<Object> cbBarrio;
 	private JComboBox<Integer> cbAdultos, cbNinos;
 	private JComboBox<String> cbOrden;
-	private JButton btnBuscar, btnVolver;
+	private JButton btnBuscar, btnVolver, btnHistorial;
 	private JTable tabla;
 	private DefaultTableModel modeloTabla;
 	private List<Alojamiento> alojamientos = new ArrayList<>();
@@ -86,6 +88,11 @@ public class PanelBuscar extends JPanel {
 		btnBuscar.setBackground(Funciones.Colores.Coral);
 		btnBuscar.setForeground(Color.WHITE);
 		btnBuscar.setFocusPainted(false);
+		
+		btnHistorial = new JButton("HISTORIAL");
+		btnHistorial.setBackground(Funciones.Colores.Coral);
+		btnHistorial.setForeground(Color.WHITE);
+		btnHistorial.setFocusPainted(false);
 
 		p.add(lblBarrio);
 		p.add(cbBarrio);
@@ -94,6 +101,8 @@ public class PanelBuscar extends JPanel {
 		p.add(lblNinos);
 		p.add(cbNinos);
 		p.add(btnBuscar);
+		p.add(btnHistorial);
+
 
 		btnBuscar.addActionListener(e -> {
 			Object seleccionado = cbBarrio.getSelectedItem();
@@ -111,7 +120,21 @@ public class PanelBuscar extends JPanel {
 					filtrados.add(a);
 				}
 			}
+			
+			String fecha = Funciones.fechayHora();
 
+			String textoBarrio;
+			if (barrio == null) {
+			    textoBarrio = "TODOS";
+			} else {
+			    textoBarrio = barrio.toString();
+			}
+
+			String filtros = "Barrio=" + textoBarrio + ", Adultos=" + adultos + ", Niños=" + ninos + ", Total=" + total;
+
+			int resultados = filtrados.size();
+
+			Sesion.getHistorial().add(new Busqueda(fecha, filtros, resultados));
 			modeloTabla.setRowCount(0);
 			for (Alojamiento a : filtrados) {
 				modeloTabla.addRow(new Object[] { a.getId(), a.getTitulo(), a.getBarrio(), a.getCapacidad(),
@@ -122,6 +145,10 @@ public class PanelBuscar extends JPanel {
 			pCentro.add(pResultados, BorderLayout.CENTER);
 			pCentro.revalidate();
 			pCentro.repaint();
+		});
+		
+		btnHistorial.addActionListener(e -> {
+		    new VentanaHistorialBusquedas().setVisible(true);
 		});
 		return p;
 	}
