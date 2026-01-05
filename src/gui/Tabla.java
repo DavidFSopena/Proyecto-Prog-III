@@ -5,7 +5,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.JTable;
@@ -41,6 +40,20 @@ public class Tabla {
 
         tabla.setDefaultRenderer(Object.class, new Renderer());
         tabla.setDefaultRenderer(Number.class, new Renderer());
+        tabla.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(java.awt.event.MouseEvent e) {
+                tabla.repaint();
+            }
+        });
+
+        tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent e) {
+                tabla.repaint();
+            }
+        });
+
     }
 
     private static class Renderer extends DefaultTableCellRenderer {
@@ -133,6 +146,10 @@ public class Tabla {
                     }
                     
                     if (hover) {
+                    	 l.setBackground(fondo);
+                         l.setHorizontalAlignment(JLabel.CENTER);
+                         l.setText(String.format("%.1f", r));
+                         
                         if (r < 2) {
                             l.setForeground(new Color(200, 40, 40));
                         } else if (r < 3.5) {
@@ -140,13 +157,13 @@ public class Tabla {
                         } else {
                             l.setForeground(new Color(40, 160, 80));
                         }
-                    } else {
-                        l.setForeground(new Color(80, 80, 80));
+     
+                        return l;
                     }
+                
                     return Funciones.ratingPanel(r, 16, fondo);
                 } catch (Exception e) {}
             }
-
             return l;
         }
     }
