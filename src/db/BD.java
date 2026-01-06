@@ -154,9 +154,30 @@ public class BD {
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
+	    String sql2 = "CREATE UNIQUE INDEX IF NOT EXISTS id_alquiler_alojamiento ON Alquiler(idAlojamiento)";
+	    try (Statement st = con.createStatement()) {
+	        st.executeUpdate(sql2);
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public static boolean alojamientoEstaAlquilado(String idAlojamiento) {
+	    String sql = "SELECT 1 FROM Alquiler WHERE idAlojamiento = ? LIMIT 1";
+	    try (PreparedStatement ps = con.prepareStatement(sql)) {
+	        ps.setString(1, idAlojamiento);
+	        ResultSet rs = ps.executeQuery();
+	        return rs.next();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
 	
 	public static boolean registrarAlquiler(int usuarioID, String idAlojamiento) {
+		if (alojamientoEstaAlquilado(idAlojamiento)) {
+		    return false;
+		}
 	    String sql = "INSERT INTO Alquiler (usuarioID, idAlojamiento) VALUES (?, ?)";
 	    try (PreparedStatement ps = con.prepareStatement(sql)) {
 	        ps.setInt(1, usuarioID);

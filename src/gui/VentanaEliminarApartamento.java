@@ -167,7 +167,7 @@ public class VentanaEliminarApartamento extends JDialog {
         if (resp != JOptionPane.YES_OPTION) return;
 
         boolean ok = BD.eliminarAlquiler(usuarioID, idAlojamiento); 
-
+        dispose();
         if (ok) {
             JOptionPane.showMessageDialog(this,
                     "Apartamento eliminado correctamente de tus alojamientos.",

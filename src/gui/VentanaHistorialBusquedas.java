@@ -2,7 +2,9 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
+import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
@@ -43,5 +45,15 @@ public class VentanaHistorialBusquedas extends JDialog{
         tabla.getColumnModel().getColumn(1).setPreferredWidth(550);
 
         add(new JScrollPane(tabla), BorderLayout.CENTER);
+        JButton btnLimpiar = new JButton("Limpiar historial");
+    	btnLimpiar.addActionListener(e -> {
+    	    Sesion.getHistorial().clear();
+    	    tabla.setModel(new ModeloTablaHistorialBusquedas(Sesion.getHistorial().getLista()));
+    	});
+
+    	JPanel sur = new JPanel();
+    	sur.add(btnLimpiar);
+    	add(sur, BorderLayout.SOUTH);
     }
+	
 }

@@ -41,6 +41,14 @@ public class PanelPerfil extends JPanel {
 		setBackground(Funciones.Colores.Turquesa);
 		setLayout(new BorderLayout(10,10));
 		setBorder(new EmptyBorder(30, 50, 30, 50));
+		if (BD.usuarioLogeado == null) {
+		    setLayout(new BorderLayout());
+		    JLabel lbl = new JLabel("Estás en modo invitado. Inicia sesión para acceder a tu perfil.", JLabel.CENTER);
+		    lbl.setFont(Funciones.Letra.negrita(22));
+		    lbl.setForeground(Color.WHITE);
+		    add(lbl, BorderLayout.CENTER);
+		    return;
+		}
 		
 		//Creamos los paneles 
 		pNorte = new JPanel(new GridLayout(3,1,5,5));

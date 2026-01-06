@@ -237,25 +237,28 @@ public class VentanaDetalleApartamento extends JDialog {
 
     private void alquilarApartamento() {
         if (!Sesion.hayUsuario()) {
-            JOptionPane.showMessageDialog(this,
-                    "Debes iniciar sesión para alquilar un apartamento.",
-                    "Aviso", JOptionPane.WARNING_MESSAGE);
+            int r = JOptionPane.showConfirmDialog(this,
+                    "Debes iniciar sesión para alquilar un apartamento.\n¿Quieres iniciar sesión ahora?",
+                    "Modo invitado", JOptionPane.YES_NO_OPTION);
+            if (r == JOptionPane.YES_OPTION) {
+            	dispose();
+            	new Ventana2_1().setVisible(true);
+            }
             return;
         }
 
         Usuario u = Sesion.getUsuarioActual();
         boolean ok = BD.registrarAlquiler(u.getId(), idAlojamiento);
 
-        if (ok) {
+        if (!ok) {
             JOptionPane.showMessageDialog(this,
-                    "Apartamento alquilado correctamente.",
-                    "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            dispose();
-        } else {
-            JOptionPane.showMessageDialog(this,
-                    "No se ha podido registrar el alquiler.",
-                    "Error", JOptionPane.ERROR_MESSAGE);
+                    "Este alojamiento ya está alquilado por otro usuario.",
+                    "No disponible", JOptionPane.WARNING_MESSAGE);
+            return;
         }
+		JOptionPane.showMessageDialog(this, "Alquiler realizado con éxito.",
+				"Confirmado", JOptionPane.INFORMATION_MESSAGE);
+        dispose();
     }
 
     private JLabel crearLabel(String texto, Font f) {

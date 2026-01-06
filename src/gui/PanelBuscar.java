@@ -258,6 +258,8 @@ public class PanelBuscar extends JPanel {
 			while (sc.hasNextLine()) {
 				String linea = sc.nextLine();
 				String[] campo = linea.split(";");
+				String id = campo[0].trim();
+				if (BD.alojamientoEstaAlquilado(id)) continue;
 
 				Barrio barrio = null;
 				try {
@@ -265,7 +267,7 @@ public class PanelBuscar extends JPanel {
 				} catch (Exception e) {
 				}
 
-				Alojamiento a = new Alojamiento(campo[0], campo[1], barrio, Integer.parseInt(campo[3]), Double.parseDouble(campo[4]), Double.parseDouble(campo[5]));
+				Alojamiento a = new Alojamiento(id, campo[1], barrio, Integer.parseInt(campo[3]), Double.parseDouble(campo[4]), Double.parseDouble(campo[5]));
 				lista.add(a);
 				BD.upsertAlojamiento(a);
 			}
@@ -275,6 +277,10 @@ public class PanelBuscar extends JPanel {
 			JOptionPane.showMessageDialog(this, "Error al cargar los alojamientos: " + e.getMessage());
 		}
 		return lista;
+	}
+	
+	public void refrescar() {
+	    alojamientos = cargarAlojamientos(new File("resources/data/alojamientos.csv"));
 	}
 	
 	public void setBarrioDesdeString(String barrio) {
