@@ -26,6 +26,8 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
+import db.BD;
+
 public class PanelGeneral extends JPanel {
 	private JPanel pNorte, pSur, pOeste, pEste, pCentro;
 	private DefaultTableModel tblModelo;
@@ -171,11 +173,19 @@ public class PanelGeneral extends JPanel {
 				return Double.compare(r2, r1);
 			}
 		});
-		
-		int limite = Math.min(cuantos, filas.size());
-		for (int i = 0; i < limite; i++) {
-			tblModelo.addRow(filas.get(i));
+		int aniadidos = 0;
+		for( int i = 0; i< filas.size()&& aniadidos < cuantos; i++){
+			String[] fila = filas.get(i);
+			String id = fila[0].trim();
+			if (BD.alojamientoEstaAlquilado(id)) continue;
+			tblModelo.addRow(fila);
+		    aniadidos++;
 		}
+	}
+	
+	public void refrescar() {
+	    tblModelo.setRowCount(0);
+	    cargarTopDesdeCSV("resources/data/alojamientos.csv", 20);
 	}
 
 }

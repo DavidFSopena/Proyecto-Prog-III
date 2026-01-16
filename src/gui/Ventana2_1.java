@@ -33,7 +33,7 @@ import db.BD;
 public class Ventana2_1 extends JFrame {
 	private JPanel pSur, pCentro, pCentroConLogo, pNorte, pFormulario;
 	private JLabel lblTitulo, lblNombre, lblContrasena, lblRegistrarse, lblReloj;
-	private JButton btnIniciarSesion, btnRegistrarse, btnVolver;
+	private JButton btnIniciarSesion, btnRegistrarse, btnInvitado, btnVolver;
 	private JTextField txtEmail;
 	private JPasswordField txtContrasena;
 	
@@ -73,6 +73,10 @@ public class Ventana2_1 extends JFrame {
 		btnRegistrarse = new JButton("REGISTRARSE");
 		btnRegistrarse.setForeground(Funciones.Colores.Coral);
 		btnRegistrarse.setBackground(Color.WHITE);
+		
+		btnInvitado = new JButton("MODO INVITADO");
+		btnInvitado.setForeground(Funciones.Colores.Coral);
+		btnInvitado.setBackground(Color.WHITE);
 
 		btnVolver = new JButton("VOLVER");
 		btnVolver.setForeground(Funciones.Colores.Coral);
@@ -146,6 +150,7 @@ public class Ventana2_1 extends JFrame {
 
 		pSur.add(btnIniciarSesion);
 		pSur.add(btnRegistrarse);
+		pSur.add(btnInvitado);
 		pSur.add(btnVolver);
 
 		// LISTENERS
@@ -165,6 +170,13 @@ public class Ventana2_1 extends JFrame {
 						JOptionPane.ERROR_MESSAGE
 				);
 			}
+		});
+		
+		btnInvitado.addActionListener((e) -> {
+			BD.usuarioLogeado = null;
+			Sesion.setUsuarioActual(null);//modo invitado
+			Ventana2_1.this.setVisible(false);
+			new Ventana3();
 		});
 		
 		btnRegistrarse.addActionListener((e) -> {
@@ -218,6 +230,7 @@ public class Ventana2_1 extends JFrame {
 		
 		Funciones.botonBonito(btnIniciarSesion, Funciones.Colores.Coral);
 		Funciones.botonBonito(btnRegistrarse, Funciones.Colores.Coral);
+		Funciones.botonBonito(btnInvitado, Funciones.Colores.Coral);
 		Funciones.botonBonito(btnVolver, Funciones.Colores.Coral);
 		
 		setVisible(true);

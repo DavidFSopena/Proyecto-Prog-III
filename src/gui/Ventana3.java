@@ -2,7 +2,6 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
-import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -24,6 +23,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import domain.Sesion;
 
 public class Ventana3 extends JFrame{
 	private JPanel pNorte, pSur, pOeste, pCentro;
@@ -50,7 +51,7 @@ public class Ventana3 extends JFrame{
 		pSur = new JPanel();
 		pOeste = new JPanel(new GridLayout(4,1,0,0));
 		pOeste.setPreferredSize(new Dimension(200,0));
-		pCentro = new JPanel(new CardLayout());
+		pCentro = new JPanel(new BorderLayout());
 		
 		JPanel panelGeneral = new PanelGeneral();
 		JPanel panelBuscar = new PanelBuscar();
@@ -110,10 +111,8 @@ public class Ventana3 extends JFrame{
 		pOeste.add(btnPerfil);
 		pOeste.add(btnCerrarSesion);
 		
-		pCentro.add(panelGeneral, "GENERAL");
-		pCentro.add(panelBuscar, "BUSCAR");
-		pCentro.add(panelPerfil, "PERFIL");
-		CardLayout cardLayout= (CardLayout) pCentro.getLayout();
+		pCentro.add(panelGeneral, BorderLayout.CENTER);
+
 		
 		
 		//Listeners de los botones
@@ -210,18 +209,29 @@ public class Ventana3 extends JFrame{
 		});
 		
 		btnGeneral.addActionListener((e) -> {
-			cardLayout.show(pCentro, "GENERAL");
-			seleccionarBoton(btnGeneral, Funciones.Colores.Coral);
+			((PanelGeneral) panelGeneral).refrescar();
+		    mostrarPanel(panelGeneral);			
+		    seleccionarBoton(btnGeneral, Funciones.Colores.Coral);
 		});
 		
 		btnBuscar.addActionListener((e) -> {
-			cardLayout.show(pCentro, "BUSCAR");
+			((PanelBuscar) panelBuscar).refrescar();
+		    mostrarPanel(panelBuscar);
 			seleccionarBoton(btnBuscar, Funciones.Colores.Coral);
 		});
 		
 		btnPerfil.addActionListener((e) -> {
+			if (!Sesion.hayUsuario()) {
+		        int r = JOptionPane.showConfirmDialog(this,
+		            "Necesitas iniciar sesión para acceder a Mi cuenta.\n¿Quieres iniciar sesión ahora?",
+		            "Modo invitado",
+		            JOptionPane.YES_NO_OPTION
+		        );
+		        if (r == JOptionPane.YES_OPTION) new Ventana2_1().setVisible(true);
+		        return;
+		    }
 			((PanelPerfil) panelPerfil).actualizarDatos();
-			cardLayout.show(pCentro, "PERFIL");
+		    mostrarPanel(panelPerfil);
 			seleccionarBoton(btnPerfil, Funciones.Colores.Coral);
 		});
 		
@@ -240,6 +250,13 @@ public class Ventana3 extends JFrame{
 		setVisible(true);
 	}
 	
+	private void mostrarPanel(JPanel  p) {
+		 pCentro.removeAll();
+		 pCentro.add(p, BorderLayout.CENTER);
+		 pCentro.revalidate();
+		 pCentro.repaint();		
+	}
+
 	private void seleccionarBoton(JButton btn, Color coral) {
 		JButton [] botones = {btnGeneral, btnBuscar, btnPerfil, btnCerrarSesion};
 		for (JButton b : botones ) {

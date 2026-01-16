@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -21,6 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -39,6 +41,14 @@ public class PanelPerfil extends JPanel {
 		setBackground(Funciones.Colores.Turquesa);
 		setLayout(new BorderLayout(10,10));
 		setBorder(new EmptyBorder(30, 50, 30, 50));
+		if (BD.usuarioLogeado == null) {
+		    setLayout(new BorderLayout());
+		    JLabel lbl = new JLabel("Estás en modo invitado. Inicia sesión para acceder a tu perfil.", JLabel.CENTER);
+		    lbl.setFont(Funciones.Letra.negrita(22));
+		    lbl.setForeground(Color.WHITE);
+		    add(lbl, BorderLayout.CENTER);
+		    return;
+		}
 		
 		//Creamos los paneles 
 		pNorte = new JPanel(new GridLayout(3,1,5,5));
@@ -70,7 +80,7 @@ public class PanelPerfil extends JPanel {
 		btnEditarPerfil.setForeground(Funciones.Colores.Coral);
 		btnEditarPerfil.setBackground(Color.WHITE);
 		
-		List<Alojamiento> alojamientosCadaUsuario = BD.obtenerListaAlojamiento(BD.usuarioLogeado.getUsuario());
+		List<Alojamiento> alojamientosCadaUsuario = BD.obtenerListaAlojamiento(BD.usuarioLogeado.getId());
 		ModeloTablaMisAlojamientosUsuario modelo = new ModeloTablaMisAlojamientosUsuario(alojamientosCadaUsuario);
 		
 		tabla = new JTable(modelo);
@@ -97,6 +107,35 @@ public class PanelPerfil extends JPanel {
 		pCentro.add(scroll);
 		
 		//Listeners
+		tabla.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2 && tabla.getSelectedRow() != -1) {
+
+		            int filaVista = tabla.rowAtPoint(e.getPoint());
+		            if(filaVista<0) {
+		            	return;
+		            }
+		            int filaModelo = tabla.convertRowIndexToModel(filaVista);
+		            
+		            ModeloTablaMisAlojamientosUsuario m = (ModeloTablaMisAlojamientosUsuario) tabla.getModel();
+
+		            String id = m.getValueAt(filaModelo, 0).toString();
+		            String titulo = m.getValueAt(filaModelo, 1).toString();
+		            String barrio = m.getValueAt(filaModelo, 2).toString();
+		            int capacidad = Integer.parseInt(m.getValueAt(filaModelo, 3).toString());
+		            double precio = Double.parseDouble(m.getValueAt(filaModelo, 4).toString());
+		            double rating = Double.parseDouble(m.getValueAt(filaModelo, 5).toString());
+
+		            Window parent = SwingUtilities.getWindowAncestor(PanelPerfil.this);
+
+		            new VentanaEliminarApartamento(parent, BD.usuarioLogeado.getId(), id, titulo, barrio, capacidad, precio, rating, () -> actualizarDatos()).setVisible(true);
+		        }
+				
+			}
+		});
+		
 		btnEditarPerfil.addActionListener( (e) -> {
 			String nuevoNombre = JOptionPane.showInputDialog(this,"Nuevo nombre:",BD.usuarioLogeado.getNombre());
 			if (nuevoNombre == null || nuevoNombre.isEmpty()) {
@@ -107,20 +146,25 @@ public class PanelPerfil extends JPanel {
 				return;
 			}
 			
-			boolean actualizacionUsuarioCorrecta = BD.actualizarUsuario(BD.usuarioLogeado.getUsuario(), nuevoNombre, nuevoEmail);
+			boolean actualizacionUsuarioCorrecta = BD.actualizarUsuario(BD.usuarioLogeado.getId(),BD.usuarioLogeado.getUsuario(), nuevoNombre, nuevoEmail);
 			
 			if(actualizacionUsuarioCorrecta) {
 				lblNombre.setText("Nombre: "+BD.usuarioLogeado.getNombre());
 				lblEmail.setText("Email: "+BD.usuarioLogeado.getEmail());
+				
+				List<Alojamiento> alojamientos = BD.obtenerListaAlojamiento(BD.usuarioLogeado.getId());
+				tabla.setModel(new ModeloTablaMisAlojamientosUsuario(alojamientos));
+		        tabla.repaint();
+		        
 				JOptionPane.showMessageDialog(this, "Datos actualizados correctamente");
 			} else {
-				JOptionPane.showMessageDialog(this, "Error, el email ya está en uso", "Error al actualizar datos", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Error, el nombre o el email ya está en uso", "Error al actualizar datos", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		
 		btnEditarPerfil.addMouseListener(new MouseAdapter() {
 			
-			
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnEditarPerfil.setBackground(Color.WHITE);
@@ -141,7 +185,7 @@ public class PanelPerfil extends JPanel {
 		lblNombre.setText("Nombre: "+BD.usuarioLogeado.getNombre());
 		lblEmail.setText("Email: "+BD.usuarioLogeado.getEmail());
 		
-		List<Alojamiento> alojamientosActualizados = BD.obtenerListaAlojamiento((BD.usuarioLogeado.getUsuario()));
+		List<Alojamiento> alojamientosActualizados = BD.obtenerListaAlojamiento((BD.usuarioLogeado.getId()));
 		
 		ModeloTablaMisAlojamientosUsuario modelo = new ModeloTablaMisAlojamientosUsuario(alojamientosActualizados);
 		

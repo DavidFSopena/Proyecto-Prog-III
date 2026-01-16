@@ -1,30 +1,13 @@
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.Window;
-
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
+import java.awt.*;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
 
 import db.BD;
-import domain.Sesion;
-import domain.Usuario;
 
-public class VentanaDetalleApartamento extends JDialog {
+public class VentanaEliminarApartamento extends JDialog {
 
     private JLabel lblImagen;
     private String idAlojamiento;
@@ -32,17 +15,24 @@ public class VentanaDetalleApartamento extends JDialog {
     private volatile boolean seguirMostrando = true;
     private ImageIcon[] imagenes;
 
-    public VentanaDetalleApartamento(
+    private int usuarioID;
+    private Runnable onDeleted;
+
+    public VentanaEliminarApartamento(
             Window padre,
+            int usuarioID,
             String id,
             String titulo,
             String barrio,
             int capacidad,
             double precioNoche,
-            double rating) {
+            double rating,
+            Runnable onDeleted) {
 
         super(padre, "Apartamento " + id, ModalityType.APPLICATION_MODAL);
+        this.usuarioID = usuarioID;
         this.idAlojamiento = id;
+        this.onDeleted = onDeleted;
 
         setSize(1000, 600);
         setLocationRelativeTo(padre);
@@ -94,7 +84,7 @@ public class VentanaDetalleApartamento extends JDialog {
         pDerecha.setLayout(new BoxLayout(pDerecha, BoxLayout.Y_AXIS));
         pCentro.add(pDerecha, BorderLayout.CENTER);
 
-        JPanel pDetalles = new JPanel(new java.awt.GridLayout(0, 2, 15, 18));
+        JPanel pDetalles = new JPanel(new GridLayout(0, 2, 15, 18));
         pDetalles.setOpaque(false);
 
         pDetalles.add(crearLabel("ID:", Funciones.Letra.normal(16)));
@@ -115,40 +105,33 @@ public class VentanaDetalleApartamento extends JDialog {
         pDerecha.add(pDetalles);
         pDerecha.add(Box.createVerticalStrut(25));
 
-        JPanel pPrecio = new JPanel();
-        pPrecio.setLayout(new BoxLayout(pPrecio, BoxLayout.Y_AXIS));
-        pPrecio.setBackground(new Color(247, 247, 247));
-        pPrecio.setBorder(BorderFactory.createCompoundBorder(
+        JPanel pAccion = new JPanel();
+        pAccion.setLayout(new BoxLayout(pAccion, BoxLayout.Y_AXIS));
+        pAccion.setBackground(new Color(247, 247, 247));
+        pAccion.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(210, 210, 210)),
                 new EmptyBorder(25, 25, 25, 25)
         ));
 
-        JButton btnAlquilar = new JButton("Alquilar");
-        btnAlquilar.setFont(Funciones.Letra.negrita(16));
-        btnAlquilar.setBackground(Color.BLACK);
-        btnAlquilar.setForeground(Color.WHITE);
-        btnAlquilar.setFocusPainted(false);
+        JButton btnEliminar = new JButton("Eliminar apartamento");
+        btnEliminar.setFont(Funciones.Letra.negrita(16));
+        btnEliminar.setBackground(Color.BLACK);
+        btnEliminar.setForeground(Color.WHITE);
+        btnEliminar.setFocusPainted(false);
 
-        btnAlquilar.addActionListener(e -> alquilarApartamento());
+        btnEliminar.addActionListener(e -> eliminarApartamento());
 
-        JLabel lblDesde = new JLabel("Precio por noche", SwingConstants.CENTER);
-        lblDesde.setFont(Funciones.Letra.normal(16));
-        lblDesde.setForeground(Color.BLACK);
+        JLabel lblInfo = new JLabel("¿Quieres quitar este apartamento?", SwingConstants.CENTER);
+        lblInfo.setFont(Funciones.Letra.normal(16));
+        lblInfo.setForeground(Color.BLACK);
 
-        JLabel lblPrecio = new JLabel(String.format("%.2f €", precioNoche), SwingConstants.CENTER);
-        lblPrecio.setFont(Funciones.Letra.negrita(30));
-        lblPrecio.setForeground(Color.BLACK);
+        pAccion.add(lblInfo);
+        pAccion.add(Box.createVerticalStrut(15));
+        pAccion.add(btnEliminar);
 
-        pPrecio.add(lblDesde);
-        pPrecio.add(Box.createVerticalStrut(10));
-        pPrecio.add(lblPrecio);
-        pPrecio.add(Box.createVerticalStrut(15));
-        pPrecio.add(btnAlquilar);
-
-        pDerecha.add(pPrecio);
+        pDerecha.add(pAccion);
         pDerecha.add(Box.createVerticalGlue());
 
-        // SUR
         JPanel pSur = new JPanel();
         pSur.setBackground(Color.WHITE);
         pSur.setPreferredSize(new Dimension(0, 60));
@@ -172,9 +155,35 @@ public class VentanaDetalleApartamento extends JDialog {
         iniciarHiloFotos();
     }
 
+    private void eliminarApartamento() {
+        int resp = JOptionPane.showConfirmDialog(
+                this,
+                "¿Seguro que quieres eliminar este apartamento de tus alojamientos?",
+                "Confirmar eliminación",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+        );
+
+        if (resp != JOptionPane.YES_OPTION) return;
+
+        boolean ok = BD.eliminarAlquiler(usuarioID, idAlojamiento); 
+        dispose();
+        if (ok) {
+            JOptionPane.showMessageDialog(this,
+                    "Apartamento eliminado correctamente de tus alojamientos.",
+                    "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+            if (onDeleted != null) onDeleted.run();
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "No ha sido posible eliminar.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private void cargarImagenesAlojamiento(String id) {
         imagenes = new ImageIcon[3];
-
         for (int i=0; i<3; i++) {
             String ruta = "/images/" + id + "_" + (i+1) + ".jpg";
             java.net.URL url = getClass().getResource(ruta);
@@ -191,16 +200,9 @@ public class VentanaDetalleApartamento extends JDialog {
     private void iniciarHiloFotos() {
         boolean hayAlguna = false;
         for (ImageIcon ic : imagenes) {
-            if (ic != null) {
-                hayAlguna = true;
-                break;
-            }
+            if (ic != null) { hayAlguna = true; break; }
         }
-
-        if (!hayAlguna) {
-            lblImagen.setText("No hay imágenes disponibles");
-            return;
-        }
+        if (!hayAlguna) { lblImagen.setText("No hay imágenes disponibles"); return; }
 
         hiloFotos = new Thread(() -> {
             int indice = 0;
@@ -209,56 +211,23 @@ public class VentanaDetalleApartamento extends JDialog {
                     indice = (indice + 1) % imagenes.length;
                     continue;
                 }
-                final int indiceFinal = indice;
+                final int idx = indice;
                 SwingUtilities.invokeLater(() -> {
                     lblImagen.setText(null);
-                    lblImagen.setIcon(imagenes[indiceFinal]);
+                    lblImagen.setIcon(imagenes[idx]);
                 });
-                try {
-                    Thread.sleep(2500);
-                } catch (InterruptedException e) {
-                    break;
-                }
-                indice = (indice+1)%imagenes.length; 
+                try { Thread.sleep(2500); } catch (InterruptedException e) { break; }
+                indice = (indice + 1) % imagenes.length;
             }
         });
-
         hiloFotos.start();
     }
 
     @Override
     public void dispose() {
         seguirMostrando = false;
-        if (hiloFotos != null && hiloFotos.isAlive()) {
-            hiloFotos.interrupt();
-        }
+        if (hiloFotos != null && hiloFotos.isAlive()) hiloFotos.interrupt();
         super.dispose();
-    }
-
-    private void alquilarApartamento() {
-        if (!Sesion.hayUsuario()) {
-            int r = JOptionPane.showConfirmDialog(this,
-                    "Debes iniciar sesión para alquilar un apartamento.\n¿Quieres iniciar sesión ahora?",
-                    "Modo invitado", JOptionPane.YES_NO_OPTION);
-            if (r == JOptionPane.YES_OPTION) {
-            	dispose();
-            	new Ventana2_1().setVisible(true);
-            }
-            return;
-        }
-
-        Usuario u = Sesion.getUsuarioActual();
-        boolean ok = BD.registrarAlquiler(u.getId(), idAlojamiento);
-
-        if (!ok) {
-            JOptionPane.showMessageDialog(this,
-                    "Este alojamiento ya está alquilado por otro usuario.",
-                    "No disponible", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-		JOptionPane.showMessageDialog(this, "Alquiler realizado con éxito.",
-				"Confirmado", JOptionPane.INFORMATION_MESSAGE);
-        dispose();
     }
 
     private JLabel crearLabel(String texto, Font f) {
@@ -275,3 +244,4 @@ public class VentanaDetalleApartamento extends JDialog {
         return lbl;
     }
 }
+

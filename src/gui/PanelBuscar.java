@@ -2,6 +2,7 @@ package gui;
 
 import domain.Alojamiento;
 import domain.Barrio;
+import domain.Sesion;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -23,6 +24,7 @@ import javax.swing.SwingUtilities;
 import java.awt.Window;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import domain.Busqueda;
 
 
 public class PanelBuscar extends JPanel {
@@ -30,7 +32,7 @@ public class PanelBuscar extends JPanel {
 	private JComboBox<Object> cbBarrio;
 	private JComboBox<Integer> cbAdultos, cbNinos;
 	private JComboBox<String> cbOrden;
-	private JButton btnBuscar, btnVolver;
+	private JButton btnBuscar, btnVolver, btnHistorial;
 	private JTable tabla;
 	private DefaultTableModel modeloTabla;
 	private List<Alojamiento> alojamientos = new ArrayList<>();
@@ -86,6 +88,11 @@ public class PanelBuscar extends JPanel {
 		btnBuscar.setBackground(Funciones.Colores.Coral);
 		btnBuscar.setForeground(Color.WHITE);
 		btnBuscar.setFocusPainted(false);
+		
+		btnHistorial = new JButton("HISTORIAL");
+		btnHistorial.setBackground(Funciones.Colores.Coral);
+		btnHistorial.setForeground(Color.WHITE);
+		btnHistorial.setFocusPainted(false);
 
 		p.add(lblBarrio);
 		p.add(cbBarrio);
@@ -94,37 +101,58 @@ public class PanelBuscar extends JPanel {
 		p.add(lblNinos);
 		p.add(cbNinos);
 		p.add(btnBuscar);
+		p.add(btnHistorial);
 
-		btnBuscar.addActionListener(e -> {
-			Object seleccionado = cbBarrio.getSelectedItem();
-			Barrio barrio = null;
-			if (!"TODOS".equals(seleccionado)) {
-				barrio = (Barrio) seleccionado;
-			}
-			int adultos = (int) cbAdultos.getSelectedItem();
-			int ninos = (int) cbNinos.getSelectedItem();
-			int total = adultos + ninos;
 
-			filtrados.clear();
-			for (Alojamiento a : alojamientos) {
-				if ((barrio == null || a.getBarrio() == barrio) && a.getCapacidad() >= total) {
-					filtrados.add(a);
-				}
-			}
-
-			modeloTabla.setRowCount(0);
-			for (Alojamiento a : filtrados) {
-				modeloTabla.addRow(new Object[] { a.getId(), a.getTitulo(), a.getBarrio(), a.getCapacidad(),
-						a.getPrecioNoche(), a.getRating() });
-			}
-
-			pCentro.remove(pBuscar);
-			pCentro.add(pResultados, BorderLayout.CENTER);
-			pCentro.revalidate();
-			pCentro.repaint();
-		});
+		btnBuscar.addActionListener(e -> {ejecutarBusquedaDesdeFiltros(true);});
+		
+		btnHistorial.addActionListener(e -> {new VentanaHistorialBusquedas(PanelBuscar.this).setVisible(true);});
 		return p;
 	}
+	public void ejecutarBusquedaDesdeFiltros(boolean guardarEnHistorial) {
+
+	    Object seleccionado = cbBarrio.getSelectedItem();
+	    Barrio barrio = null;
+	    if (!"TODOS".equals(seleccionado)) {
+	        barrio = (Barrio) seleccionado;
+	    }
+
+	    int adultos = (int) cbAdultos.getSelectedItem();
+	    int ninos = (int) cbNinos.getSelectedItem();
+	    int total = adultos + ninos;
+
+	    filtrados.clear();
+	    for (Alojamiento a : alojamientos) {
+	        if ((barrio == null || a.getBarrio() == barrio) && a.getCapacidad() >= total) {
+	            filtrados.add(a);
+	        }
+	    }
+
+	    modeloTabla.setRowCount(0);
+	    for (Alojamiento a : filtrados) {
+	        modeloTabla.addRow(new Object[] { a.getId(), a.getTitulo(), a.getBarrio(), a.getCapacidad(),
+	                a.getPrecioNoche(), a.getRating() });
+	    }
+
+	    if (guardarEnHistorial) {
+	        String fecha = Funciones.fechayHora();
+
+	        String textoBarrio;
+	        if (barrio == null) textoBarrio = "TODOS";
+	        else textoBarrio = barrio.toString();
+
+	        String filtros = "Barrio=" + textoBarrio + ", Adultos=" + adultos + ", Niños=" + ninos + ", Total=" + total;
+	        int resultados = filtrados.size();
+
+	        Sesion.getHistorial().add(new Busqueda(fecha, filtros, resultados, textoBarrio, adultos, ninos));
+	    }
+
+	    pCentro.remove(pBuscar);
+	    pCentro.add(pResultados, BorderLayout.CENTER);
+	    pCentro.revalidate();
+	    pCentro.repaint();
+	}
+
 
 	private JPanel pResultados() {
 		JPanel p = new JPanel(new BorderLayout(10, 10));
@@ -230,6 +258,8 @@ public class PanelBuscar extends JPanel {
 			while (sc.hasNextLine()) {
 				String linea = sc.nextLine();
 				String[] campo = linea.split(";");
+				String id = campo[0].trim();
+				if (BD.alojamientoEstaAlquilado(id)) continue;
 
 				Barrio barrio = null;
 				try {
@@ -237,7 +267,7 @@ public class PanelBuscar extends JPanel {
 				} catch (Exception e) {
 				}
 
-				Alojamiento a = new Alojamiento(campo[0], campo[1], barrio, Integer.parseInt(campo[3]), Double.parseDouble(campo[4]), Double.parseDouble(campo[5]));
+				Alojamiento a = new Alojamiento(id, campo[1], barrio, Integer.parseInt(campo[3]), Double.parseDouble(campo[4]), Double.parseDouble(campo[5]));
 				lista.add(a);
 				BD.upsertAlojamiento(a);
 			}
@@ -247,6 +277,26 @@ public class PanelBuscar extends JPanel {
 			JOptionPane.showMessageDialog(this, "Error al cargar los alojamientos: " + e.getMessage());
 		}
 		return lista;
+	}
+	
+	public void refrescar() {
+	    alojamientos = cargarAlojamientos(new File("resources/data/alojamientos.csv"));
+	}
+	
+	public void setBarrioDesdeString(String barrio) {
+	    for (int i = 0; i < cbBarrio.getItemCount(); i++) {
+	        Object item = cbBarrio.getItemAt(i);
+	        if (item != null && item.toString().equals(barrio)) {
+	            cbBarrio.setSelectedIndex(i);
+	            return;
+	        }
+	    }
+	}
+	public void setAdultos(int adultos) {
+	    cbAdultos.setSelectedItem(adultos);
+	}
+	public void setNinos(int ninos) {
+	    cbNinos.setSelectedItem(ninos);
 	}
 
 }
