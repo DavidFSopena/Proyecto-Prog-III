@@ -154,12 +154,6 @@ public class BD {
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
-	    String sql2 = "CREATE UNIQUE INDEX IF NOT EXISTS id_alquiler_alojamiento ON Alquiler(idAlojamiento)";
-	    try (Statement st = con.createStatement()) {
-	        st.executeUpdate(sql2);
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
 	}
 	
 	public static boolean alojamientoEstaAlquilado(String idAlojamiento) {
@@ -191,7 +185,7 @@ public class BD {
 	}
 	
 	public static Usuario obtenerUsuarioPorUsuarioOEmail(String usuarioEmail) {
-	    String sql = "SELECT usuario, email, nombre FROM Usuario WHERE nombre = ? OR email = ?";
+		String sql = "SELECT id, usuario, email, nombre FROM Usuario WHERE nombre = ? OR email = ?";
 	    try (PreparedStatement ps = con.prepareStatement(sql)) {
 	        ps.setString(1, usuarioEmail);
 	        ps.setString(2, usuarioEmail);
