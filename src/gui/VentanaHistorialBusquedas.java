@@ -1,17 +1,18 @@
 package gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-
 import domain.Sesion;
+import javax.swing.JLabel;
+import domain.Recursividad;
 
 public class VentanaHistorialBusquedas extends JDialog{
 	private PanelBuscar panelBuscar;
+	
 	
 	public VentanaHistorialBusquedas(PanelBuscar panelBuscar) {
 		this.panelBuscar = panelBuscar;
@@ -20,6 +21,11 @@ public class VentanaHistorialBusquedas extends JDialog{
         setSize(new Dimension(800, 400));
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
+
+        JLabel lblEstadis = new JLabel();
+        lblEstadis.setHorizontalAlignment(JLabel.CENTER);
+        add(lblEstadis, BorderLayout.NORTH);
+        actualizarEstadis(lblEstadis);
 
         JTable tabla = new JTable(new ModeloTablaHistorialBusquedas(Sesion.getHistorial().getLista()));
         Tabla.aplicar(tabla);
@@ -49,11 +55,25 @@ public class VentanaHistorialBusquedas extends JDialog{
     	btnLimpiar.addActionListener(e -> {
     	    Sesion.getHistorial().clear();
     	    tabla.setModel(new ModeloTablaHistorialBusquedas(Sesion.getHistorial().getLista()));
+            actualizarEstadis(lblEstadis);
+
     	});
 
     	JPanel sur = new JPanel();
     	sur.add(btnLimpiar);
     	add(sur, BorderLayout.SOUTH);
     }
+	
+	private void actualizarEstadis(JLabel lblEstadis) {
+	    int totalResultados = Recursividad.sumarBusquedasRec(
+	            Sesion.getHistorial().getLista()
+	    );
+	    int numBusquedas = Sesion.getHistorial().getLista().size();
+
+	    lblEstadis.setText(
+	        "Búsquedas: " + numBusquedas +", Resultados totales mostrados: " + totalResultados
+	    );
+	}
+
 	
 }
