@@ -19,7 +19,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
+
 import javax.swing.SwingUtilities;
 import java.awt.Window;
 import java.awt.event.MouseAdapter;
@@ -50,64 +54,147 @@ public class PanelBuscar extends JPanel {
 		pCentro.setOpaque(false);
 		pCentro.add(pBuscar, BorderLayout.CENTER);
 		add(pCentro, BorderLayout.CENTER);
+		
+        JPanel wrapper = new JPanel(new BorderLayout());
+        wrapper.setOpaque(false);
+        wrapper.setBorder(BorderFactory.createEmptyBorder(30, 40, 30, 40));
+        wrapper.add(pCentro, BorderLayout.CENTER);
+        add(wrapper, BorderLayout.CENTER);
 
 		alojamientos = cargarAlojamientos(new File("resources/data/alojamientos.csv"));
 	}
+	
+	 private JPanel crearCard() {
+	        JPanel card = new JPanel(new GridBagLayout());
+	        card.setBackground(new Color(245, 247, 250));
+	        card.setBorder(BorderFactory.createCompoundBorder(
+	                BorderFactory.createLineBorder(new Color(220, 225, 230), 1),
+	                BorderFactory.createEmptyBorder(22, 26, 22, 26)
+	        ));
+	        return card;
+	    }
+	 
+	  private void estiloCombo(JComboBox<?> cb) {
+	        cb.setFont(Funciones.Letra.negrita(16));
+	        cb.setPreferredSize(new Dimension(320, 40));
+	        cb.setMaximumSize(new Dimension(320, 40));
+	        cb.setFocusable(false);
+	    }
+
+	    private void estiloBoton(JButton b) {
+	        b.setBackground(Funciones.Colores.Coral);
+	        b.setForeground(Color.WHITE);
+	        b.setFocusPainted(false);
+	        b.setFont(Funciones.Letra.negrita(16));
+	        b.setPreferredSize(new Dimension(160, 42));
+	    }
+
+	    private JLabel titulo(String text) {
+	        JLabel t = new JLabel(text);
+	        t.setFont(Funciones.Letra.negrita(24));
+	        t.setForeground(new Color(40, 40, 40));
+	        return t;
+	    }
+
+	    private JLabel etiqueta(String text) {
+	        JLabel l = new JLabel(text);
+	        l.setFont(Funciones.Letra.negrita(16));
+	        l.setForeground(new Color(60, 60, 60));
+	        return l;
+	    }
 
 	private JPanel pBuscar() {
 		JPanel p = new JPanel(new GridLayout(4, 2, 10, 10));
-		p.setBorder(BorderFactory.createEmptyBorder(40, 100, 40, 100));
-		p.setOpaque(false);
+		JPanel outer = new JPanel(new GridBagLayout());
+        outer.setOpaque(false);
 
-		cbBarrio = new JComboBox<>();
-		cbBarrio.addItem("TODOS");
-		for (Barrio b : Barrio.values())
-			cbBarrio.addItem(b);
-		cbAdultos = new JComboBox<>();
-		cbNinos = new JComboBox<>();
-		for (int i = 0; i <= 5; i++) {
-			cbAdultos.addItem(i);
-			cbNinos.addItem(i);
-		}
-		JLabel lblBarrio = new JLabel("BARRIO:");
-		lblBarrio.setFont(Funciones.Letra.negrita(20));
-		JLabel lblAdultos = new JLabel("ADULTOS:");
-		lblAdultos.setFont(Funciones.Letra.negrita(20));
-		JLabel lblNinos = new JLabel("NIÑOS:");
-		lblNinos.setFont(Funciones.Letra.negrita(20));
+        JPanel card = crearCard();
 
-		cbBarrio.setFont(Funciones.Letra.negrita(20));
-		cbAdultos.setFont(Funciones.Letra.negrita(20));
-		cbNinos.setFont(Funciones.Letra.negrita(20));
+        GridBagConstraints gc = new GridBagConstraints();
+        gc.gridx = 0;
+        gc.gridy = 0;
+        gc.gridwidth = 2;
+        gc.anchor = GridBagConstraints.WEST;
+        gc.insets = new Insets(0, 0, 18, 0);
+        card.add(titulo("Buscar alojamiento"), gc);
 
-		cbBarrio.setPreferredSize(new Dimension(260, 36));
-		cbAdultos.setPreferredSize(new Dimension(260, 36));
-		cbNinos.setPreferredSize(new Dimension(260, 36));
+        // combos
+        cbBarrio = new JComboBox<>();
+        cbBarrio.addItem("TODOS");
+        for (Barrio b : Barrio.values()) cbBarrio.addItem(b);
 
-		btnBuscar = new JButton("BUSCAR");
-		btnBuscar.setBackground(Funciones.Colores.Coral);
-		btnBuscar.setForeground(Color.WHITE);
-		btnBuscar.setFocusPainted(false);
-		
-		btnHistorial = new JButton("HISTORIAL");
-		btnHistorial.setBackground(Funciones.Colores.Coral);
-		btnHistorial.setForeground(Color.WHITE);
-		btnHistorial.setFocusPainted(false);
+        cbAdultos = new JComboBox<>();
+        cbNinos = new JComboBox<>();
+        for (int i = 0; i <= 5; i++) {
+            cbAdultos.addItem(i);
+            cbNinos.addItem(i);
+        }
 
-		p.add(lblBarrio);
-		p.add(cbBarrio);
-		p.add(lblAdultos);
-		p.add(cbAdultos);
-		p.add(lblNinos);
-		p.add(cbNinos);
-		p.add(btnBuscar);
-		p.add(btnHistorial);
+        estiloCombo(cbBarrio);
+        estiloCombo(cbAdultos);
+        estiloCombo(cbNinos);
 
+        // fila 1
+        gc.gridwidth = 1;
+        gc.gridy = 1;
+        gc.gridx = 0;
+        gc.insets = new Insets(0, 0, 12, 16);
+        gc.anchor = GridBagConstraints.EAST;
+        card.add(etiqueta("Barrio:"), gc);
 
-		btnBuscar.addActionListener(e -> {ejecutarBusquedaDesdeFiltros(true);});
-		
-		btnHistorial.addActionListener(e -> {new VentanaHistorialBusquedas(PanelBuscar.this).setVisible(true);});
-		return p;
+        gc.gridx = 1;
+        gc.insets = new Insets(0, 0, 12, 0);
+        gc.anchor = GridBagConstraints.WEST;
+        card.add(cbBarrio, gc);
+
+        // fila 2
+        gc.gridy = 2;
+        gc.gridx = 0;
+        gc.insets = new Insets(0, 0, 12, 16);
+        gc.anchor = GridBagConstraints.EAST;
+        card.add(etiqueta("Adultos:"), gc);
+
+        gc.gridx = 1;
+        gc.insets = new Insets(0, 0, 12, 0);
+        gc.anchor = GridBagConstraints.WEST;
+        card.add(cbAdultos, gc);
+
+        // fila 3
+        gc.gridy = 3;
+        gc.gridx = 0;
+        gc.insets = new Insets(0, 0, 18, 16);
+        gc.anchor = GridBagConstraints.EAST;
+        card.add(etiqueta("Niños:"), gc);
+
+        gc.gridx = 1;
+        gc.insets = new Insets(0, 0, 18, 0);
+        gc.anchor = GridBagConstraints.WEST;
+        card.add(cbNinos, gc);
+
+        // botones
+        btnBuscar = new JButton("BUSCAR");
+        btnHistorial = new JButton("HISTORIAL");
+        estiloBoton(btnBuscar);
+        estiloBoton(btnHistorial);
+
+        JPanel pBtns = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
+        pBtns.setOpaque(false);
+        pBtns.add(btnHistorial);
+        pBtns.add(btnBuscar);
+
+        gc.gridy = 4;
+        gc.gridx = 0;
+        gc.gridwidth = 2;
+        gc.insets = new Insets(0, 0, 0, 0);
+        gc.anchor = GridBagConstraints.EAST;
+        card.add(pBtns, gc);
+
+        outer.add(card); // centra el card
+
+        btnBuscar.addActionListener(e -> ejecutarBusquedaDesdeFiltros(true));
+        btnHistorial.addActionListener(e -> new VentanaHistorialBusquedas(PanelBuscar.this).setVisible(true));
+
+        return outer;
 	}
 	public void ejecutarBusquedaDesdeFiltros(boolean guardarEnHistorial) {
 
@@ -199,13 +286,15 @@ public class PanelBuscar extends JPanel {
 
 		cbOrden = new JComboBox<>(new String[] { "Precio menor-mayor", "Precio mayor-menor", "Rating menor-mayor",
 				"Rating mayor-menor" });
-		cbOrden.setBackground(Funciones.Colores.Coral);
-		cbOrden.setForeground(Color.WHITE);
-		cbOrden.setFocusable(false);
-		btnVolver = new JButton("VOLVER");
-		btnVolver.setBackground(Funciones.Colores.Coral);
-		btnVolver.setForeground(Color.WHITE);
-		btnVolver.setFocusPainted(false);
+		
+        cbOrden.setFont(Funciones.Letra.negrita(14));
+        cbOrden.setBackground(Funciones.Colores.Coral);
+        cbOrden.setForeground(Color.WHITE);
+        cbOrden.setFocusable(false);
+
+        btnVolver = new JButton("VOLVER");
+        estiloBoton(btnVolver);
+        btnVolver.setPreferredSize(new Dimension(140, 40));
 
 		JPanel pSur = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
 		pSur.add(cbOrden);
