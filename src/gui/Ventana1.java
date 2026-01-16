@@ -76,6 +76,8 @@ public class Ventana1 extends JFrame{
 			pSur.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 100));
 			
 			
+			//IAG (herramienta: Chatgpt)
+			//Adaptado (hemos modificado los valores pero el action listener esta hecho por IA)
 			
 			JButton btnSalir = new JButton("Salir");
 			btnSalir.setFont(Funciones.Letra.negrita(40));
