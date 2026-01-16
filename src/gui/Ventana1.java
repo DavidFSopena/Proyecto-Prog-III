@@ -48,6 +48,10 @@ public class Ventana1 extends JFrame{
 			lblImagen = new JLabel(icono);
 			lblImagen.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			
+			
+			//IAG (herramienta: Chatgpt)
+			//Adaptado (hemos modificado los valores pero el action listener esta hecho por IA)
+			
 			lblImagen.addMouseListener(new MouseAdapter() {
 				public void mouseEntered(MouseEvent e ) {
 					ImageIcon iconoIluminado = new ImageIcon(getClass().getResource("/images/ImagenTrans1.png"));
@@ -74,10 +78,7 @@ public class Ventana1 extends JFrame{
 			pSur = new JPanel();
 			pSur.setOpaque(false);
 			pSur.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 100));
-			
-			
-			//IAG (herramienta: Chatgpt)
-			//Adaptado (hemos modificado los valores pero el action listener esta hecho por IA)
+	
 			
 			JButton btnSalir = new JButton("Salir");
 			btnSalir.setFont(Funciones.Letra.negrita(40));
