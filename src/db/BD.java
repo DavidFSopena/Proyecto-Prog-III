@@ -63,19 +63,20 @@ public class BD {
 	}
 	
 	public static boolean registrarUsuario(Usuario u, String contrasenia) {
-		String sql = "INSERT INTO Usuario (usuario, email, nombre, contrasenia) VALUES (?,?,?,?)";
-		try (PreparedStatement ps = con.prepareStatement(sql)) {
-			ps.setString(1, u.getUsuario());
-			ps.setString(2, u.getEmail());
-			ps.setString(3, u.getNombre());
-			ps.setString(4, contrasenia);
-			ps.executeUpdate();
-			
-			return true;
-		} catch (SQLException e) {
-			return false;
-		}
+	    String sql = "INSERT INTO Usuario (usuario, email, nombre, contrasenia) VALUES (?,?,?,?)";
+	    try (PreparedStatement ps = con.prepareStatement(sql)) {
+	        ps.setString(1, u.getUsuario());
+	        ps.setString(2, u.getEmail());
+	        ps.setString(3, u.getNombre());
+	        ps.setString(4, contrasenia);
+	        ps.executeUpdate();
+	        return true;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
+
 	
 	public static boolean eliminarAlquiler(int usuarioID, String idAlojamiento) {
 		String sql = "DELETE FROM Alquiler WHERE usuarioID = ? AND idAlojamiento = ?";
