@@ -45,7 +45,7 @@ public class Ventana2_1 extends JFrame {
 		
 		getContentPane().setBackground(Funciones.Colores.Turquesa);
 		
-		// Paneles
+		// Paneles6
 		pNorte = new JPanel(new BorderLayout());
 		pNorte.setBackground(Funciones.Colores.Turquesa);
 		pNorte.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
