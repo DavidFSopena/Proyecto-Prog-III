@@ -11,6 +11,7 @@ public class Recursividad {
         
         if (b.getBarrio() != null && b.getBarrio().equalsIgnoreCase(barrio)) {
         	suma = 1;
+        	
         }
 
         return suma + contarBusquedasConBarrioRec(busquedas.subList(1, busquedas.size()), barrio);
